@@ -82,23 +82,28 @@ def get_common_elements(entity_id1, entity_id2):
 
 def get_common_names(entity_id):
     # Establish a connection to the SQLite database
-    with get_db() as db:
+    db = get_db()
+    cursor = db.cursor()
+
+    try:
         # Use placeholders to prevent SQL injection
         query = "SELECT molecules FROM flavordb WHERE entityID = ?"
-        cursor = db.cursor()
         cursor.execute(query, (entity_id,))
 
         result = cursor.fetchone()
 
         if result:
-            pubchem_ids = result[0].split(',')
+            pubchem_ids = result[0].split(',')  # Assuming 'molecules' is a comma-separated string in the database
             query = "SELECT commonName FROM molecules WHERE pubchemID IN ({})".format(','.join('?' for _ in pubchem_ids))
             cursor.execute(query, pubchem_ids)
 
             common_names = [row[0] for row in cursor.fetchall()]
             return common_names
         else:
-            return None
+            return []  # Return an empty list if no data is found
+    finally:
+        cursor.close()  # Close the cursor in a 'finally' block to ensure it gets closed even if an exception occurs
+        db.close()
 
 
 
