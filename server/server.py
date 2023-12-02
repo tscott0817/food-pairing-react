@@ -8,6 +8,7 @@ app.config['DATABASE'] = 'data/food_data.db'
 CORS(app)  # TODO: Important, react can't access routes without this apparently
 
 
+# TODO: Not sure which to do
 # def get_db():
 #     if 'db' not in g:
 #         g.db = sqlite3.connect(app.config['DATABASE'])
@@ -81,30 +82,31 @@ def get_common_elements(entity_id1, entity_id2):
 
 
 def get_common_names(entity_id):
-    # Establish a connection to the SQLite database
     db = get_db()
     cursor = db.cursor()
 
     try:
-        # Use placeholders to prevent SQL injection
         query = "SELECT molecules FROM flavordb WHERE entityID = ?"
         cursor.execute(query, (entity_id,))
 
         result = cursor.fetchone()
 
         if result:
-            pubchem_ids = result[0].split(',')  # Assuming 'molecules' is a comma-separated string in the database
+            # pubchem_ids = result[0].split(',')
+            # query = "SELECT commonName FROM molecules WHERE pubchemID IN ({})".format(','.join('?' for _ in pubchem_ids))
+            # cursor.execute(query, pubchem_ids)
+
+            pubchem_ids = result[0].replace('{', '').replace('}', '').split(', ')
             query = "SELECT commonName FROM molecules WHERE pubchemID IN ({})".format(','.join('?' for _ in pubchem_ids))
             cursor.execute(query, pubchem_ids)
 
             common_names = [row[0] for row in cursor.fetchall()]
             return common_names
         else:
-            return []  # Return an empty list if no data is found
+            return []  # TODO: Change return
     finally:
-        cursor.close()  # Close the cursor in a 'finally' block to ensure it gets closed even if an exception occurs
+        cursor.close()
         db.close()
-
 
 
 if __name__ == '__main__':

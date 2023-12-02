@@ -14,7 +14,8 @@ function SearchByName() {
             if (data) {
                 setSearchData(data);
             } else {
-                setErrorMessage("No data found");
+                setSearchData("Nothing Found");
+                // setErrorMessage("No data found");
             }
         } catch (error) {
             console.error('Error fetching or parsing data:', error);
