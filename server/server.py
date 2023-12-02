@@ -67,8 +67,24 @@ def get_molecule_by_id(pubchem_id):
     return jsonify({'data': data})
 
 
+@app.route('/api/flavordb/category/<category>', methods=['GET'])
+def get_items_by_category_route(category):
+    return get_items_by_category(category)
 
-@app.route('/api/common-elements/<int:entity_id1>/<int:entity_id2>', methods=['GET'])
+
+def get_items_by_category(category):
+    db = get_db()
+    cursor = db.cursor()
+    query = "SELECT alias FROM flavordb WHERE category = ?"
+
+    cursor.execute(query, (category,))
+    rows = cursor.fetchall()
+    aliases = [row[0] for row in rows] if rows else None
+    cursor.close()
+    return jsonify({'aliases': aliases})
+
+
+@app.route('/api/common-molecules/<int:entity_id1>/<int:entity_id2>', methods=['GET'])
 def get_common_elements_route(entity_id1, entity_id2):
     common_elements = get_common_elements(entity_id1, entity_id2)
     return jsonify({'common_elements': common_elements})
@@ -92,10 +108,6 @@ def get_common_names(entity_id):
         result = cursor.fetchone()
 
         if result:
-            # pubchem_ids = result[0].split(',')
-            # query = "SELECT commonName FROM molecules WHERE pubchemID IN ({})".format(','.join('?' for _ in pubchem_ids))
-            # cursor.execute(query, pubchem_ids)
-
             pubchem_ids = result[0].replace('{', '').replace('}', '').split(', ')
             query = "SELECT commonName FROM molecules WHERE pubchemID IN ({})".format(','.join('?' for _ in pubchem_ids))
             cursor.execute(query, pubchem_ids)
