@@ -1,0 +1,3 @@
+ - To enter venv from pycharm terminal (must be in same directory as venv) -> .\venv\Scripts\activate
+ - To leave just type 'deactivate'
+ - To launch server -> python app.py

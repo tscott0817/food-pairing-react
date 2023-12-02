@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: aquamarine;
 }
 
 .App-logo {
@@ -35,4 +36,16 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.chart-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.Pie {
+  height: 50%;
+  width: 50%;
+  background-color: blueviolet;
 }
