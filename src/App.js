@@ -3,6 +3,9 @@ import './App.css';
 import SearchByName from './pages/searchByName';
 import CompareIngredients from './pages/compareIngredients';
 import SearchByCategory from "./pages/searchByCategory";
+import MouseTracker from './components/mouseTracker';
+import IngredientPage from "./pages/ingredientPage";
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 
 function App() {
@@ -17,17 +20,22 @@ function App() {
             <button onClick={() => handlePageChange('compareIngredients')}>
                 Compare Ingredients
             </button>
-            {/* Uncomment the following button if you have a component named SearchByName */}
             <button onClick={() => handlePageChange('searchByName')}>
                 Search By Name
             </button>
             <button onClick={() => handlePageChange('searchByCategory')}>
                 Search By Category
             </button>
+            <button onClick={() => handlePageChange('ingredientPage')}>
+                Ingredient Page
+            </button>
+            {/*<MouseTracker />*/}
+
 
             {currentPage === 'compareIngredients' && <CompareIngredients />}
             {currentPage === 'searchByName' && <SearchByName />}
             {currentPage === 'searchByCategory' && <SearchByCategory />}
+            {currentPage === 'ingredientPage' && <IngredientPage />}
         </div>
     );
 }

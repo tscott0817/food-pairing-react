@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 import {ResponsivePie} from "@nivo/pie";
 
+
+// TODO: Break this whole file into components
 function CompareIngredients() {
 
     const [item1Id, setItem1Id] = useState('');
@@ -40,24 +42,22 @@ function CompareIngredients() {
         const wordsArray = cleanedStr.split(',');
 
         // Count the number of words
-        const wordCount = wordsArray.length;
-
-        return wordCount;
+        return wordsArray.length;
     };
 
-        // Render the chart only when both item1Data and sharedMolecules are available
+    // Render the chart only when both item1Data and sharedMolecules are available
     const isDataReady = item1Data && sharedMolecules.length > 0;
 
-    const data = isDataReady
+    const dataItem1 = isDataReady
         ? [
               {
-                  id: 'Shared id',
+                  id: sharedMolecules.length + ' Molecules in common',
                   label: 'Shared label',
                   value: sharedMolecules.length,
                   color: 'hsl(90, 70%, 50%)',
               },
               {
-                  id: 'total id',
+                  id: (countWordsInString(item1Data.molecules) - sharedMolecules.length) + ' Molecules isolated',
                   label: 'total label',
                   value: item1Data && item1Data.molecules ? countWordsInString(item1Data.molecules) - sharedMolecules.length : 0,
                   // value: item1Data.molecules.length,
@@ -74,13 +74,13 @@ function CompareIngredients() {
     const dataItem2 = isDataReadyItem2
         ? [
               {
-                  id: 'Shared id',
+                  id: sharedMolecules.length + ' Molecules in common',
                   label: 'Shared label',
                   value: sharedMolecules.length,
                   color: 'hsl(90, 70%, 50%)',
               },
               {
-                  id: 'total id',
+                  id: (countWordsInString(item2Data.molecules) - sharedMolecules.length) + ' Molecules isolated',
                   label: 'total label',
                   value: item2Data && item2Data.molecules ? countWordsInString(item2Data.molecules) - sharedMolecules.length : 0,
                   color: 'hsl(56, 70%, 50%)',
@@ -94,16 +94,15 @@ function CompareIngredients() {
         <div>
             <div>
                 <label>Enter Item 1 ID: </label>
-                <input type="number" value={item1Id} onChange={(e) => setItem1Id(e.target.value)} />
+                <input type="text" value={item1Id} onChange={(e) => setItem1Id(e.target.value)} />
             </div>
             <div>
                 <label>Enter Item 2 ID: </label>
-                <input type="number" value={item2Id} onChange={(e) => setItem2Id(e.target.value)} />
+                <input type="text" value={item2Id} onChange={(e) => setItem2Id(e.target.value)} />
             </div>
             <button onClick={fetchData}>Fetch Data</button>
             {/*<div>*/}
             {/*    <h2>Item 1</h2>*/}
-            {/*    /!*{item1Data && <p>{JSON.stringify(item1Data)}</p>}*!/*/}
             {/*    {item1Data && <p>{JSON.stringify(item1Data)}</p>}*/}
             {/*</div>*/}
             {/*<div>*/}
@@ -124,9 +123,10 @@ function CompareIngredients() {
             </div>
             <div style={{ display: 'flex' }}>
                 <div style={{ flex: 1, height: 400, marginRight: '20px' }}>
-                    <h2>Charts for Item 1</h2>
+                    {/*TODO: Need these to activate when fetchData is clicked*/}
+                    {/*<h2>{item1Data.alias} composition</h2>*/}
                     <ResponsivePie
-                        data={data}
+                        data={dataItem1}
                         margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
                         innerRadius={0.5}
                         padAngle={0.7}
@@ -140,10 +140,32 @@ function CompareIngredients() {
                         arcLinkLabelsColor={{ from: 'color' }}
                         arcLabelsSkipAngle={10}
                         arcLabelsTextColor={{ from: 'color', modifiers: [['darker', 2]] }}
+                        colors={['#f47560', '#e8c1a0']}
+                        arcLabel={({ value }) => `${(value / dataItem1.reduce((acc, d) => acc + d.value, 0) * 100).toFixed(2)}%`}
+                        // layers={[
+                        //     'arcs',
+                        //     'arcLabels',
+                        //     'arcLinkLabels',
+                        //     () => (
+                        //         <text
+                        //             x="39%"
+                        //             y="36%"
+                        //             textAnchor="middle"
+                        //             dominantBaseline="middle"
+                        //             style={{
+                        //                 fontSize: '20px',
+                        //                 fontWeight: 'bold',
+                        //                 fill: '#333333',
+                        //             }}
+                        //         >
+                        //             {item1Data.alias}
+                        //         </text>
+                        //     ),
+                        // ]}
                     />
                 </div>
                 <div style={{ flex: 1, height: 400}}>
-                    <h2>Charts for Item 2</h2>
+                    {/*<h2>{item2Data.alias} composition</h2>*/}
                     <ResponsivePie
                         data={dataItem2}
                         margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
@@ -159,6 +181,29 @@ function CompareIngredients() {
                         arcLinkLabelsColor={{ from: 'color' }}
                         arcLabelsSkipAngle={10}
                         arcLabelsTextColor={{ from: 'color', modifiers: [['darker', 2]] }}
+                        colors={['#f47560', '#e8c1a0']}
+                        // just make the arc label a percentage
+                        arcLabel={({ value }) => `${(value / dataItem2.reduce((acc, d) => acc + d.value, 0) * 100).toFixed(2)}%`}
+                        // layers={[
+                        //     'arcs',
+                        //     'arcLabels',
+                        //     'arcLinkLabels',
+                        //     () => (
+                        //         <text
+                        //             x="39.5%"
+                        //             y="36%"
+                        //             textAnchor="middle"
+                        //             dominantBaseline="middle"
+                        //             style={{
+                        //                 fontSize: '20px',
+                        //                 fontWeight: 'bold',
+                        //                 fill: '#333333',
+                        //             }}
+                        //         >
+                        //             {item2Data.alias}
+                        //         </text>
+                        //     ),
+                        // ]}
                     />
                 </div>
             </div>

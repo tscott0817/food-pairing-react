@@ -1,6 +1,15 @@
+body {
+  text-align: center;
+  background-color: blueviolet;
+  height: 100vh;
+  margin: 0; /* Remove default margin */
+  overflow-x: hidden; /* Prevent horizontal scrollbar */
+}
+
 .App {
   text-align: center;
   background-color: aquamarine;
+  height: 100vh;
 }
 
 .App-logo {

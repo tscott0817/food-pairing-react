@@ -1,5 +1,6 @@
 import sqlite3
 
+import requests
 from flask import Flask, jsonify, g
 from flask_cors import CORS
 
@@ -85,19 +86,19 @@ def get_items_by_category(category):
 
 
 @app.route('/api/common-molecules/<int:entity_id1>/<int:entity_id2>', methods=['GET'])
-def get_common_elements_route(entity_id1, entity_id2):
-    common_elements = get_common_elements(entity_id1, entity_id2)
+def get_common_elements_id_route(entity_id1, entity_id2):
+    common_elements = get_common_elements_by_id(entity_id1, entity_id2)
     return jsonify({'common_elements': common_elements})
 
 
-def get_common_elements(entity_id1, entity_id2):
-    common_names1 = set(get_common_names(entity_id1))
-    common_names2 = set(get_common_names(entity_id2))
+def get_common_elements_by_id(entity_id1, entity_id2):
+    common_names1 = set(get_common_names_by_id(entity_id1))
+    common_names2 = set(get_common_names_by_id(entity_id2))
     common_elements = list(common_names1.intersection(common_names2))
     return common_elements
 
 
-def get_common_names(entity_id):
+def get_common_names_by_id(entity_id):
     db = get_db()
     cursor = db.cursor()
 
@@ -119,6 +120,57 @@ def get_common_names(entity_id):
     finally:
         cursor.close()
         db.close()
+
+
+@app.route('/api/common-molecules/<alias_1>/<alias_2>', methods=['GET'])
+def get_common_elements_alias_route(alias_1, alias_2):
+    common_elements = get_common_elements_by_alias(alias_1, alias_2)
+    return jsonify({'common_elements': common_elements})
+
+
+def get_common_elements_by_alias(alias_1, alias_2):
+    common_names1 = set(get_common_names_by_alias(alias_1))
+    common_names2 = set(get_common_names_by_alias(alias_2))
+    common_elements = list(common_names1.intersection(common_names2))
+    return common_elements
+
+
+def get_common_names_by_alias(alias):
+    db = get_db()
+    cursor = db.cursor()
+
+    try:
+        query = "SELECT molecules FROM flavordb WHERE alias = ?"
+        cursor.execute(query, (alias,))
+
+        result = cursor.fetchone()
+
+        if result:
+            pubchem_ids = result[0].replace('{', '').replace('}', '').split(', ')
+            query = "SELECT commonName FROM molecules WHERE pubchemID IN ({})".format(','.join('?' for _ in pubchem_ids))
+            cursor.execute(query, pubchem_ids)
+
+            common_names = [row[0] for row in cursor.fetchall()]
+            return common_names
+        else:
+            return []  # TODO: Change return
+    finally:
+        cursor.close()
+        db.close()
+
+
+@app.route('/api/wikipedia/<path:pageTitle>')
+def wikipedia_proxy(pageTitle):
+    wikipedia_api_url = f'https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exintro=true&titles={pageTitle}'
+
+    try:
+        response = requests.get(wikipedia_api_url)
+        data = response.json()
+
+        return jsonify(data)
+    except Exception as e:
+        print(f'Error fetching Wikipedia data: {e}')
+        return jsonify({'error': 'Internal Server Error'}), 500
 
 
 if __name__ == '__main__':

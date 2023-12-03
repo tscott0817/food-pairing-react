@@ -1,0 +1,34 @@
+.ingredient-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #61dafb; /* Set the background color of the container */
+}
+
+.top-left-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.alias {
+  font-weight: bold;
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.scientific-name {
+  font-size: 0.8em;
+  color: #555;
+}
+
+.separator {
+  margin: 20px 0;
+  border: none;
+  border-top: 1px solid #ccc;
+}
+
+.property-section {
+  margin-top: 20px;
+}
