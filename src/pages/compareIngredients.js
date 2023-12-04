@@ -1,9 +1,10 @@
 import React, {useState} from "react";
 import {ResponsivePie} from "@nivo/pie";
-import PieCompare from "../components/pieCompare";
+import PieCompare from "../components/charts/pieCompare";
 import SharedMoleculesCard from "../components/cards/sharedMoleculesCard";
 import IngredientsCard from "../components/cards/ingredientsCard";
-import RadarCompare from "../components/radarCompare";
+import RadarCompare from "../components/charts/radarCompare";
+import SharedMoleculesFlavorsCard from "../components/cards/sharedMoleculesFlavorsCard";
 
 
 // TODO: Break this whole file into components
@@ -43,7 +44,7 @@ function CompareIngredients() {
     };
 
     return (
-        <div style={{backgroundColor: '#e62981', maxWidth: '90vw', margin: '0 auto', padding: '20px'}}>
+        <div style={{fontFamily: 'Roboto, sans-serif', backgroundColor: '#e62981', maxWidth: '90vw', margin: '0 auto', padding: '20px'}}>
             <div>
                 <label>Ingredient or ID 1: </label>
                 <input type="text" value={item1Id} onChange={(e) => setItem1Id(e.target.value)}/>
@@ -55,9 +56,10 @@ function CompareIngredients() {
             <button onClick={fetchData}>Fetch Data</button>
 
             {/*<IngredientsCard item1Data={item1Data} item2Data={item2Data} />*/}
-            <SharedMoleculesCard sharedMolecules={sharedMolecules}/>
+            {/*<SharedMoleculesCard sharedMolecules={sharedMolecules}/>*/}
+            <SharedMoleculesFlavorsCard sharedMolecules={sharedMolecules} radarData={radarData}/>
             <PieCompare item1Data={item1Data} item2Data={item2Data} sharedMolecules={sharedMolecules}/>
-            <RadarCompare radarData={radarData}/>
+            {/*<RadarCompare radarData={radarData}/>*/}
         </div>
     );
 }

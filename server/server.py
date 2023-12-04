@@ -8,11 +8,6 @@ app = Flask(__name__)
 app.config['DATABASE'] = 'data/food_data.db'
 CORS(app)  # TODO: Important, react can't access routes without this apparently
 
-# TODO:
-#   - This is a mess lol
-
-
-
 
 # TODO: Not sure which to do
 # def get_db():
@@ -217,8 +212,6 @@ def get_common_data_by_ids(entity_id1, entity_id2):
         db.close()
 
 
-
-# TODO: USE THE PUBCHEM DATABASE INSTEAD OF WIKI
 @app.route('/api/wikipedia/<path:pageTitle>')
 def wikipedia_proxy(pageTitle):
     wikipedia_api_url = f'https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exintro=true&titles={pageTitle}'
