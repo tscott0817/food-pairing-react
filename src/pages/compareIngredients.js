@@ -14,7 +14,6 @@ function CompareIngredients() {
     const [item1Data, setItem1Data] = useState(null);
     const [item2Data, setItem2Data] = useState(null);
     const [sharedMolecules, setSharedMolecules] = useState([]);
-    const [fetchDataClicked, setFetchDataClicked] = useState(false);
     const [radarData, setRadarData] = useState(null);
 
 
@@ -29,34 +28,36 @@ function CompareIngredients() {
         const data2 = await response2.json();
         setItem2Data(data2.data);
 
-        // Fetch shared molecules
-        const responseShared = await fetch(`http://localhost:5000/api/common-molecules/${item1Id}/${item2Id}`);
+        // Use the 'entityID' directly from the data
+        const entityID1 = data1.data.entityID || '';
+        const entityID2 = data2.data.entityID || '';
+
+        // Fetch shared molecules using the entity IDs
+        const responseShared = await fetch(`http://localhost:5000/api/common-molecules/${entityID1}/${entityID2}`);
         const dataShared = await responseShared.json();
         setSharedMolecules(dataShared.common_elements || []);
 
-        const responseRadar = await fetch(`http://localhost:5000/api/common-data/${item1Id}/${item2Id}`);
+        const responseRadar = await fetch(`http://localhost:5000/api/common-data/${entityID1}/${entityID2}`);
         const dataRadar = await responseRadar.json();
         setRadarData(dataRadar.common_data);
-
-        // setFetchDataClicked(true);
     };
 
     return (
-        <div style={{ backgroundColor: '#e62981', maxWidth: '90vw', margin: '0 auto', padding: '20px' }}>
+        <div style={{backgroundColor: '#e62981', maxWidth: '90vw', margin: '0 auto', padding: '20px'}}>
             <div>
-                <label>Enter Item 1 ID: </label>
-                <input type="text" value={item1Id} onChange={(e) => setItem1Id(e.target.value)} />
+                <label>Ingredient or ID 1: </label>
+                <input type="text" value={item1Id} onChange={(e) => setItem1Id(e.target.value)}/>
             </div>
             <div>
-                <label>Enter Item 2 ID: </label>
-                <input type="text" value={item2Id} onChange={(e) => setItem2Id(e.target.value)} />
+                <label>Ingredient or ID 2: </label>
+                <input type="text" value={item2Id} onChange={(e) => setItem2Id(e.target.value)}/>
             </div>
             <button onClick={fetchData}>Fetch Data</button>
 
             {/*<IngredientsCard item1Data={item1Data} item2Data={item2Data} />*/}
-            <SharedMoleculesCard sharedMolecules={sharedMolecules} />
-            <PieCompare item1Data={item1Data} item2Data={item2Data} sharedMolecules={sharedMolecules} />
-            <RadarCompare radarData={radarData} />
+            <SharedMoleculesCard sharedMolecules={sharedMolecules}/>
+            <PieCompare item1Data={item1Data} item2Data={item2Data} sharedMolecules={sharedMolecules}/>
+            <RadarCompare radarData={radarData}/>
         </div>
     );
 }

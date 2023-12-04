@@ -16,7 +16,7 @@ const RadarCompare = ({ radarData }) => {
     });
 
     return (
-        <div style={{ backgroundColor: 'coral', borderRadius: '8px', paddingBottom: "1%", paddingTop: "1%", marginTop: "1%" }}>
+        <div style={{ backgroundColor: '#f2f2f2', borderRadius: '8px', paddingBottom: "1%", paddingTop: "1%", marginTop: "1%" }}>
             {/*<h2>List of Common Data:</h2>*/}
             {/*<ul>*/}
             {/*    {radarData.map((item, index) => (*/}
