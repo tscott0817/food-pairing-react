@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './css/IngredientPage.css';
+
 const IngredientPage = () => {
   const [ingredientData, setIngredientData] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');

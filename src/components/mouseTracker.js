@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react';
 
+
+// TODO: This uses GET request constantly. But will want to make request only once, but still update rectangle position with mouse
 const MouseTracker = ({width = 400, height = 250}) => {
     const [position, setPosition] = useState({x: 0, y: 0});
     const [wikiParagraph, setWikiParagraph] = useState('');

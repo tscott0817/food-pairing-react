@@ -8,6 +8,8 @@ import IngredientPage from "./pages/ingredientPage";
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 
+
+
 function App() {
     const [currentPage, setCurrentPage] = useState('compareIngredients');
 
