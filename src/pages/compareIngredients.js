@@ -6,6 +6,8 @@ import IngredientsCard from "../components/cards/ingredientsCard";
 import RadarCompare from "../components/charts/radarCompare";
 import SharedMoleculesFlavorsCard from "../components/cards/sharedMoleculesFlavorsCard";
 import IngredientFlavorsCard from "../components/cards/ingredientFlavorsCard";
+import IngredientMoleculesCard from "../components/cards/ingredientMoleculesCard";
+import IngredientFlavorsCardList from "../components/cards/ingredientFlavorsCardList";
 
 
 // TODO: Break this whole file into components
@@ -74,8 +76,11 @@ function CompareIngredients() {
             <button onClick={fetchData}>Fetch Data</button>
 
             <SharedMoleculesFlavorsCard sharedMolecules={sharedMolecules} radarData={radarData}/>
+            {/*<IngredientFlavorsCardList ingredientName={ingredientName1} radarData={radarData1}/>*/}
             <IngredientFlavorsCard ingredientName={ingredientName1} radarData={radarData1}/>
+            <IngredientMoleculesCard ingredientName={ingredientName1} radarData={radarData1}/>
             <IngredientFlavorsCard ingredientName={ingredientName2} radarData={radarData2}/>
+            <IngredientMoleculesCard ingredientName={ingredientName2} radarData={radarData2}/>
             <PieCompare item1Data={item1Data} item2Data={item2Data} sharedMolecules={sharedMolecules}/>
         </div>
     );

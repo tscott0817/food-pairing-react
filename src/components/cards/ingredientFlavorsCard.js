@@ -11,6 +11,7 @@ const IngredientFlavorsCard = ({ ingredientName, radarData }) => {
     }
 
     const flavorCounts = countFlavorProfiles(radarData.molecules);
+    const sortedFlavorCounts = Object.keys(flavorCounts).sort((a, b) => flavorCounts[b] - flavorCounts[a]);
     const radarChartData = Object.keys(flavorCounts).map((key) => {
         const [flavor, commonName] = key.split('_');
         return {
@@ -20,20 +21,19 @@ const IngredientFlavorsCard = ({ ingredientName, radarData }) => {
     });
 
     return (
-        <div style={{ display: 'flex', backgroundColor: '#fcba03', borderRadius: '8px', padding: '1%' }}>
+        <div style={{ display: 'flex', backgroundColor: '#3c81c2', borderRadius: '8px', padding: '1%' }}>
             <div style={{ fontFamily: 'Roboto, sans-serif', backgroundColor: 'green', minWidth: '25vw', width: '50%', height: '50vh', borderRadius: '8px', margin: '1%', overflow: 'auto', fontSize: '1em' }}>
-                <h2 style={{ borderBottom: '1px solid #232b2b', paddingBottom: '0.5em', marginLeft: '5%', width: '90%' }}>{ingredientName} Molecule Details</h2>
-                {/*<h2 style={{ borderBottom: '1px solid #232b2b', paddingBottom: '0.5em', marginLeft: '5%', width: '90%' }}>Molecule Details</h2>*/}
+                <h2 style={{ borderBottom: '1px solid #232b2b', paddingBottom: '0.5em', marginLeft: '5%', width: '90%' }}>{ingredientName} Flavor Profile Details</h2>
                 {radarData.molecules.length > 0 ? (
-                    radarData.molecules.map((detail, index) => (
-                        <div key={index}>
-                            <p>{detail.commonName}</p>
-                        </div>
-                    ))
-                ) : (
-                    <p>No Molecules, that doesn't seem right!</p>
-                )}
+                sortedFlavorCounts.map((key, index) => (
+                <div key={index}>
+                <p>{key}: {flavorCounts[key]}</p>
             </div>
+        ))
+      ) : (
+        <p>No Molecules, that doesn't seem right!</p>
+      )}
+    </div>
             <div style={{ minWidth: '25vw', width: '50%', height: '50vh', backgroundColor: 'green', margin: '1%', borderRadius: '8px' }}>
                 <ResponsiveRadar
                     data={radarChartData}
