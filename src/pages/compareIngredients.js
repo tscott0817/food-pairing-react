@@ -1,10 +1,11 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {ResponsivePie} from "@nivo/pie";
 import PieCompare from "../components/charts/pieCompare";
 import SharedMoleculesCard from "../components/cards/sharedMoleculesCard";
 import IngredientsCard from "../components/cards/ingredientsCard";
 import RadarCompare from "../components/charts/radarCompare";
 import SharedMoleculesFlavorsCard from "../components/cards/sharedMoleculesFlavorsCard";
+import IngredientFlavorsCard from "../components/cards/ingredientFlavorsCard";
 
 
 // TODO: Break this whole file into components
@@ -17,17 +18,24 @@ function CompareIngredients() {
     const [sharedMolecules, setSharedMolecules] = useState([]);
     const [radarData, setRadarData] = useState(null);
 
+    const [radarData1, setRadarData1] = useState(null);
+    const [radarData2, setRadarData2] = useState(null);
+    const [ingredientName1, setIngredientName1] = useState('');
+    const [ingredientName2, setIngredientName2] = useState('');
+
 
     const fetchData = async () => {
         // Fetch data for item 1
         const response1 = await fetch(`http://localhost:5000/api/flavordb/${item1Id}`);
         const data1 = await response1.json();
         setItem1Data(data1.data);
+        setIngredientName1(data1.data.alias)
 
         // Fetch data for item 2
         const response2 = await fetch(`http://localhost:5000/api/flavordb/${item2Id}`);
         const data2 = await response2.json();
         setItem2Data(data2.data);
+        setIngredientName2(data2.data.alias)
 
         // Use the 'entityID' directly from the data
         const entityID1 = data1.data.entityID || '';
@@ -41,6 +49,16 @@ function CompareIngredients() {
         const responseRadar = await fetch(`http://localhost:5000/api/common-data/${entityID1}/${entityID2}`);
         const dataRadar = await responseRadar.json();
         setRadarData(dataRadar.common_data);
+
+        const singleRadarResponse1 = await fetch(`http://localhost:5000/api/flavordb/ingredient-molecules/${entityID1}`);
+        const singleRadarData1 = await singleRadarResponse1.json();
+        setRadarData1(singleRadarData1);
+
+        const singleRadarResponse2 = await fetch(`http://localhost:5000/api/flavordb/ingredient-molecules/${entityID2}`);
+        const singleRadarData2 = await singleRadarResponse2.json();
+        setRadarData2(singleRadarData2);
+
+
     };
 
     return (
@@ -55,11 +73,10 @@ function CompareIngredients() {
             </div>
             <button onClick={fetchData}>Fetch Data</button>
 
-            {/*<IngredientsCard item1Data={item1Data} item2Data={item2Data} />*/}
-            {/*<SharedMoleculesCard sharedMolecules={sharedMolecules}/>*/}
             <SharedMoleculesFlavorsCard sharedMolecules={sharedMolecules} radarData={radarData}/>
+            <IngredientFlavorsCard ingredientName={ingredientName1} radarData={radarData1}/>
+            <IngredientFlavorsCard ingredientName={ingredientName2} radarData={radarData2}/>
             <PieCompare item1Data={item1Data} item2Data={item2Data} sharedMolecules={sharedMolecules}/>
-            {/*<RadarCompare radarData={radarData}/>*/}
         </div>
     );
 }

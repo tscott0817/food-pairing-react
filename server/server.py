@@ -68,6 +68,56 @@ def get_molecule_by_id(pubchem_id):
     return jsonify({'data': data})
 
 
+@app.route('/api/flavordb/ingredient-molecules/<int:entity_id>', methods=['GET'])
+def get_all_molecules_of_ingredient(entity_id):
+    # Connect to SQLite database (replace 'your_database.db' with the actual name of your SQLite database file)
+    conn = sqlite3.connect('data/food_data.db')
+    cursor = conn.cursor()
+
+    # Get 'molecules' column for the given entity_id
+    cursor.execute("SELECT molecules FROM flavordb WHERE entityID = ?", (entity_id,))
+    result = cursor.fetchone()
+
+    if result is None:
+        # If no record is found for the given entity_id, return an error response
+        return jsonify({"error": "Entity not found"}), 404
+
+    molecules_str = result[0]
+
+    try:
+        # Convert the string representation to a list
+        molecules_list = eval(molecules_str)
+        # Ensure molecules_list is a list and not a set
+        if not isinstance(molecules_list, list):
+            molecules_list = list(molecules_list)
+    except Exception as e:
+        # Handle potential evaluation errors
+        return jsonify({"error": f"Error processing 'molecules': {str(e)}"}), 500
+
+    # Fetch details for each molecule using pubchemID from the 'molecules' table
+    molecules_data = []
+    for pubchem_id in molecules_list:
+        cursor.execute("SELECT * FROM molecules WHERE pubchemID = ?", (pubchem_id,))
+        molecule_data = cursor.fetchone()
+        if molecule_data:
+            # Convert the flavorProfile set to a list
+            flavor_profile = eval(molecule_data[3])
+            if not isinstance(flavor_profile, list):
+                flavor_profile = list(flavor_profile)
+
+            molecules_data.append({
+                "pubchemID": molecule_data[1],
+                "commonName": molecule_data[2],
+                "flavorProfile": flavor_profile
+            })
+
+    # Close the database connection
+    conn.close()
+
+    # Convert the response to JSON
+    response_json = {"entityID": entity_id, "molecules": molecules_data}
+    return jsonify(response_json)
+
 
 @app.route('/api/flavordb/category/<category>', methods=['GET'])
 def get_items_by_category_route(category):

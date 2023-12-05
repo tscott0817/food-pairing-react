@@ -2,10 +2,11 @@ import React from "react";
 import {ResponsiveRadar} from "@nivo/radar";
 
 
-const SharedMoleculesFlavorsCard = ({ sharedMolecules, radarData }) => {
+const SharedMoleculesFlavorsCard = ({ radarData }) => {
     if (radarData === null) {
         return <div>No radar data available.</div>;
     }
+    // console.log(radarData)
 
     const flavorCounts = countFlavorProfiles(radarData);
     const radarChartData = Object.keys(flavorCounts).map((key) => {
@@ -20,10 +21,10 @@ const SharedMoleculesFlavorsCard = ({ sharedMolecules, radarData }) => {
         <div style={{ display: 'flex', backgroundColor: '#fcba03', borderRadius: '8px', padding: "1%" }}>
             <div style={{ fontFamily: 'Roboto, sans-serif', backgroundColor: "green", minWidth: '25vw', width: '50%', height: '50vh', borderRadius: '8px', margin: "1%", overflow: 'auto', fontSize: '1em' }}>
                 <h2 style={{ borderBottom: '1px solid #232b2b', paddingBottom: '0.5em', marginLeft: "5%", width: "90%"}}>Shared Molecule Details</h2>
-                {sharedMolecules.length > 0 ? (
-                  sharedMolecules.map((detail, index) => (
+                {radarData.length > 0 ? (
+                  radarData.map((detail, index) => (
                     <div key={index}>
-                      <p>{detail}</p>
+                      <p>{detail.commonName}</p>
                     </div>
                   ))
                 ) : (

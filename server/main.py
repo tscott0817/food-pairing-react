@@ -262,7 +262,7 @@ def get_entity_flavor_mapping(flavordb_df, molecules_df):
         pubchem_id = row['pubchemID']
         flavor_profile = row['flavorProfile']
 
-        entities = flavordb_df[flavordb_df['molecules'].apply(lambda x: pubchem_id in x)]['entityID'].tolist()
+        entities = flavordb_df[flavordb_df['molecules'].applay(lambda x: pubchem_id in x)]['entityID'].tolist()
 
         for entity in entities:
             if entity not in entity_flavor_mapping:
