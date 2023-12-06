@@ -35,6 +35,17 @@ def before_request():
 def teardown_request(exception):
     close_db()
 
+
+@app.route('/api/flavordb', methods=['GET'])
+def get_all_ingredients():
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM flavordb")
+    rows = cursor.fetchall()
+    data = [dict(zip(['index', 'entityID', 'alias', 'synonyms', 'scientificName', 'category', 'molecules'], row)) for row in rows]
+    cursor.close()
+    return jsonify({'data': data})
+
 @app.route('/api/flavordb/<alias>', methods=['GET'])
 def get_flavor_by_alias(alias):
     db = get_db()

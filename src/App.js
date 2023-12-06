@@ -6,12 +6,13 @@ import SearchByCategory from "./pages/searchByCategory";
 import MouseTracker from './components/mouseTracker';
 import IngredientPage from "./pages/ingredientPage";
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import DefaultPage from "./pages/defaultPage";
 
 
 
 
 function App() {
-    const [currentPage, setCurrentPage] = useState('compareIngredients');
+    const [currentPage, setCurrentPage] = useState('defaultPage');
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
@@ -19,6 +20,9 @@ function App() {
 
     return (
         <div className="App">
+            <button onClick={() => handlePageChange('defaultPage')}>
+                Default Page
+            </button>
             <button onClick={() => handlePageChange('compareIngredients')}>
                 Compare Ingredients
             </button>
@@ -34,6 +38,7 @@ function App() {
             {/*<MouseTracker />*/}
 
 
+            {currentPage === 'defaultPage' && <DefaultPage />}
             {currentPage === 'compareIngredients' && <CompareIngredients />}
             {currentPage === 'searchByName' && <SearchByName />}
             {currentPage === 'searchByCategory' && <SearchByCategory />}
