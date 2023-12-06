@@ -1,0 +1,6 @@
+purple -> Entire viewport
+aquamarine -> App (main window)
+red -> Main page view (encapsulates filter and page views)
+pink -> Next level within man view (main page as separate inner div from filters)
+yellow/blue/white -> Next level within page view
+green -> Individual components/card

@@ -7,11 +7,9 @@ const DefaultPage = () => {
     const [selectedIngredient, setSelectedIngredient] = useState(null);
 
     useEffect(() => {
-        // Fetch data from your Flask API
         fetch('http://localhost:5000/api/flavordb')
             .then(response => response.json())
             .then(data => {
-                // Sort data alphabetically based on the 'alias' column
                 const sortedFlavors = data.data.sort((a, b) =>
                     a.alias.localeCompare(b.alias)
                 );
@@ -35,7 +33,8 @@ const DefaultPage = () => {
             {selectedIngredient ? (
                 <IngredientPage ingredient={selectedIngredient}/>
             ) : (
-                <div style={{backgroundColor: "pink", width: "98%", display: 'flex', flexWrap: 'wrap', margin: "1%"}}>
+                // <div style={{backgroundColor: "#ff9cf0", width: "90%", display: 'flex', flexWrap: 'wrap', margin: "5%"}}>
+                <div style={{backgroundColor: "#ff9cf0", width: "100%", display: 'flex', flexWrap: 'wrap' }}>
                     {flavors.map(flavor => (
                         <div key={flavor.index} style={{flex: '0 0 auto', margin: '5px'}}
                              onClick={() => handleThumbnailClick(flavor)}>

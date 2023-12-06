@@ -17,7 +17,7 @@ const IngredientThumbnail = ({ingredient}) => {
                 backgroundColor: color,
                 marginTop: '10%', // Set margin as needed
                 marginBottom: '10%', // Set margin as needed
-                marginLeft: '35%', // Set margin as needed
+                marginLeft: '50%', // Set margin as needed
                 marginRight: '10%', // Set margin as needed
                 display: 'flex',
                 justifyContent: 'center',
