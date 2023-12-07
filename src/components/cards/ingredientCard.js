@@ -1,11 +1,8 @@
 import React, {useEffect, useState} from 'react';
-// import {useIngredientContext} from "../../stateManager/IngredientContext";
-
 
 const IngredientCard = ({ingredient}) => {
     const [ingredientData, setIngredientData] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
-    // const {selectedIngredients, selectIngredient, unselectIngredient} = useIngredientContext();
 
     useEffect(() => {
         if (ingredient) {

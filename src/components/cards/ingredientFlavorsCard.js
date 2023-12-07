@@ -3,9 +3,7 @@ import {ResponsiveRadar} from "@nivo/radar";
 
 
 const IngredientFlavorsCard = ({ ingredientName, radarData }) => {
-// const IngredientFlavorsCard = ({ radarData }) => {
 
-    // console.log(radarData)
     if (radarData === null) {
         return <div>No radar data available.</div>;
     }

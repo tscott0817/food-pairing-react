@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import IngredientThumbnail from "../components/cards/ingredientThumbnail";
-import IngredientCard from "../components/cards/ingredientCard";
 
 
 const DefaultPage = ({ setSelectedIngredientRef, handlePageChange }) => {
@@ -22,7 +21,6 @@ const DefaultPage = ({ setSelectedIngredientRef, handlePageChange }) => {
 
     const handleThumbnailClick = (ingredient) => {
         setSelectedIngredientRef({ current: ingredient });
-        // Change the currentPage after setting the selected ingredient
         handlePageChange('ingredientPage');
     };
 
@@ -34,7 +32,6 @@ const DefaultPage = ({ setSelectedIngredientRef, handlePageChange }) => {
         setSearchQuery(event.target.value);
     };
 
-    // Filter flavors based on the search query
     const filteredFlavors = flavors.filter(flavor =>
         flavor.alias.toLowerCase().includes(searchQuery.toLowerCase())
     );

@@ -1,11 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
-import SearchByName from './pages/searchByName';
 import CompareIngredients from './pages/compareIngredients';
 import CompareIngredientsGlobal from "./pages/compareIngredientsGlobal";
 import SearchByCategory from "./pages/searchByCategory";
-import MouseTracker from './components/mouseTracker';
-import IngredientCard from "./components/cards/ingredientCard";
 import IngredientPage from "./pages/ingredientPage";
 import DefaultPage from "./pages/defaultPage";
 import {useIngredientContext} from "./stateManager/IngredientContext";

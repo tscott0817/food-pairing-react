@@ -6,7 +6,6 @@ const SharedMoleculesFlavorsCard = ({ radarData }) => {
     if (radarData === null) {
         return <div>No radar data available.</div>;
     }
-    // console.log(radarData)
 
     const flavorCounts = countFlavorProfiles(radarData);
     const radarChartData = Object.keys(flavorCounts).map((key) => {

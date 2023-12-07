@@ -23,7 +23,6 @@ const IngredientCard = ({ingredient}) => {
     };
 
     const handleAddToComparison = () => {
-        // Check if the ingredient is not already in the selectedIngredients array
         if (!selectedIngredients.includes(ingredient)) {
             selectIngredient(ingredient);
         }

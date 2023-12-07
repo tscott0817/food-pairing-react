@@ -27,23 +27,19 @@ function CompareIngredients() {
 
 
     const fetchData = async () => {
-        // Fetch data for item 1
         const response1 = await fetch(`http://localhost:5000/api/flavordb/${item1Id}`);
         const data1 = await response1.json();
         setItem1Data(data1.data);
         setIngredientName1(data1.data.alias)
 
-        // Fetch data for item 2
         const response2 = await fetch(`http://localhost:5000/api/flavordb/${item2Id}`);
         const data2 = await response2.json();
         setItem2Data(data2.data);
         setIngredientName2(data2.data.alias)
 
-        // Use the 'entityID' directly from the data
         const entityID1 = data1.data.entityID || '';
         const entityID2 = data2.data.entityID || '';
 
-        // Fetch shared molecules using the entity IDs
         const responseShared = await fetch(`http://localhost:5000/api/common-molecules/${entityID1}/${entityID2}`);
         const dataShared = await responseShared.json();
         setSharedMolecules(dataShared.common_elements || []);
@@ -60,7 +56,6 @@ function CompareIngredients() {
         const singleRadarData2 = await singleRadarResponse2.json();
         setRadarData2(singleRadarData2);
 
-
     };
 
     return (
@@ -76,7 +71,6 @@ function CompareIngredients() {
             <button onClick={fetchData}>Fetch Data</button>
 
             <SharedMoleculesFlavorsCard sharedMolecules={sharedMolecules} radarData={radarData}/>
-            {/*<IngredientsCard item1Data={item1Data} item2Data={item2Data}/>*/}
             <IngredientCard ingredient={item1Data} />
             <IngredientFlavorsCard ingredientName={ingredientName1} radarData={radarData1}/>
             <IngredientMoleculesCard ingredientName={ingredientName1} radarData={radarData1}/>
