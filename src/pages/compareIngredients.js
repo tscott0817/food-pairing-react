@@ -2,13 +2,12 @@ import React, {useEffect, useState} from "react";
 import {ResponsivePie} from "@nivo/pie";
 import PieCompare from "../components/charts/pieCompare";
 import SharedMoleculesCard from "../components/cards/sharedMoleculesCard";
-import IngredientsCard from "../components/cards/ingredientsCard";
 import RadarCompare from "../components/charts/radarCompare";
 import SharedMoleculesFlavorsCard from "../components/cards/sharedMoleculesFlavorsCard";
 import IngredientFlavorsCard from "../components/cards/ingredientFlavorsCard";
 import IngredientMoleculesCard from "../components/cards/ingredientMoleculesCard";
 import IngredientFlavorsCardList from "../components/cards/ingredientFlavorsCardList";
-import IngredientPage from "./ingredientPage";
+import IngredientCard from "../components/cards/ingredientCard";
 
 
 // TODO: Break this whole file into components
@@ -78,7 +77,7 @@ function CompareIngredients() {
 
             <SharedMoleculesFlavorsCard sharedMolecules={sharedMolecules} radarData={radarData}/>
             {/*<IngredientsCard item1Data={item1Data} item2Data={item2Data}/>*/}
-            <IngredientPage ingredient={item1Data} />
+            <IngredientCard ingredient={item1Data} />
             <IngredientFlavorsCard ingredientName={ingredientName1} radarData={radarData1}/>
             <IngredientMoleculesCard ingredientName={ingredientName1} radarData={radarData1}/>
             <IngredientFlavorsCard ingredientName={ingredientName2} radarData={radarData2}/>

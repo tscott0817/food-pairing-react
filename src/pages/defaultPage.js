@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import IngredientThumbnail from "../components/cards/ingredientThumbnail";
-import IngredientPage from "./ingredientPage";
+import IngredientCard from "../components/cards/ingredientCard";
 
 
 const DefaultPage = ({ setSelectedIngredientRef, handlePageChange }) => {
@@ -19,21 +19,6 @@ const DefaultPage = ({ setSelectedIngredientRef, handlePageChange }) => {
             })
             .catch(error => console.error('Error fetching data:', error));
     }, []);
-
-    // const handleThumbnailClick = ingredient => {
-    //     setSelectedIngredient(ingredient);
-    // };
-
-    // const handleThumbnailClick = (ingredient) => {
-    //     setSelectedIngredientRef({ current: ingredient });
-    // };
-
-    // const handleThumbnailClick = (ingredient) => {
-    //     setSelectedIngredientRef((prev) => {
-    //         // Use a function to ensure the correct previous value
-    //         return { current: ingredient };
-    //     });
-    // };
 
     const handleThumbnailClick = (ingredient) => {
         setSelectedIngredientRef({ current: ingredient });
@@ -64,9 +49,6 @@ const DefaultPage = ({ setSelectedIngredientRef, handlePageChange }) => {
                 onChange={handleSearchInputChange}
                 style = {{margin: '1%'}}
             />
-            {/*{selectedIngredient ? (*/}
-            {/*    <IngredientPage ingredient={selectedIngredient} />*/}
-            {/*) : (*/}
                 <div style={{ backgroundColor: '#ff9cf0', width: '100%', display: 'flex', flexWrap: 'wrap' }}>
                     {filteredFlavors.map(flavor => (
                         <div
@@ -78,7 +60,6 @@ const DefaultPage = ({ setSelectedIngredientRef, handlePageChange }) => {
                         </div>
                     ))}
                 </div>
-            {/*)}*/}
             {selectedIngredient && (
                 <button onClick={handleGoBack}>Go Back to Ingredient List</button>
             )}

@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import './css/IngredientPage.css';
 import {useIngredientContext} from "../stateManager/IngredientContext";
 
 
-const IngredientPage = ({ingredient}) => {
+const IngredientCard = ({ingredient}) => {
     const [ingredientData, setIngredientData] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
     const {selectedIngredients, selectIngredient, unselectIngredient} = useIngredientContext();
@@ -12,8 +11,8 @@ const IngredientPage = ({ingredient}) => {
         if (ingredient) {
             fetchIngredientData();
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ingredient]); // Include ingredient in the dependency array
+
+    }, [ingredient]);
 
     const handleSelect = (ingredient) => {
         selectIngredient(ingredient);
@@ -47,48 +46,47 @@ const IngredientPage = ({ingredient}) => {
             setErrorMessage('Error fetching data');
         }
     };
-
     return (
         <div>
             {errorMessage && <p>{errorMessage}</p>}
             {ingredientData && (
-                <div className="ingredient-container">
-                    <div className="top-left-section">
-                        <div className="alias">{ingredientData.alias}</div>
-                        <div className="scientific-name">Category: {ingredientData.scientificName}</div>
+                <div style={{
+                    maxWidth: '600px',
+                    margin: '0 auto',
+                    padding: '20px',
+                    border: '1px solid #ccc',
+                    borderRadius: '8px',
+                    backgroundColor: '#61dafb'
+                }}>
+                    <div className="top-left-section" style={{display: 'flex', flexDirection: 'column'}}>
+                        <div className="alias" style={{
+                            fontWeight: 'bold',
+                            fontSize: '1.5em',
+                            marginBottom: '10px'
+                        }}>{ingredientData.alias}</div>
+                        <div className="scientific-name"
+                             style={{fontSize: '0.8em', color: '#555'}}>Category: {ingredientData.scientificName}</div>
                     </div>
 
-                    <hr className="separator"/>
+                    <hr className="separator" style={{margin: '20px 0', border: 'none', borderTop: '1px solid #ccc'}}/>
 
-                    <div className="property-section">
-                        <div className="property">
-                            <span className="property-label">Category:</span> {ingredientData.category}
+                    <div className="property-section" style={{marginTop: '20px'}}>
+                        <div className="property"><span
+                            className="property-label">Category:</span> {ingredientData.category}</div>
+                        <div className="property"><span
+                            className="property-label">Entity ID:</span> {ingredientData.entityID}</div>
+                        <div className="property"><span className="property-label">Index:</span> {ingredientData.index}
                         </div>
-
-                        <div className="property">
-                            <span className="property-label">Entity ID:</span> {ingredientData.entityID}
-                        </div>
-
-                        <div className="property">
-                            <span className="property-label">Index:</span> {ingredientData.index}
-                        </div>
-
-                        <div className="property">
-                            <span className="property-label">Molecules:</span> {ingredientData.molecules}
-                        </div>
-
-                        <div className="property">
-                            <span className="property-label">Synonyms:</span> {ingredientData.synonyms}
-                        </div>
+                        <div className="property"><span
+                            className="property-label">Molecules:</span> {ingredientData.molecules}</div>
+                        <div className="property"><span
+                            className="property-label">Synonyms:</span> {ingredientData.synonyms}</div>
                     </div>
                 </div>
             )}
-            {/*/!* Back button *!/*/}
-            {/*<button onClick={handleGoBack}>Go Back to Ingredient List</button>*/}
-            {/* Add to Comparison button */}
             <button onClick={handleAddToComparison}>Add to Comparison</button>
         </div>
     );
 };
 
-export default IngredientPage;
+export default IngredientCard;

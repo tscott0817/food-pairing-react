@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from "react";
 import SharedMoleculesFlavorsCard from "../components/cards/sharedMoleculesFlavorsCard";
-import IngredientPage from "./ingredientPage";
+import IngredientCard from "../components/cards/ingredientCard";
 import IngredientFlavorsCard from "../components/cards/ingredientFlavorsCard";
 import IngredientMoleculesCard from "../components/cards/ingredientMoleculesCard";
 import PieCompare from "../components/charts/pieCompare";
+import IngredientCombinedCard from "../components/cards/ingredientCombinedCard";
 
 const CompareIngredientsGlobal = ({ingredient1, ingredient2}) => {
     const [sharedMolecules, setSharedMolecules] = useState([]);
@@ -57,12 +58,13 @@ const CompareIngredientsGlobal = ({ingredient1, ingredient2}) => {
             {/*    <label>Ingredient 2: {ingredient2.alias} </label>*/}
             {/*</div>*/}
 
+            < IngredientCombinedCard ingredient1={ingredient1} ingredient2={ingredient2}/>
             <SharedMoleculesFlavorsCard sharedMolecules={sharedMolecules} radarData={radarData}/>
             {/*<IngredientsCard item1Data={item1Data} item2Data={item2Data}/>*/}
-            <IngredientPage ingredient={ingredient1}/>
+            {/*<IngredientCard ingredient={ingredient1}/>*/}
             <IngredientFlavorsCard ingredientName={ingredientName1} radarData={radarData1}/>
             <IngredientMoleculesCard ingredientName={ingredientName1} radarData={radarData1}/>
-            <IngredientPage ingredient={ingredient2}/>
+            {/*<IngredientCard ingredient={ingredient2}/>*/}
             <IngredientFlavorsCard ingredientName={ingredientName2} radarData={radarData2}/>
             <IngredientMoleculesCard ingredientName={ingredientName2} radarData={radarData2}/>
             <PieCompare item1Data={ingredient1} item2Data={ingredient2} sharedMolecules={sharedMolecules}/>

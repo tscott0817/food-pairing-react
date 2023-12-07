@@ -5,8 +5,8 @@ import CompareIngredients from './pages/compareIngredients';
 import CompareIngredientsGlobal from "./pages/compareIngredientsGlobal";
 import SearchByCategory from "./pages/searchByCategory";
 import MouseTracker from './components/mouseTracker';
+import IngredientCard from "./components/cards/ingredientCard";
 import IngredientPage from "./pages/ingredientPage";
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import DefaultPage from "./pages/defaultPage";
 import {useIngredientContext} from "./stateManager/IngredientContext";
 
