@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import './css/IngredientPage.css';
+import {useIngredientContext} from "../stateManager/IngredientContext";
+
 
 const IngredientPage = ({ingredient}) => {
     const [ingredientData, setIngredientData] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
+    const {selectedIngredients, selectIngredient, unselectIngredient} = useIngredientContext();
 
-    // Moved the conditional check to useEffect
     useEffect(() => {
         if (ingredient) {
             fetchIngredientData();
@@ -13,10 +15,20 @@ const IngredientPage = ({ingredient}) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ingredient]); // Include ingredient in the dependency array
 
-    // const handleGoBack = () => {
-    //     // Reset the selectedIngredient state to go back to the list of ingredients
-    //     setIngredientData(null);
-    // };
+    const handleSelect = (ingredient) => {
+        selectIngredient(ingredient);
+    };
+
+    const handleUnselect = (ingredient) => {
+        unselectIngredient(ingredient);
+    };
+
+    const handleAddToComparison = () => {
+        // Check if the ingredient is not already in the selectedIngredients array
+        if (!selectedIngredients.includes(ingredient)) {
+            selectIngredient(ingredient);
+        }
+    };
 
     const fetchIngredientData = async () => {
         const entity_id = ingredient.entityID;
@@ -73,6 +85,8 @@ const IngredientPage = ({ingredient}) => {
             )}
             {/*/!* Back button *!/*/}
             {/*<button onClick={handleGoBack}>Go Back to Ingredient List</button>*/}
+            {/* Add to Comparison button */}
+            <button onClick={handleAddToComparison}>Add to Comparison</button>
         </div>
     );
 };

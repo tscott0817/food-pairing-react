@@ -3,7 +3,7 @@ import IngredientThumbnail from "../components/cards/ingredientThumbnail";
 import IngredientPage from "./ingredientPage";
 
 
-const DefaultPage = () => {
+const DefaultPage = ({ setSelectedIngredientRef, handlePageChange }) => {
     const [flavors, setFlavors] = useState([]);
     const [selectedIngredient, setSelectedIngredient] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
@@ -20,8 +20,25 @@ const DefaultPage = () => {
             .catch(error => console.error('Error fetching data:', error));
     }, []);
 
-    const handleThumbnailClick = ingredient => {
-        setSelectedIngredient(ingredient);
+    // const handleThumbnailClick = ingredient => {
+    //     setSelectedIngredient(ingredient);
+    // };
+
+    // const handleThumbnailClick = (ingredient) => {
+    //     setSelectedIngredientRef({ current: ingredient });
+    // };
+
+    // const handleThumbnailClick = (ingredient) => {
+    //     setSelectedIngredientRef((prev) => {
+    //         // Use a function to ensure the correct previous value
+    //         return { current: ingredient };
+    //     });
+    // };
+
+    const handleThumbnailClick = (ingredient) => {
+        setSelectedIngredientRef({ current: ingredient });
+        // Change the currentPage after setting the selected ingredient
+        handlePageChange('ingredientPage');
     };
 
     const handleGoBack = () => {
@@ -45,10 +62,11 @@ const DefaultPage = () => {
                 placeholder="Search for ingredients..."
                 value={searchQuery}
                 onChange={handleSearchInputChange}
+                style = {{margin: '1%'}}
             />
-            {selectedIngredient ? (
-                <IngredientPage ingredient={selectedIngredient} />
-            ) : (
+            {/*{selectedIngredient ? (*/}
+            {/*    <IngredientPage ingredient={selectedIngredient} />*/}
+            {/*) : (*/}
                 <div style={{ backgroundColor: '#ff9cf0', width: '100%', display: 'flex', flexWrap: 'wrap' }}>
                     {filteredFlavors.map(flavor => (
                         <div
@@ -60,7 +78,7 @@ const DefaultPage = () => {
                         </div>
                     ))}
                 </div>
-            )}
+            {/*)}*/}
             {selectedIngredient && (
                 <button onClick={handleGoBack}>Go Back to Ingredient List</button>
             )}
