@@ -58,8 +58,10 @@ const IngredientCard = ({ingredient}) => {
                     padding: '20px',
                     margin: '0 auto',
                     marginTop: '15vh',
-                    border: '1px solid #ccc',
                     borderRadius: '8px',
+                    border: '1px solid #000',
+                    boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
+                    boxSizing: 'border-box',
                     backgroundColor: randomTempColor
                 }}>
                     <div className="top-left-section" style={{display: 'flex', flexDirection: 'column'}}>

@@ -5,6 +5,7 @@ import IngredientFlavorsCard from "../components/cards/ingredientFlavorsCard";
 import IngredientMoleculesCard from "../components/cards/ingredientMoleculesCard";
 import PieCompare from "../components/charts/pieCompare";
 import IngredientCombinedCard from "../components/cards/ingredientCombinedCard";
+import ResultsCard from "../components/cards/resultsCard";
 import {windowColor, pageColor, pageSectionColor, sectionItemColor, mainAppColor} from "../colors";
 
 const CompareIngredientsGlobal = ({ingredient1, ingredient2}) => {
@@ -49,16 +50,11 @@ const CompareIngredientsGlobal = ({ingredient1, ingredient2}) => {
             backgroundColor: pageColor,
             maxWidth: '90vw',
             margin: '0 auto',
-            padding: '20px'
+            padding: '20px',
+            paddingTop: '60px'
         }}>
-            {/*<div>*/}
-            {/*    <label>Ingredient 1: {ingredient1.alias} </label>*/}
-            {/*</div>*/}
-            {/*<div>*/}
-            {/*    <label>Ingredient 2: {ingredient2.alias} </label>*/}
-            {/*</div>*/}
-
             <IngredientCombinedCard ingredient1={ingredient1} ingredient2={ingredient2}/>
+            <ResultsCard ingredient1={ingredient1} ingredient2={ingredient2}/>
             <SharedMoleculesFlavorsCard sharedMolecules={sharedMolecules} radarData={radarData}/>
             <IngredientFlavorsCard ingredientName={ingredientName1} radarData={radarData1}/>
             <IngredientMoleculesCard ingredientName={ingredientName1} radarData={radarData1}/>

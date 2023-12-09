@@ -1,12 +1,10 @@
 import React, {useEffect, useState} from "react";
 import IngredientThumbnail from "../components/cards/ingredientThumbnail";
-import {mainAppColor, pageColor, randomTempColor} from "../colors";
+import {mainAppColor, pageColor, pageSectionColor, randomTempColor, sectionItemColor} from "../colors";
 
 
-const DefaultPage = ({setSelectedIngredientRef, handlePageChange, handleDisplayIngredient}) => {
+const DefaultPage = ({setSelectedIngredientRef, handleDisplayIngredient, searchQuery}) => {
     const [flavors, setFlavors] = useState([]);
-    const [selectedIngredient, setSelectedIngredient] = useState(null);
-    const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
         fetch('http://localhost:5000/api/flavordb')
@@ -22,16 +20,7 @@ const DefaultPage = ({setSelectedIngredientRef, handlePageChange, handleDisplayI
 
     const handleThumbnailClick = (ingredient) => {
         setSelectedIngredientRef({current: ingredient});
-        // handlePageChange('ingredientPage');
         handleDisplayIngredient(true);
-    };
-
-    const handleGoBack = () => {
-        setSelectedIngredient(null);
-    };
-
-    const handleSearchInputChange = event => {
-        setSearchQuery(event.target.value);
     };
 
     const filteredFlavors = flavors.filter(flavor =>
@@ -39,41 +28,26 @@ const DefaultPage = ({setSelectedIngredientRef, handlePageChange, handleDisplayI
     );
 
     return (
-        <div style={{backgroundColor: pageColor}}>
-            <div style={{
-                backgroundColor: randomTempColor,
-                width: '100%',
-                height: '60px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                position: 'fixed',
-                zIndex: 1
-            }}>
-                <input
-                    type="text"
-                    placeholder="Search for ingredients..."
-                    value={searchQuery}
-                    onChange={handleSearchInputChange}
-                    style={{width: '40%', minWidth: '400px', height: '80%', marginRight: '200px'}}
-                />
-            </div>
-            {/*<div style={{backgroundColor: '#ff9cf0', width: '100%', display: 'flex', flexWrap: 'wrap'}}>*/}
-            <div style={{width: '100%', display: 'flex', flexWrap: 'wrap'}}>
+        <div style={{backgroundColor: pageColor, minWidth: '800px'}}>
+            <div style={{width: '100%', height: '100%', display: 'flex', flexWrap: 'wrap', padding: '1%', backgroundColor: pageSectionColor}}>
                 {filteredFlavors.map(flavor => (
                     <div
                         key={flavor.index}
-                        // style={{flex: '0 0 auto', margin: '5px', cursor: 'pointer', width: '20%', height: '20%'}}
-                        style={{flex: '0 0 auto', margin: '5px', cursor: 'pointer', width: '200px', height: '200px'}}
+                        style={{
+                            flex: '1 0 23%', // flex-grow: 1 to allow items to grow, 0 flex-shrink, 23% flex-basis
+                            margin: '1%',
+                            cursor: 'pointer',
+                            minWidth: '250px',
+                            height: '40vh',
+                            minHeight: '275px',
+                            // backgroundColor: sectionItemColor,
+                        }}
                         onClick={() => handleThumbnailClick(flavor)}
                     >
                         <IngredientThumbnail ingredient={flavor}/>
                     </div>
                 ))}
             </div>
-            {/*{selectedIngredient && (*/}
-            {/*    <button onClick={handleGoBack}>Go Back to Ingredient List</button>*/}
-            {/*)}*/}
         </div>
     );
 };

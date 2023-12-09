@@ -6,7 +6,14 @@ import SearchByCategory from "./pages/searchByCategory";
 import IngredientPage from "./pages/ingredientPage";
 import DefaultPage from "./pages/defaultPage";
 import {useIngredientContext} from "./stateManager/IngredientContext";
-import {mainAppColor} from "./colors";
+import {
+    ingredientBackgroundColor,
+    mainAppColor,
+    navBarColor,
+    pageSectionColor,
+    randomTempColor,
+    randomTempColor2
+} from "./colors";
 import './animations.css';
 
 
@@ -16,6 +23,7 @@ function App() {
     const [selectedIngredientRef, setSelectedIngredientRef] = useState(null);  // Pretending this is like a 'fake' pointer
     const {selectedIngredients, unselectIngredient} = useIngredientContext();
     const [displayIngredient, setDisplayIngredient] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
 
 
     // TODO: Apparently callback better? Not sure why
@@ -41,25 +49,34 @@ function App() {
         }
     };
 
+    const handleSearchInputChange = event => {
+        setSearchQuery(event.target.value);
+    };
+
     return (
         <div key={key} className="App" style={{display: 'flex', flexDirection: 'column'}}>
-            <div className="navigation-bar" style={{
-                padding: '1%',
-                backgroundColor: '#f0f0f0',
+            <div style={{
+                backgroundColor: navBarColor,
                 width: '100%',
                 height: '60px',
                 display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
                 position: 'fixed',
-                justifyContent: 'space-around',
-                zIndex: 2
+                zIndex: 1,
+                boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
+                // border: '1px solid #000',
+                // boxSizing: 'border-box',
             }}>
-                <button onClick={() => handlePageChange('defaultPage')}>Default Page</button>
-                {/*<button onClick={() => handlePageChange('compareIngredients')}>Compare Ingredients</button>*/}
-                {/*<button onClick={() => handlePageChange('searchByName')}>Search By Name</button>*/}
-                <button onClick={() => handlePageChange('searchByCategory')}>Search By Category</button>
-                {/*<button onClick={() => handlePageChange('ingredientPage')}>Ingredient Page</button>*/}
+                {/*<button onClick={() => handlePageChange('defaultPage')}>Default Page</button>*/}
+                <input
+                    type="text"
+                    placeholder="Search for ingredients..."
+                    value={searchQuery}
+                    onChange={handleSearchInputChange}
+                    style={{width: '40%', minWidth: '400px', height: '80%'}}
+                />
             </div>
-
             <div className="main-layout"
                  style={{display: 'flex', flexGrow: 1, marginTop: '60px', position: 'relative', top: '3%',}}>
                 <div className="left-column" style={{
@@ -68,7 +85,9 @@ function App() {
                     padding: '1%',
                     width: '225px',
                     height: '50vh',
-                    backgroundColor: '#e0e0e0',
+                    backgroundColor: pageSectionColor,
+                    border: '1px solid #000',
+                    boxSizing: 'border-box',
                     overflowY: 'auto'
                 }}>
                     {selectedIngredients.length > 0 && (
@@ -126,11 +145,30 @@ function App() {
                 <div className="main-content" style={{flex: '1', marginLeft: '225px'}}>
                     {currentPage === 'defaultPage' && <DefaultPage setSelectedIngredientRef={setSelectedIngredientRef}
                                                                    handlePageChange={handlePageChange}
-                                                                   handleDisplayIngredient={handleDisplayIngredient}/>}
-                    {currentPage === 'compareIngredientsGlobal' &&
-                        <CompareIngredientsGlobal ingredient1={selectedIngredients[0]}
-                                                  ingredient2={selectedIngredients[1]}/>}
-                    {/*{currentPage === 'ingredientPage' && <IngredientPage ingredient={selectedIngredientRef.current}/>}*/}
+                                                                   handleDisplayIngredient={handleDisplayIngredient}
+                                                                   searchQuery={searchQuery}/>}
+                    {currentPage === 'compareIngredientsGlobal' && (
+                        <div>
+                            <div style={{
+                                backgroundColor: randomTempColor2,
+                                height: '40px',
+                                width: '100%',
+                                position: 'fixed',
+                                display: 'flex',
+                                alignItems: 'center',
+                                zIndex: 1,
+                                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.5)'
+                            }}>
+                                <button onClick={() => handlePageChange('defaultPage')} style={{marginLeft: '8px'}}>
+                                    Go Back
+                                </button>
+                            </div>
+                            <CompareIngredientsGlobal
+                                ingredient1={selectedIngredients[0]}
+                                ingredient2={selectedIngredients[1]}
+                            />
+                        </div>
+                    )}
                 </div>
                 {displayIngredient && (
                     <div style={{
@@ -139,14 +177,15 @@ function App() {
                         left: 0,
                         width: '100%',
                         height: '100%',
-                        backgroundColor: 'rgba(55, 55, 55, 0.9)',
-                        zIndex: 2,
+                        backgroundColor: ingredientBackgroundColor,
+                        // zIndex: 2,
                         // overflow: 'hidden'
                     }}>
+                        <IngredientPage ingredient={selectedIngredientRef.current}/>
+                        {/*<div style={{zIndex: 3}}>*/}
                         <div>
                             <button onClick={() => setDisplayIngredient(false)}>Go Back</button>
                         </div>
-                        <IngredientPage ingredient={selectedIngredientRef.current}/>
                     </div>
                 )}
             </div>

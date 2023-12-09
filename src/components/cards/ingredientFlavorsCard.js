@@ -3,7 +3,7 @@ import {ResponsiveRadar} from "@nivo/radar";
 import {windowColor, pageColor, pageSectionColor, sectionItemColor, mainAppColor} from "../../colors";
 
 
-const IngredientFlavorsCard = ({ ingredientName, radarData }) => {
+const IngredientFlavorsCard = ({ingredientName, radarData}) => {
 
     if (radarData === null) {
         return <div>No radar data available.</div>;
@@ -20,29 +20,67 @@ const IngredientFlavorsCard = ({ ingredientName, radarData }) => {
     });
 
     return (
-        <div style={{ display: 'flex', backgroundColor: pageSectionColor, borderRadius: '8px', padding: '1%' }}>
-            <div style={{ fontFamily: 'Roboto, sans-serif', backgroundColor: sectionItemColor, minWidth: '25vw', width: '50%', height: '50vh', borderRadius: '8px', margin: '1%', overflow: 'auto', fontSize: '1em' }}>
-                <h2 style={{ borderBottom: '1px solid #232b2b', paddingBottom: '0.5em', marginLeft: '5%', width: '90%' }}>{ingredientName} Flavor Profile Details</h2>
+        <div style={{
+            display: 'flex',
+            backgroundColor: pageSectionColor,
+            borderRadius: '8px',
+            padding: '1%',
+            border: '1px solid #000',
+            boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
+            boxSizing: 'border-box',
+            marginTop: '1%',
+            marginBottom: '1%'
+        }}>
+            <div style={{
+                fontFamily: 'Roboto, sans-serif',
+                backgroundColor: sectionItemColor,
+                minWidth: '25vw',
+                width: '50%',
+                height: '50vh',
+                borderRadius: '8px',
+                margin: '1%',
+                overflow: 'auto',
+                fontSize: '1em',
+                border: '1px solid #000',
+                boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
+                boxSizing: 'border-box',
+            }}>
+                <h2 style={{
+                    borderBottom: '1px solid #232b2b',
+                    paddingBottom: '0.5em',
+                    marginLeft: '5%',
+                    width: '90%'
+                }}>{ingredientName} Flavor Profile Details</h2>
                 {radarData.molecules.length > 0 ? (
-                sortedFlavorCounts.map((key, index) => (
-                <div key={index}>
-                <p>{key}: {flavorCounts[key]}</p>
+                    sortedFlavorCounts.map((key, index) => (
+                        <div key={index}>
+                            <p>{key}: {flavorCounts[key]}</p>
+                        </div>
+                    ))
+                ) : (
+                    <p>No Molecules, that doesn't seem right!</p>
+                )}
             </div>
-        ))
-      ) : (
-        <p>No Molecules, that doesn't seem right!</p>
-      )}
-    </div>
-            <div style={{ minWidth: '25vw', width: '50%', height: '50vh', backgroundColor: sectionItemColor, margin: '1%', borderRadius: '8px' }}>
+            <div style={{
+                minWidth: '25vw',
+                width: '50%',
+                height: '50vh',
+                backgroundColor: sectionItemColor,
+                margin: '1%',
+                border: '1px solid #000',
+                borderRadius: '8px',
+                boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
+                boxSizing: 'border-box',
+            }}>
                 <ResponsiveRadar
                     data={radarChartData}
                     keys={['count']}
                     indexBy="taste"
-                    margin={{ top: 70, right: 80, bottom: 40, left: 80 }}
-                    borderColor={{ from: 'color' }}
+                    margin={{top: 70, right: 80, bottom: 40, left: 80}}
+                    borderColor={{from: 'color'}}
                     gridLabelOffset={36}
                     dotSize={10}
-                    dotColor={{ theme: 'background' }}
+                    dotColor={{theme: 'background'}}
                     dotBorderWidth={2}
                     colors={['#FF5733', '#33FF57', '#5733FF', '#33B8FF']}
                     blendMode="multiply"

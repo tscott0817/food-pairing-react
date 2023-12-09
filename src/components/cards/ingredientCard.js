@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {pageSectionColor, sectionItemColor} from "../../colors";
 
 const IngredientCard = ({ingredient}) => {
     const [ingredientData, setIngredientData] = useState(null);
@@ -39,7 +40,7 @@ const IngredientCard = ({ingredient}) => {
                     padding: '20px',
                     border: '1px solid #ccc',
                     borderRadius: '8px',
-                    backgroundColor: '#61dafb'
+                    backgroundColor: sectionItemColor
                 }}>
                     <div className="top-left-section" style={{display: 'flex', flexDirection: 'column'}}>
                         <div className="alias" style={{fontWeight: 'bold', fontSize: '1.5em', marginBottom: '10px'}}>

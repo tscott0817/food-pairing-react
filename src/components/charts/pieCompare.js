@@ -1,5 +1,6 @@
 import {ResponsivePie} from "@nivo/pie";
 import React, {useState} from "react";
+import {pageSectionColor, sectionItemColor} from "../../colors";
 
 
 function PieCompare({item1Data, item2Data, sharedMolecules}) {
@@ -66,9 +67,29 @@ function PieCompare({item1Data, item2Data, sharedMolecules}) {
         : [];
 
     return (
-        <div style={{ display: 'flex', backgroundColor: '#f2f2f2', padding: '1%', borderRadius: '8px' }}>
+        <div style={{
+            display: 'flex',
+            backgroundColor: pageSectionColor,
+            padding: '1%',
+            borderRadius: '8px',
+            border: '1px solid #000',
+            boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
+            boxSizing: 'border-box',
+            marginTop: '1%',
+            marginBottom: '1%'
+        }}>
             {/*<div style={{flex: 1, height: 400, marginRight: '20px'}}>*/}
-            <div style={{ backgroundColor: 'green', minWidth: '25vw', width: '50%', height: '50vh', margin: '1%', borderRadius: '8px'}}>
+            <div style={{
+                backgroundColor: sectionItemColor,
+                minWidth: '25vw',
+                width: '50%',
+                height: '50vh',
+                margin: '1%',
+                borderRadius: '8px',
+                border: '1px solid #000',
+                boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
+                boxSizing: 'border-box',
+            }}>
                 {/*TODO: Need these to activate when fetchData is clicked*/}
                 {/*<h2>{item1Data.alias} composition</h2>*/}
                 <ResponsivePie
@@ -111,7 +132,17 @@ function PieCompare({item1Data, item2Data, sharedMolecules}) {
                 />
             </div>
             {/*<div style={{flex: 1, height: 400}}>*/}
-            <div style={{ backgroundColor: "green", minWidth: '25vw', width: '50%', height: '50vh', margin: "1%", borderRadius: '8px'}}>
+            <div style={{
+                backgroundColor: sectionItemColor,
+                minWidth: '25vw',
+                width: '50%',
+                height: '50vh',
+                margin: "1%",
+                borderRadius: '8px',
+                border: '1px solid #000',
+                boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
+                boxSizing: 'border-box',
+            }}>
                 {/*<h2>{item2Data.alias} composition</h2>*/}
                 <ResponsivePie
                     data={dataItem2}

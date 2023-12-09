@@ -1,13 +1,14 @@
-import IngredientCard from './ingredientCard';
-import {pageSectionColor, randomTempColor2, sectionItemColor} from "../../colors";
+import React from "react";
+import {windowColor, pageColor, pageSectionColor, sectionItemColor, mainAppColor, randomTempColor2} from "../../colors";
+import IngredientCard from "./ingredientCard";
 
 
-const IngredientCombinedCard = ({ingredient1, ingredient2}) => {
+const ResultsCard = ({ingredient1, ingredient2}) => {
     return (
         <div style={{
             display: 'flex',
-            backgroundColor: pageSectionColor,
             borderRadius: '8px',
+            marginTop: '1%',
             padding: '1%',
             justifyContent: 'space-between',
             border: '1px solid #000',
@@ -26,25 +27,7 @@ const IngredientCombinedCard = ({ingredient1, ingredient2}) => {
                 boxSizing: 'border-box',
                 boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
             }}>
-                {/* Place IngredientCard component here */}
-                <IngredientCard ingredient={ingredient1}/>
-            </div>
-            <div style={{
-                fontFamily: 'Arial, sans-serif',
-                backgroundColor: sectionItemColor,
-                width: '4%',
-                borderRadius: '8px',
-                margin: '1%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '1.5em',
-                fontWeight: 'bold',
-                color: 'white',
-                border: '1px solid #000',
-                boxSizing: 'border-box',
-                boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
-            }}>VS
+                <h2>Matching result here</h2>
             </div>
             <div style={{
                 fontFamily: 'Roboto, sans-serif',
@@ -58,12 +41,10 @@ const IngredientCombinedCard = ({ingredient1, ingredient2}) => {
                 boxSizing: 'border-box',
                 boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
             }}>
-                <IngredientCard ingredient={ingredient2}/>
+                <h2>Parameters used in result here</h2>
             </div>
         </div>
     );
+}
 
-};
-
-
-export default IngredientCombinedCard;
+export default ResultsCard;

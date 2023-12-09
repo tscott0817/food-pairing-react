@@ -16,7 +16,17 @@ const IngredientMoleculesCard = ({ingredientName, radarData}) => {
     }
 
     return (
-        <div style={{display: 'flex', backgroundColor: pageSectionColor, borderRadius: '8px', padding: '1%'}}>
+        <div style={{
+            display: 'flex',
+            backgroundColor: pageSectionColor,
+            borderRadius: '8px',
+            padding: '1%',
+            border: '1px solid #000',
+            boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
+            boxSizing: 'border-box',
+            marginTop: '1%',
+            marginBottom: '1%'
+        }}>
             <div style={{
                 fontFamily: 'Roboto, sans-serif',
                 backgroundColor: sectionItemColor,
@@ -26,7 +36,10 @@ const IngredientMoleculesCard = ({ingredientName, radarData}) => {
                 borderRadius: '8px',
                 margin: '1%',
                 overflow: 'auto',
-                fontSize: '1em'
+                fontSize: '1em',
+                border: '1px solid #000',
+                boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
+                boxSizing: 'border-box'
             }}>
                 <h2 style={{
                     borderBottom: '1px solid #232b2b',
@@ -53,7 +66,10 @@ const IngredientMoleculesCard = ({ingredientName, radarData}) => {
                 borderRadius: '8px',
                 margin: '1%',
                 overflow: 'auto',
-                fontSize: '1em'
+                fontSize: '1em',
+                border: '1px solid #000',
+                boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
+                boxSizing: 'border-box'
             }}>
                 {selectedMolecule ? (
                     <div>
