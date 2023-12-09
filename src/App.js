@@ -178,11 +178,9 @@ function App() {
                         width: '100%',
                         height: '100%',
                         backgroundColor: ingredientBackgroundColor,
-                        // zIndex: 2,
-                        // overflow: 'hidden'
+                        zIndex: 1  // TODO: Not sure if I want 0 or 1
                     }}>
                         <IngredientPage ingredient={selectedIngredientRef.current}/>
-                        {/*<div style={{zIndex: 3}}>*/}
                         <div>
                             <button onClick={() => setDisplayIngredient(false)}>Go Back</button>
                         </div>
