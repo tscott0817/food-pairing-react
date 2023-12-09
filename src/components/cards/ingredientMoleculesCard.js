@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import {windowColor, pageColor, pageSectionColor, sectionItemColor, mainAppColor} from "../../colors";
 
 
 // TODO: All of this data will be filled in by pubchem at: https://pubchem.ncbi.nlm.nih.gov/
@@ -15,10 +16,10 @@ const IngredientMoleculesCard = ({ingredientName, radarData}) => {
     }
 
     return (
-        <div style={{display: 'flex', backgroundColor: '#fcba03', borderRadius: '8px', padding: '1%'}}>
+        <div style={{display: 'flex', backgroundColor: pageSectionColor, borderRadius: '8px', padding: '1%'}}>
             <div style={{
                 fontFamily: 'Roboto, sans-serif',
-                backgroundColor: 'green',
+                backgroundColor: sectionItemColor,
                 minWidth: '25vw',
                 width: '50%',
                 height: '50vh',
@@ -45,7 +46,7 @@ const IngredientMoleculesCard = ({ingredientName, radarData}) => {
             </div>
             <div style={{
                 fontFamily: 'Roboto, sans-serif',
-                backgroundColor: 'green',
+                backgroundColor: sectionItemColor,
                 minWidth: '25vw',
                 width: '50%',
                 height: '50vh',

@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {windowColor, pageColor, pageSectionColor, sectionItemColor, mainAppColor} from "../../colors";
 
 const IngredientThumbnail = ({ingredient}) => {
 
@@ -7,12 +8,13 @@ const IngredientThumbnail = ({ingredient}) => {
     return (
         <div
             style={{
-                width: '100px',
-                height: '100px',
-                backgroundColor: color,
-                marginTop: '10%',
+                width: '100%',
+                height: '100%',
+                // backgroundColor: color,
+                backgroundColor: 'pink',
+                marginTop: '60px',
                 marginBottom: '10%',
-                marginLeft: '50%',
+                marginLeft: '15%',
                 marginRight: '10%',
                 display: 'flex',
                 justifyContent: 'center',

@@ -59,7 +59,9 @@ function CompareIngredients() {
     };
 
     return (
-        <div style={{fontFamily: 'Roboto, sans-serif', backgroundColor: '#e62981', maxWidth: '90vw', margin: '0 auto', padding: '20px'}}>
+        // <div style={{fontFamily: 'Roboto, sans-serif', backgroundColor: '#e62981', maxWidth: '90vw', margin: '0 auto', padding: '20px'}}>
+        <div style={{fontFamily: 'Roboto, sans-serif', maxWidth: '90vw', margin: '0 auto', padding: '20px'}}>
+
             <div>
                 <label>Ingredient or ID 1: </label>
                 <input type="text" value={item1Id} onChange={(e) => setItem1Id(e.target.value)}/>

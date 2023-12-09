@@ -5,7 +5,7 @@ const IngredientCombinedCard = ({ingredient1, ingredient2}) => {
     return (
         <div style={{
             display: 'flex',
-            backgroundColor: '#fcba03',
+            // backgroundColor: '#fcba03',
             borderRadius: '8px',
             padding: '1%',
             justifyContent: 'space-between'
@@ -24,7 +24,7 @@ const IngredientCombinedCard = ({ingredient1, ingredient2}) => {
             </div>
             <div style={{
                 fontFamily: 'Arial, sans-serif',
-                backgroundColor: '#fcba03',
+                // backgroundColor: '#fcba03',
                 width: '4%',
                 borderRadius: '8px',
                 margin: '1%',

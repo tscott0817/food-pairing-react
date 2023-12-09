@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useIngredientContext} from "../stateManager/IngredientContext";
+import {randomTempColor} from "../colors";
+
 
 
 const IngredientCard = ({ingredient}) => {
@@ -45,47 +47,42 @@ const IngredientCard = ({ingredient}) => {
             setErrorMessage('Error fetching data');
         }
     };
+
     return (
         <div>
             {errorMessage && <p>{errorMessage}</p>}
             {ingredientData && (
                 <div style={{
-                    maxWidth: '600px',
-                    margin: '0 auto',
+                    width: '50%',
+                    height: '100%',
                     padding: '20px',
+                    margin: '0 auto',
+                    marginTop: '15vh',
                     border: '1px solid #ccc',
                     borderRadius: '8px',
-                    backgroundColor: '#61dafb'
+                    backgroundColor: randomTempColor
                 }}>
                     <div className="top-left-section" style={{display: 'flex', flexDirection: 'column'}}>
-                        <div className="alias" style={{
-                            fontWeight: 'bold',
-                            fontSize: '1.5em',
-                            marginBottom: '10px'
-                        }}>{ingredientData.alias}</div>
-                        <div className="scientific-name"
-                             style={{fontSize: '0.8em', color: '#555'}}>Category: {ingredientData.scientificName}</div>
-                    </div>
-
-                    <hr className="separator" style={{margin: '20px 0', border: 'none', borderTop: '1px solid #ccc'}}/>
-
-                    <div className="property-section" style={{marginTop: '20px'}}>
-                        <div className="property"><span
-                            className="property-label">Category:</span> {ingredientData.category}</div>
-                        <div className="property"><span
-                            className="property-label">Entity ID:</span> {ingredientData.entityID}</div>
-                        <div className="property"><span className="property-label">Index:</span> {ingredientData.index}
+                        <div className="alias" style={{fontWeight: 'bold', fontSize: '1.5em', marginBottom: '10px'}}>
+                            {ingredientData.alias.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
                         </div>
-                        <div className="property"><span
-                            className="property-label">Molecules:</span> {ingredientData.molecules}</div>
-                        <div className="property"><span
-                            className="property-label">Synonyms:</span> {ingredientData.synonyms}</div>
+                        <div className="scientific-name" style={{fontSize: '0.8em', color: '#555'}}>
+                            Scientific Name: {ingredientData.scientificName}
+                        </div>
+                        <div className="category" style={{fontSize: '0.8em', color: '#555'}}>
+                            Category: {ingredientData.category}
+                        </div>
+                        <div className="molecules" style={{fontSize: '0.8em', color: '#555'}}>
+                            Molecules: {ingredientData.molecules}
+                        </div>
                     </div>
+                    <hr className="separator" style={{margin: '20px 0', border: 'none', borderTop: '1px solid #ccc'}}/>
                 </div>
             )}
             <button onClick={handleAddToComparison}>Add to Comparison</button>
         </div>
     );
+
 };
 
 export default IngredientCard;

@@ -1,5 +1,6 @@
 import React from "react";
 import {ResponsiveRadar} from "@nivo/radar";
+import {windowColor, pageColor, pageSectionColor, sectionItemColor, mainAppColor} from "../../colors";
 
 
 const SharedMoleculesFlavorsCard = ({ radarData }) => {
@@ -17,8 +18,8 @@ const SharedMoleculesFlavorsCard = ({ radarData }) => {
     });
 
     return (
-        <div style={{ display: 'flex', backgroundColor: '#fcba03', borderRadius: '8px', padding: "1%" }}>
-            <div style={{ fontFamily: 'Roboto, sans-serif', backgroundColor: "green", minWidth: '25vw', width: '50%', height: '50vh', borderRadius: '8px', margin: "1%", overflow: 'auto', fontSize: '1em' }}>
+        <div style={{ display: 'flex', backgroundColor: pageSectionColor, borderRadius: '8px', padding: "1%" }}>
+            <div style={{ fontFamily: 'Roboto, sans-serif', backgroundColor: sectionItemColor, minWidth: '25vw', width: '50%', height: '50vh', borderRadius: '8px', margin: "1%", overflow: 'auto', fontSize: '1em' }}>
                 <h2 style={{ borderBottom: '1px solid #232b2b', paddingBottom: '0.5em', marginLeft: "5%", width: "90%"}}>Shared Molecule Details</h2>
                 {radarData.length > 0 ? (
                   radarData.map((detail, index) => (
@@ -30,7 +31,8 @@ const SharedMoleculesFlavorsCard = ({ radarData }) => {
                   <p>No Common Molecules</p>
                 )}
             </div>
-            <div style={{ minWidth: '25vw', width: '50%', height: '50vh', backgroundColor: 'green', margin: "1%", borderRadius: '8px'}}>
+            {/*<div style={{ minWidth: '25vw', width: '50%', height: '50vh', backgroundColor: 'green', margin: "1%", borderRadius: '8px'}}>*/}
+            <div style={{ minWidth: '25vw', width: '50%', height: '50vh', margin: "1%", borderRadius: '8px'}}>
                 <ResponsiveRadar
                   data={radarChartData}
                   keys={['count']}

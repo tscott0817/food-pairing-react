@@ -1,5 +1,6 @@
 import React from "react";
 import {ResponsiveRadar} from "@nivo/radar";
+import {windowColor, pageColor, pageSectionColor, sectionItemColor, mainAppColor} from "../../colors";
 
 
 const IngredientFlavorsCard = ({ ingredientName, radarData }) => {
@@ -19,8 +20,8 @@ const IngredientFlavorsCard = ({ ingredientName, radarData }) => {
     });
 
     return (
-        <div style={{ display: 'flex', backgroundColor: '#3c81c2', borderRadius: '8px', padding: '1%' }}>
-            <div style={{ fontFamily: 'Roboto, sans-serif', backgroundColor: 'green', minWidth: '25vw', width: '50%', height: '50vh', borderRadius: '8px', margin: '1%', overflow: 'auto', fontSize: '1em' }}>
+        <div style={{ display: 'flex', backgroundColor: pageSectionColor, borderRadius: '8px', padding: '1%' }}>
+            <div style={{ fontFamily: 'Roboto, sans-serif', backgroundColor: sectionItemColor, minWidth: '25vw', width: '50%', height: '50vh', borderRadius: '8px', margin: '1%', overflow: 'auto', fontSize: '1em' }}>
                 <h2 style={{ borderBottom: '1px solid #232b2b', paddingBottom: '0.5em', marginLeft: '5%', width: '90%' }}>{ingredientName} Flavor Profile Details</h2>
                 {radarData.molecules.length > 0 ? (
                 sortedFlavorCounts.map((key, index) => (
@@ -32,7 +33,7 @@ const IngredientFlavorsCard = ({ ingredientName, radarData }) => {
         <p>No Molecules, that doesn't seem right!</p>
       )}
     </div>
-            <div style={{ minWidth: '25vw', width: '50%', height: '50vh', backgroundColor: 'green', margin: '1%', borderRadius: '8px' }}>
+            <div style={{ minWidth: '25vw', width: '50%', height: '50vh', backgroundColor: sectionItemColor, margin: '1%', borderRadius: '8px' }}>
                 <ResponsiveRadar
                     data={radarChartData}
                     keys={['count']}
