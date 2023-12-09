@@ -17,7 +17,8 @@ export const windowColor = '#f4f3f2';
 export const mainAppColor = '#f4f3f2';
 
 export const pageColor = '#f4f3f2';
-export const pageSectionColor = '#f4f3f2';
+export const pageSectionColor = 'yellow';
 export const sectionItemColor = 'green';
 export const randomTempColor = '#f4f3f2';
+export const leftColumnColor = '#f4f3f2';
 // export const randomTempColor2 = '#f4f3f2';

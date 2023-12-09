@@ -38,9 +38,9 @@ const IngredientCard = ({ingredient}) => {
                     width: '100%',
                     height: '100%',
                     padding: '20px',
-                    border: '1px solid #ccc',
+                    // border: '1px solid #ccc',
                     borderRadius: '8px',
-                    backgroundColor: sectionItemColor
+                    // backgroundColor: sectionItemColor
                 }}>
                     <div className="top-left-section" style={{display: 'flex', flexDirection: 'column'}}>
                         <div className="alias" style={{fontWeight: 'bold', fontSize: '1.5em', marginBottom: '10px'}}>

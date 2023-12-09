@@ -48,10 +48,10 @@ const CompareIngredientsGlobal = ({ingredient1, ingredient2}) => {
         <div style={{
             fontFamily: 'Roboto, sans-serif',
             backgroundColor: pageColor,
-            maxWidth: '90vw',
+            // maxWidth: '90vw',
             margin: '0 auto',
             padding: '20px',
-            paddingTop: '60px'
+            paddingTop: '60px',
         }}>
             <IngredientCombinedCard ingredient1={ingredient1} ingredient2={ingredient2}/>
             <ResultsCard ingredient1={ingredient1} ingredient2={ingredient2}/>
