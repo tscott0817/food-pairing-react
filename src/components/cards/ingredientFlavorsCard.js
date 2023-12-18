@@ -19,6 +19,8 @@ const IngredientFlavorsCard = ({ingredientName, radarData}) => {
         };
     });
 
+    const totalFlavorProfiles = Object.values(flavorCounts).reduce((total, count) => total + count, 0);
+
     return (
         <div style={{
             display: 'flex',
@@ -52,11 +54,14 @@ const IngredientFlavorsCard = ({ingredientName, radarData}) => {
                     width: '90%'
                 }}>{ingredientName} Flavor Profile Details</h2>
                 {radarData.molecules.length > 0 ? (
-                    sortedFlavorCounts.map((key, index) => (
-                        <div key={index}>
-                            <p>{key}: {flavorCounts[key]}</p>
-                        </div>
-                    ))
+                    <>
+                        <p>Total Flavor Profiles: {totalFlavorProfiles}</p>
+                        {sortedFlavorCounts.map((key, index) => (
+                            <div key={index}>
+                                <p>{key}: {flavorCounts[key]}</p>
+                            </div>
+                        ))}
+                    </>
                 ) : (
                     <p>No Molecules, that doesn't seem right!</p>
                 )}
@@ -67,6 +72,7 @@ const IngredientFlavorsCard = ({ingredientName, radarData}) => {
                 height: '50vh',
                 backgroundColor: sectionItemColor,
                 margin: '1%',
+                padding: '1%',
                 border: '1px solid #000',
                 borderRadius: '8px',
                 boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',

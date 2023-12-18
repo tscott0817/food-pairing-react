@@ -6,15 +6,11 @@ import IngredientCard from "./ingredientCard";
 
 
 const ResultsCard = ({ingredient1, ingredient2}) => {
-
-    const pieChartData = [
-        {id: 'Category 1', label: 'Category 1', value: 25, color: '#FF5733'},
-        {id: 'Category 2', label: 'Category 2', value: 30, color: '#33FF57'},
-        {id: 'Category 3', label: 'Category 3', value: 20, color: '#5733FF'},
-        {id: 'Category 4', label: 'Category 4', value: 25, color: '#33B8FF'},
-    ];
-
     // TODO: The value should be the percentage of the match
+    //  - Maybe show 3 parameters that go into overall rating
+    //  - Flavor profile commonality, molecule commonality,
+    //      -- weighted ratio of those molecules/flavor profiles per total molecules/flavor profiles of each
+    //      -- idk if that makes sense
     const radialBarChartData = [
         {id: 'Match', value: 75},
     ];

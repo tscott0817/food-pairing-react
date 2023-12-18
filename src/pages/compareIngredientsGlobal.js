@@ -15,6 +15,7 @@ const CompareIngredientsGlobal = ({ingredient1, ingredient2}) => {
     const [radarData2, setRadarData2] = useState(null);
     const [ingredientName1, setIngredientName1] = useState('');
     const [ingredientName2, setIngredientName2] = useState('');
+    const [fadeIn, setFadeIn] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -38,6 +39,9 @@ const CompareIngredientsGlobal = ({ingredient1, ingredient2}) => {
             const singleRadarResponse2 = await fetch(`http://localhost:5000/api/flavordb/ingredient-molecules/${entityID2}`);
             const singleRadarData2 = await singleRadarResponse2.json();
             setRadarData2(singleRadarData2);
+
+            // Trigger fade-in effect
+            setFadeIn(true);
         };
 
         fetchData(); // Call fetchData when the component mounts
@@ -48,19 +52,33 @@ const CompareIngredientsGlobal = ({ingredient1, ingredient2}) => {
         <div style={{
             fontFamily: 'Roboto, sans-serif',
             backgroundColor: pageColor,
-            // maxWidth: '90vw',
+            width: '100%',
+            height: '100%',
             margin: '0 auto',
             padding: '20px',
-            paddingTop: '60px',
+            paddingTop: '20px',
+            borderRadius: '8px',
+            overflowY: 'auto',
+            opacity: fadeIn ? 1 : 0,
+            transition: 'opacity .5s ease-in-out',
+
         }}>
-            <IngredientCombinedCard ingredient1={ingredient1} ingredient2={ingredient2}/>
-            <ResultsCard ingredient1={ingredient1} ingredient2={ingredient2}/>
-            <SharedMoleculesFlavorsCard sharedMolecules={sharedMolecules} radarData={radarData}/>
-            <IngredientFlavorsCard ingredientName={ingredientName1} radarData={radarData1}/>
-            <IngredientMoleculesCard ingredientName={ingredientName1} radarData={radarData1}/>
-            <IngredientFlavorsCard ingredientName={ingredientName2} radarData={radarData2}/>
-            <IngredientMoleculesCard ingredientName={ingredientName2} radarData={radarData2}/>
-            <PieCompare item1Data={ingredient1} item2Data={ingredient2} sharedMolecules={sharedMolecules}/>
+            <div style={{
+                opacity: fadeIn ? 1 : 0,
+                transition: 'opacity .5s ease-in-out',
+                width: '100%',
+                height: '100%',
+
+            }}>
+                <IngredientCombinedCard ingredient1={ingredient1} ingredient2={ingredient2}/>
+                <ResultsCard ingredient1={ingredient1} ingredient2={ingredient2}/>
+                <SharedMoleculesFlavorsCard moleculeData={radarData}/>
+                <IngredientFlavorsCard ingredientName={ingredientName1} radarData={radarData1}/>
+                <IngredientMoleculesCard ingredientName={ingredientName1} radarData={radarData1}/>
+                <IngredientFlavorsCard ingredientName={ingredientName2} radarData={radarData2}/>
+                <IngredientMoleculesCard ingredientName={ingredientName2} radarData={radarData2}/>
+                <PieCompare item1Data={ingredient1} item2Data={ingredient2} sharedMolecules={sharedMolecules}/>
+            </div>
         </div>
     );
 }

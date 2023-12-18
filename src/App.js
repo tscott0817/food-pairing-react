@@ -1,36 +1,32 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect, useCallback, useRef} from 'react';
 import './App.css';
-import CompareIngredients from './pages/compareIngredients';
 import CompareIngredientsGlobal from "./pages/compareIngredientsGlobal";
-import SearchByCategory from "./pages/searchByCategory";
 import IngredientPage from "./pages/ingredientPage";
 import DefaultPage from "./pages/defaultPage";
 import {useIngredientContext} from "./stateManager/IngredientContext";
 import MouseTracker from "./components/mouseTracker";
 import {
-    ingredientBackgroundColor,
-    mainAppColor,
-    navBarColor,
-    pageSectionColor,
-    randomTempColor,
-    randomTempColor2,
-    leftColumnColor, sectionItemColor
+    ingredientBackgroundColor, mainAppColor, navBarColor, pageSectionColor, randomTempColor,
+    randomTempColor2, leftColumnColor, sectionItemColor
 } from "./colors";
 import './animations.css';
-
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faBars} from '@fortawesome/free-solid-svg-icons';
+import {FaBars} from 'react-icons/fa';
+import {FaSearch} from 'react-icons/fa';
 
 function App() {
     const [currentPage, setCurrentPage] = useState('defaultPage');
     const [key, setKey] = useState(0); // Add a key state
-    const [selectedIngredientRef, setSelectedIngredientRef] = useState(null);  // Pretending this is like a 'fake' pointer
+    const [selectedIngredientRef, setSelectedIngredientRef] = useState(null);  // Pretending this is like a pointer
     const {selectedIngredients, unselectIngredient} = useIngredientContext();
     const [displayIngredient, setDisplayIngredient] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [leftColumnVisible, setLeftColumnVisible] = useState(true);
-    const [comparisonVisible, setComparisonVisible] = useState(false);
+    const [comparisonVisible, setComparisonVisible] = useState(false);  // TODO: For if I want to show the comparison as overlay instead of new page
+    const comparisonContainerRef = useRef(null);
 
-
-    // TODO: Apparently callback better? Not sure why
+    // TODO: Apparently callback better? Not sure why, see if need to implement for other functions
     const handleDisplayIngredient = useCallback((displayIngredient) => {
         setDisplayIngredient(displayIngredient);
     }, [setDisplayIngredient]);
@@ -41,9 +37,12 @@ function App() {
         handleDisplayIngredient(false);
     }, [setKey, setCurrentPage, handleDisplayIngredient]);
 
+    // TODO: Decide whether to use overlay or page change
     const handleShowSelectedIngredients = () => {
         console.log('Selected Ingredients:', selectedIngredients);
-        handlePageChange('compareIngredientsGlobal');
+        // handlePageChange('compareIngredientsGlobal');
+        // handleToggleLeftColumn();
+        setComparisonVisible(true);
     };
 
     const handleRemoveIngredient = (index) => {
@@ -60,6 +59,10 @@ function App() {
     const handleToggleLeftColumn = () => {
         setLeftColumnVisible((prevVisible) => !prevVisible);
     };
+
+    const handleToggleComparison = () => {
+        setComparisonVisible((prevVisible) => !prevVisible);
+    }
 
     useEffect(() => {
         const handleResize = () => {
@@ -80,9 +83,51 @@ function App() {
         };
     }, []); // Empty dependency array ensures that the effect runs only on mount and unmount
 
-    const handleToggleComparison = () => {
-        setComparisonVisible((prevVisible) => !prevVisible);
-    }
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (
+                comparisonContainerRef.current &&
+                !comparisonContainerRef.current.contains(event.target)
+            ) {
+                // Clicked outside the CompareIngredientsGlobal container
+                setComparisonVisible(false);
+            }
+        };
+
+        // Add the event listener to handle clicks outside the container
+        document.addEventListener('click', handleClickOutside);
+
+        // Remove the event listener on component unmount
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, [setComparisonVisible]);
+
+    useEffect(() => {
+        // Conditionally set the body overflow based on the comparisonVisible state
+        if (comparisonVisible || displayIngredient) {
+            disableScroll();
+        } else {
+            enableScroll();
+        }
+
+        // Cleanup function to revert changes on component unmount
+        return () => {
+            enableScroll();
+        };
+    }, [comparisonVisible, displayIngredient]);
+
+
+    const disableScroll = () => {
+        document.documentElement.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden';
+    };
+
+    const enableScroll = () => {
+        document.documentElement.style.overflow = 'auto';
+        document.body.style.overflow = 'auto';
+    };
+
 
     return (
         <div key={key} className="App" style={{display: 'flex', flexDirection: 'column'}}>
@@ -100,18 +145,46 @@ function App() {
                 // boxSizing: 'border-box',
             }}>
                 {/*<button onClick={() => handlePageChange('defaultPage')}>Default Page</button>*/}
-                <div style={{backgroundColor: sectionItemColor, marginRight: '20%', position: 'fixed', left: 10,}}>
+                <div style={{backgroundColor: sectionItemColor, marginRight: '20%', position: 'fixed', left: 100,}}>
                     <button onClick={handleToggleLeftColumn} style={{height: '100%', width: '100%'}}>
-                        {leftColumnVisible ? 'Hide Left Column' : 'Show Left Column'}
+                        {/*<FontAwesomeIcon icon={faBars} />*/}
+                        <FaBars/>
+                        {/*{leftColumnVisible ? 'Hide Left Column' : 'Show Left Column'}*/}
                     </button>
                 </div>
-                <div style={{backgroundColor: sectionItemColor, height: '80%', width: '40%', minWidth: '400px'}}>
+                <div
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        borderRadius: '25px',
+                        // border: '2px solid #ccc',
+                        overflow: 'hidden',
+                        // backgroundColor: sectionItemColor,
+                        height: '80%',
+                        width: '40%',
+                        minWidth: '400px',
+                        padding: '8px', // Adjust padding as needed
+                        boxShadow: '0 0 8px rgba(0, 0, 0, 0.2)',
+                    }}
+                >
                     <input
                         type="text"
                         placeholder="Search for ingredients..."
                         value={searchQuery}
                         onChange={handleSearchInputChange}
-                        style={{width: '100%', height: '100%'}}
+                        style={{
+                            border: 'none',
+                            outline: 'none',
+                            padding: '8px', // Adjust padding as needed
+                            flex: '1',
+                            borderRadius: '25px',
+                        }}
+                    />
+                    <FaSearch
+                        style={{
+                            marginLeft: '10px',
+                            color: '#555',
+                        }}
                     />
                 </div>
             </div>
@@ -195,28 +268,29 @@ function App() {
                                                                    handlePageChange={handlePageChange}
                                                                    handleDisplayIngredient={handleDisplayIngredient}
                                                                    searchQuery={searchQuery}/>}
-                    {currentPage === 'compareIngredientsGlobal' && (
-                        <div>
-                            <div style={{
-                                backgroundColor: randomTempColor2,
-                                height: '40px',
-                                width: '100%',
-                                position: 'fixed',
-                                display: 'flex',
-                                alignItems: 'center',
-                                zIndex: 1,
-                                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.5)'
-                            }}>
-                                <button onClick={() => handlePageChange('defaultPage')} style={{marginLeft: '8px'}}>
-                                    Go Back
-                                </button>
-                            </div>
-                            <CompareIngredientsGlobal
-                                ingredient1={selectedIngredients[0]}
-                                ingredient2={selectedIngredients[1]}
-                            />
-                        </div>
-                    )}
+                    {/*{currentPage === 'compareIngredientsGlobal' && (*/}
+                    {/*    <div>*/}
+                    {/*        <div style={{*/}
+                    {/*            backgroundColor: randomTempColor2,*/}
+                    {/*            height: '40px',*/}
+                    {/*            width: '100%',*/}
+                    {/*            position: 'fixed',*/}
+                    {/*            display: 'flex',*/}
+                    {/*            alignItems: 'center',*/}
+                    {/*            zIndex: 1,*/}
+                    {/*            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.5)',*/}
+
+                    {/*        }}>*/}
+                    {/*            <button onClick={() => handlePageChange('defaultPage')} style={{marginLeft: '8px'}}>*/}
+                    {/*                Go Back*/}
+                    {/*            </button>*/}
+                    {/*        </div>*/}
+                    {/*        <CompareIngredientsGlobal*/}
+                    {/*            ingredient1={selectedIngredients[0]}*/}
+                    {/*            ingredient2={selectedIngredients[1]}*/}
+                    {/*        />*/}
+                    {/*    </div>*/}
+                    {/*)}*/}
                 </div>
                 {displayIngredient && (
                     <div style={{
@@ -234,36 +308,37 @@ function App() {
                         </div>
                     </div>
                 )}
-                {/*{comparisonVisible && (*/}
-                {/*    <div style={{*/}
-                {/*        position: 'fixed',*/}
-                {/*        top: 0,*/}
-                {/*        left: 0,*/}
-                {/*        width: '80%',*/}
-                {/*        // height: '100%',*/}
-                {/*        backgroundColor: ingredientBackgroundColor,*/}
-                {/*        zIndex: 1*/}
-                {/*    }}>*/}
-                {/*        <div style={{*/}
-                {/*            backgroundColor: randomTempColor2,*/}
-                {/*            height: '40px',*/}
-                {/*            width: '80%',*/}
-                {/*            position: 'fixed',*/}
-                {/*            display: 'flex',*/}
-                {/*            alignItems: 'center',*/}
-                {/*            zIndex: 1,*/}
-                {/*            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.5)'*/}
-                {/*        }}>*/}
-                {/*            <button onClick={() => setComparisonVisible(false)} style={{marginLeft: '8px'}}>*/}
-                {/*                Go Back*/}
-                {/*            </button>*/}
-                {/*        </div>*/}
-                {/*        <CompareIngredientsGlobal*/}
-                {/*            ingredient1={selectedIngredients[0]}*/}
-                {/*            ingredient2={selectedIngredients[1]}*/}
-                {/*        />*/}
-                {/*    </div>*/}
-                {/*)}*/}
+
+                {/*TODO: FOR IF I WANT TO SHOW THE COMPARISON AS OVERLAY*/}
+                {comparisonVisible && (
+                    <div style={{
+                        position: 'fixed',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: '100%',
+                        height: '100%',
+                        backgroundColor: ingredientBackgroundColor,
+                        zIndex: 1,
+                        // overflowY: 'auto', // Add this line to enable scrolling
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}
+                         onClick={() => setComparisonVisible(false)}  // Close comparison when clicking on the background overlay
+                    >
+                        <div style={{width: '75%', height: '90%'}}>
+                            <CompareIngredientsGlobal
+                                ingredient1={selectedIngredients[0]}
+                                ingredient2={selectedIngredients[1]}
+                            />
+                        </div>
+                        {/*<button onClick={() => setComparisonVisible(false)} style={{marginLeft: '8px'}}>*/}
+                        {/*    Go Back*/}
+                        {/*</button>*/}
+                    </div>
+                )}
             </div>
         </div>
     );

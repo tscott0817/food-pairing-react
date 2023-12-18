@@ -1,4 +1,6 @@
 # for basic data science
+import ast
+
 import pandas as pd
 import numpy as np
 # import matplotlib.pyplot as plt
@@ -30,19 +32,36 @@ def main():
     # Convert the 'flavorProfile' column in molecules_df from string to set
     molecules_df['flavorProfile'] = molecules_df['flavorProfile'].apply(eval)  # Important
 
+    entityID1 = 139
+    entityID2 = 165
+
+    common_profiles = compare_flavor_profiles(entityID1, entityID2, flavordb_df, molecules_df)
+    # if common_profiles is not None:
+    #     print(f"Molecules and Their Associated Flavor Profiles for Entity ID {entityID1} and Entity ID {entityID2}:")
+    #     print(common_profiles.to_string(index=False))
+    # else:
+    #     print(f"No data found for Entity ID {entityID1} or {entityID2}")
+
+    # if common_profiles is not None:
+    #     count_and_print_flavor_profiles(common_profiles)
+    # else:
+    #     print(f"No data found for Entity ID {entityID1} or {entityID2}")
+
+
     # Get the entityID-flavorProfile mapping
-    entity_flavor_mapping = get_entity_flavor_mapping(flavordb_df, molecules_df)
+    # entity_flavor_mapping = get_entity_flavor_mapping(flavordb_df, molecules_df)
+    # print(entity_flavor_mapping)
 
     # Find the two items with the most shared flavor profiles
-    top_two_shared_items = find_top_two_shared_items(entity_flavor_mapping)
+    # top_two_shared_items = find_top_two_shared_items(entity_flavor_mapping)
 
     # Print the results
-    print("\n")
-    print(f"The two items with the most shared flavor profiles are:")
-    for item, shared_profiles in top_two_shared_items.items():
-        print(f"Item {item}: {len(shared_profiles)} shared flavor profiles")
-        print(f"All shared flavor profiles: {len(shared_profiles)}")
-        print("\n")
+    # print("\n")
+    # print(f"The two items with the most shared flavor profiles are:")
+    # for item, shared_profiles in top_two_shared_items.items():
+    #     print(f"Item {item}: {len(shared_profiles)} shared flavor profiles")
+    #     print(f"All shared flavor profiles: {len(shared_profiles)}")
+    #     print("\n")
 
     # get_molecules(flavordb_df, molecules_df)
 
@@ -96,9 +115,9 @@ def main():
 
     # TODO: This
     #  - Best pair: (162, 234) | 188 molecules in common
-    # print("\n")
-    # best_pair = find_best_molecule_pair(flavordb_df, molecules_df)
-    # print(f"Best pair: {best_pair[0]} | {best_pair[1]} molecules in common")
+    print("\n")
+    best_pair = find_best_molecule_pair(flavordb_df, molecules_df)
+    print(f"Best pair: {best_pair[0]} | {best_pair[1]} molecules in common")
 
 
 
@@ -205,53 +224,53 @@ def match_score_penalization(common_elements, total_molecules1, total_molecules2
 
 
 # Function to get common names for a given entity_id
-def get_common_names(entity_id, flavordb_df, molecules_df):
-    row = flavordb_df[flavordb_df['entityID'] == entity_id]
+# def get_common_names(entity_id, flavordb_df, molecules_df):
+#     row = flavordb_df[flavordb_df['entityID'] == entity_id]
+#
+#     if not row.empty:
+#         pubchem_ids = row['molecules'].values[0]
+#         common_names = molecules_df[molecules_df['pubchemID'].isin(pubchem_ids)]['commonName'].tolist()
+#
+#         return common_names
+#     else:
+#         return None
 
-    if not row.empty:
-        pubchem_ids = row['molecules'].values[0]
-        common_names = molecules_df[molecules_df['pubchemID'].isin(pubchem_ids)]['commonName'].tolist()
 
-        return common_names
-    else:
-        return None
-
-
-def compare():
-    # Load the CSV files
-    flavordb_df = pd.read_csv('flavordb.csv')
-    molecules_df = pd.read_csv('molecules.csv')
-
-    # Convert the 'molecules' column in flavordb_df from string to set
-    flavordb_df['molecules'] = flavordb_df['molecules'].apply(eval)
-
-    # Function to get common names for a given entity_id
-    def get_common_names(entity_id):
-        row = flavordb_df[flavordb_df['entityID'] == entity_id]
-
-        if not row.empty:
-            pubchem_ids = row['molecules'].values[0]
-            common_names = molecules_df[molecules_df['pubchemID'].isin(pubchem_ids)]['commonName'].tolist()
-
-            return common_names
-        else:
-            return None
-
-    # Input entity_id1
-    entity_id1_input = int(input("Enter first entity_id: "))
-    common_names1 = set(get_common_names(entity_id1_input))
-
-    # Input entity_id2
-    entity_id2_input = int(input("Enter second entity_id: "))
-    common_names2 = set(get_common_names(entity_id2_input))
-
-    # Find common elements between the two sets
-    common_elements = common_names1.intersection(common_names2)
-
-    # Print the results
-    print(f"Common Names for Entity ID {entity_id1_input}: {common_names1}")
-    print(f"Common Names for Entity ID {entity_id2_input}: {common_names2}")
-    print(f"Common Elements: {common_elements}")
+# def compare():
+#     # Load the CSV files
+#     flavordb_df = pd.read_csv('flavordb.csv')
+#     molecules_df = pd.read_csv('molecules.csv')
+#
+#     # Convert the 'molecules' column in flavordb_df from string to set
+#     flavordb_df['molecules'] = flavordb_df['molecules'].apply(eval)
+#
+#     # Function to get common names for a given entity_id
+#     def get_common_names(entity_id):
+#         row = flavordb_df[flavordb_df['entityID'] == entity_id]
+#
+#         if not row.empty:
+#             pubchem_ids = row['molecules'].values[0]
+#             common_names = molecules_df[molecules_df['pubchemID'].isin(pubchem_ids)]['commonName'].tolist()
+#
+#             return common_names
+#         else:
+#             return None
+#
+#     # Input entity_id1
+#     entity_id1_input = int(input("Enter first entity_id: "))
+#     common_names1 = set(get_common_names(entity_id1_input))
+#
+#     # Input entity_id2
+#     entity_id2_input = int(input("Enter second entity_id: "))
+#     common_names2 = set(get_common_names(entity_id2_input))
+#
+#     # Find common elements between the two sets
+#     common_elements = common_names1.intersection(common_names2)
+#
+#     # Print the results
+#     print(f"Common Names for Entity ID {entity_id1_input}: {common_names1}")
+#     print(f"Common Names for Entity ID {entity_id2_input}: {common_names2}")
+#     print(f"Common Elements: {common_elements}")
 
 
 
@@ -262,7 +281,7 @@ def get_entity_flavor_mapping(flavordb_df, molecules_df):
         pubchem_id = row['pubchemID']
         flavor_profile = row['flavorProfile']
 
-        entities = flavordb_df[flavordb_df['molecules'].applay(lambda x: pubchem_id in x)]['entityID'].tolist()
+        entities = flavordb_df[flavordb_df['molecules'].apply(lambda x: pubchem_id in x)]['entityID'].tolist()
 
         for entity in entities:
             if entity not in entity_flavor_mapping:
@@ -271,6 +290,7 @@ def get_entity_flavor_mapping(flavordb_df, molecules_df):
             entity_flavor_mapping[entity].update(flavor_profile)
 
     return entity_flavor_mapping
+
 
 def find_top_two_shared_items(entity_flavor_mapping):
     max_shared_count = 0
@@ -288,6 +308,43 @@ def find_top_two_shared_items(entity_flavor_mapping):
                                     entity_id2: entity_flavor_mapping[entity_id2]}
 
     return top_two_shared_items
+
+
+def get_common_profiles(entity_id, flavordb_df, molecules_df):
+    row = flavordb_df[flavordb_df['entityID'] == entity_id]
+
+    if not row.empty:
+        pubchem_ids = row['molecules'].values[0]
+        common_profiles_df = molecules_df[molecules_df['pubchemID'].isin(pubchem_ids)][['commonName', 'flavorProfile']]
+        return common_profiles_df
+    else:
+        return None
+
+def compare_flavor_profiles(entity_id1, entity_id2, flavordb_df, molecules_df):
+    # Get flavor profiles for the first entity
+    profiles1 = get_common_profiles(entity_id1, flavordb_df, molecules_df)
+
+    # Get flavor profiles for the second entity
+    profiles2 = get_common_profiles(entity_id2, flavordb_df, molecules_df)
+
+    # Find common flavor profiles between the two entities
+    common_profiles = profiles1.merge(profiles2, on='commonName', how='inner', suffixes=('_1', '_2'))
+
+    return common_profiles
+
+# Get total shared flavor profiles
+def count_and_print_flavor_profiles(common_profiles):
+    # Concatenate flavor profiles from both columns
+    all_flavor_profiles = common_profiles[['flavorProfile_1', 'flavorProfile_2']].stack().dropna()
+
+    # Count occurrences of each flavor profile
+    flavor_profile_counts = all_flavor_profiles.value_counts()
+
+    # Print flavor profiles in descending order
+    print("Flavor Profiles and Their Counts:")
+    for flavor_profile, count in flavor_profile_counts.items():
+        print(f"{flavor_profile}: {count}")
+
 
 if __name__ == '__main__':
     main()
