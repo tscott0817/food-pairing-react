@@ -13,10 +13,7 @@ const IngredientFlavorsCard = ({ingredientName, radarData}) => {
     const sortedFlavorCounts = Object.keys(flavorCounts).sort((a, b) => flavorCounts[b] - flavorCounts[a]);
     const radarChartData = Object.keys(flavorCounts).map((key) => {
         const [flavor, commonName] = key.split('_');
-        return {
-            taste: flavor,
-            count: flavorCounts[key],
-        };
+        return {taste: flavor, count: flavorCounts[key]};
     });
 
     const totalFlavorProfiles = Object.values(flavorCounts).reduce((total, count) => total + count, 0);
@@ -52,7 +49,7 @@ const IngredientFlavorsCard = ({ingredientName, radarData}) => {
                     paddingBottom: '0.5em',
                     marginLeft: '5%',
                     width: '90%'
-                }}>{ingredientName} Flavor Profile Details</h2>
+                }}>All Flavor Profiles: {ingredientName && ingredientName.charAt(0).toUpperCase() + ingredientName.slice(1)}</h2>
                 {radarData.molecules.length > 0 ? (
                     <>
                         <p>Total Flavor Profiles: {totalFlavorProfiles}</p>
@@ -118,6 +115,8 @@ const IngredientFlavorsCard = ({ingredientName, radarData}) => {
     );
 };
 
+
+// TODO: This should probably be backend function?
 const countFlavorProfiles = (molecules) => {
     const flavorCounts = {};
 

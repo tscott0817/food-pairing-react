@@ -3,7 +3,6 @@ import React from "react";
 
 function SharedMoleculesCard({ sharedMolecules }) {
     return (
-        // <div style={{ backgroundColor: '#fcba03', width: "50%", borderRadius: '8px' }}>
         <div style={{ width: "50%", borderRadius: '8px' }}>
             <h2>Shared Molecule Details</h2>
             {sharedMolecules.length > 0 ? (

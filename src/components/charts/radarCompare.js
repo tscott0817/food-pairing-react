@@ -17,28 +17,28 @@ const RadarCompare = ({ radarData }) => {
 
     return (
         <div style={{ backgroundColor: '#f2f2f2', borderRadius: '8px', paddingBottom: "1%", paddingTop: "1%", marginTop: "1%" }}>
-            {/*<h2>List of Common Data:</h2>*/}
-            {/*<ul>*/}
-            {/*    {radarData.map((item, index) => (*/}
-            {/*        <li key={index}>*/}
-            {/*            <strong>Common Name:</strong> {item.commonName}<br />*/}
-            {/*            <strong>Flavor Profile:</strong> {item.flavorProfile.join(', ')}<br />*/}
-            {/*            <strong>Index Position:</strong> {item.indexPos}<br />*/}
-            {/*            <strong>Pubchem ID:</strong> {item.pubchemID}<br />*/}
-            {/*            <hr />*/}
-            {/*        </li>*/}
-            {/*    ))}*/}
-            {/*</ul>*/}
-            {/*            <div>*/}
-            {/*<h3>Flavor Profile Counts:</h3>*/}
-            {/*    <ul>*/}
-            {/*        {Object.entries(flavorCounts).map(([flavor, count]) => (*/}
-            {/*            <li key={flavor}>*/}
-            {/*                {flavor}: {count}*/}
-            {/*            </li>*/}
-            {/*        ))}*/}
-            {/*    </ul>*/}
-            {/*</div>*/}
+            <h2>List of Common Data:</h2>
+            <ul>
+                {radarData.map((item, index) => (
+                    <li key={index}>
+                        <strong>Common Name:</strong> {item.commonName}<br />
+                        <strong>Flavor Profile:</strong> {item.flavorProfile.join(', ')}<br />
+                        <strong>Index Position:</strong> {item.indexPos}<br />
+                        <strong>Pubchem ID:</strong> {item.pubchemID}<br />
+                        <hr />
+                    </li>
+                ))}
+            </ul>
+                        <div>
+            <h3>Flavor Profile Counts:</h3>
+                <ul>
+                    {Object.entries(flavorCounts).map(([flavor, count]) => (
+                        <li key={flavor}>
+                            {flavor}: {count}
+                        </li>
+                    ))}
+                </ul>
+            </div>
             <div style={{ minWidth: '25vw', width: '50%',height: '400px', backgroundColor: 'green', marginLeft: "25%", padding: "1%"}}>
                 <ResponsiveRadar
                     data={radarChartData}
@@ -98,7 +98,5 @@ const countFlavorProfiles = (flavorProfiles) => {
 
     return flavorCounts;
 };
-
-
 
 export default RadarCompare;

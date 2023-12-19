@@ -7,7 +7,6 @@ const IngredientMoleculesCard = ({ingredientName, radarData}) => {
     const [selectedMolecule, setSelectedMolecule] = useState(null);
 
     const handleMoleculeClick = (selected) => {
-        // Update the state with the selected molecule
         setSelectedMolecule(selected);
     };
 
@@ -46,7 +45,7 @@ const IngredientMoleculesCard = ({ingredientName, radarData}) => {
                     paddingBottom: '0.5em',
                     marginLeft: '5%',
                     width: '90%'
-                }}>{ingredientName} Molecule Details</h2>
+                }}>Molecule Details: {ingredientName && ingredientName.charAt(0).toUpperCase() + ingredientName.slice(1)}</h2>
                 {radarData.molecules.length > 0 ? (
                     radarData.molecules.map((detail, index) => (
                         <div key={index} onClick={() => handleMoleculeClick(detail)} style={{cursor: 'pointer'}}>

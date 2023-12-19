@@ -3,9 +3,10 @@ import {ResponsiveRadar} from "@nivo/radar";
 import {windowColor, pageColor, pageSectionColor, sectionItemColor, mainAppColor} from "../../colors";
 
 
-
 // TODO: This is not accurately getting shared flavors (lobster / lemon each have 1 garlic; but NOT in shared list)
+//  - moleculeData does not seem to have everything.
 const SharedMoleculesFlavorsCard = ({moleculeData}) => {
+
     if (moleculeData === null) {
         return <div>No radar data available.</div>;
     }
@@ -63,7 +64,8 @@ const SharedMoleculesFlavorsCard = ({moleculeData}) => {
                     paddingBottom: '0.5em',
                     marginLeft: "5%",
                     width: "90%",
-                }}>Shared Flavor Profiles and Counts</h2>
+                }}>Flavor Profiles of Shared Molecules (Weighed Heavier)</h2>
+
             </div>
             {flavorListData.length > 0 ? (
                 flavorListData.map((profile, index) => (

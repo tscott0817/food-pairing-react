@@ -35,10 +35,12 @@ const CompareIngredientsGlobal = ({ingredient1, ingredient2}) => {
             const singleRadarResponse1 = await fetch(`http://localhost:5000/api/flavordb/ingredient-molecules/${entityID1}`);
             const singleRadarData1 = await singleRadarResponse1.json();
             setRadarData1(singleRadarData1);
+            setIngredientName1(ingredient1.alias);
 
             const singleRadarResponse2 = await fetch(`http://localhost:5000/api/flavordb/ingredient-molecules/${entityID2}`);
             const singleRadarData2 = await singleRadarResponse2.json();
             setRadarData2(singleRadarData2);
+            setIngredientName2(ingredient2.alias)
 
             // Trigger fade-in effect
             setFadeIn(true);
@@ -58,6 +60,8 @@ const CompareIngredientsGlobal = ({ingredient1, ingredient2}) => {
             padding: '20px',
             paddingTop: '20px',
             borderRadius: '8px',
+            // border: '1px solid #000',
+            // boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
             overflowY: 'auto',
             opacity: fadeIn ? 1 : 0,
             transition: 'opacity .5s ease-in-out',

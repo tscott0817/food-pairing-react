@@ -39,8 +39,8 @@ function App() {
 
     // TODO: Decide whether to use overlay or page change
     const handleShowSelectedIngredients = () => {
-        console.log('Selected Ingredients:', selectedIngredients);
-        // handlePageChange('compareIngredientsGlobal');
+        // console.log('Selected Ingredients:', selectedIngredients);
+        // handlePageChange('compareIngredientsGlobal');  // TODO: Only need if using page change instead of overlay
         // handleToggleLeftColumn();
         setComparisonVisible(true);
     };
@@ -82,26 +82,6 @@ function App() {
             window.removeEventListener('resize', handleResize);
         };
     }, []); // Empty dependency array ensures that the effect runs only on mount and unmount
-
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (
-                comparisonContainerRef.current &&
-                !comparisonContainerRef.current.contains(event.target)
-            ) {
-                // Clicked outside the CompareIngredientsGlobal container
-                setComparisonVisible(false);
-            }
-        };
-
-        // Add the event listener to handle clicks outside the container
-        document.addEventListener('click', handleClickOutside);
-
-        // Remove the event listener on component unmount
-        return () => {
-            document.removeEventListener('click', handleClickOutside);
-        };
-    }, [setComparisonVisible]);
 
     useEffect(() => {
         // Conditionally set the body overflow based on the comparisonVisible state
@@ -216,7 +196,6 @@ function App() {
                         </div>
                     )}
                     <button onClick={handleShowSelectedIngredients}>Show Selected Ingredients</button>
-                    {/*<button onClick={handleToggleComparison}>Show Selected Ingredients</button>*/}
                     <h3>Search Filters</h3>
                     <ul>
                         <li>Filter 1</li>
@@ -326,17 +305,17 @@ function App() {
                         alignItems: 'center',
                         justifyContent: 'center',
                     }}
-                         onClick={() => setComparisonVisible(false)}  // Close comparison when clicking on the background overlay
+                         // onClick={() => setComparisonVisible(false)}  // Close comparison when clicking on the background overlay
                     >
-                        <div style={{width: '75%', height: '90%'}}>
+                        <div style={{width: '75%', height: '95%'}}>
                             <CompareIngredientsGlobal
                                 ingredient1={selectedIngredients[0]}
                                 ingredient2={selectedIngredients[1]}
                             />
                         </div>
-                        {/*<button onClick={() => setComparisonVisible(false)} style={{marginLeft: '8px'}}>*/}
-                        {/*    Go Back*/}
-                        {/*</button>*/}
+                        <button onClick={() => setComparisonVisible(false)} style={{marginLeft: '8px'}}>
+                            Go Back
+                        </button>
                     </div>
                 )}
             </div>

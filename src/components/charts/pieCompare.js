@@ -13,17 +13,12 @@ function PieCompare({item1Data, item2Data, sharedMolecules}) {
 
     // TODO: This is temp, need to fix 'molcules' column in db
     const countWordsInString = (str) => {
-        // Remove curly braces and single quotes
         const cleanedStr = str.replace(/['{}]/g, '');
-
-        // Split the string into an array of words
         const wordsArray = cleanedStr.split(',');
 
-        // Count the number of words
         return wordsArray.length;
     };
 
-    // Render the chart only when both item1Data and sharedMolecules are available
     const isDataReady = item1Data && sharedMolecules.length > 0;
 
     const dataItem1 = isDataReady
@@ -46,7 +41,6 @@ function PieCompare({item1Data, item2Data, sharedMolecules}) {
         : [];
 
 
-    // Render the chart only when both item2Data and sharedMolecules are available
     const isDataReadyItem2 = item2Data && sharedMolecules.length > 0;
 
     const dataItem2 = isDataReadyItem2

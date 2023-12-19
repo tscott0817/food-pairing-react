@@ -9,13 +9,6 @@ app.config['DATABASE'] = 'data/food_data.db'
 CORS(app)  # TODO: Important, react can't access routes without this apparently
 
 
-# TODO: Not sure which to do
-# def get_db():
-#     if 'db' not in g:
-#         g.db = sqlite3.connect(app.config['DATABASE'])
-#         g.db.row_factory = sqlite3.Row
-#     return g.db
-
 def get_db():
     return sqlite3.connect(app.config['DATABASE'])
 
@@ -67,16 +60,6 @@ def get_flavor_by_id(entity_id):
     cursor.close()
     return jsonify({'data': data})
 
-
-@app.route('/api/molecules/<int:pubchem_id>', methods=['GET'])
-def get_molecule_by_id(pubchem_id):
-    db = get_db()
-    cursor = db.cursor()
-    cursor.execute("SELECT * FROM molecules WHERE pubchemID = ?", (pubchem_id,))
-    row = cursor.fetchone()
-    data = dict(zip(['index', 'pubchemID', 'commonName', 'flavorProfile'], row)) if row else None
-    cursor.close()
-    return jsonify({'data': data})
 
 
 @app.route('/api/flavordb/ingredient-molecules/<int:entity_id>', methods=['GET'])
@@ -145,6 +128,17 @@ def get_items_by_category(category):
     aliases = [row[0] for row in rows] if rows else None
     cursor.close()
     return jsonify({'aliases': aliases})
+
+
+@app.route('/api/molecules/<int:pubchem_id>', methods=['GET'])
+def get_molecule_by_id(pubchem_id):
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM molecules WHERE pubchemID = ?", (pubchem_id,))
+    row = cursor.fetchone()
+    data = dict(zip(['index', 'pubchemID', 'commonName', 'flavorProfile'], row)) if row else None
+    cursor.close()
+    return jsonify({'data': data})
 
 
 @app.route('/api/common-molecules/<int:entity_id1>/<int:entity_id2>', methods=['GET'])

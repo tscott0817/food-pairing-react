@@ -3,7 +3,7 @@ import IngredientThumbnail from "../components/cards/ingredientThumbnail";
 import {mainAppColor, pageColor, pageSectionColor, randomTempColor, sectionItemColor} from "../colors";
 
 
-const DefaultPage = ({setSelectedIngredientRef, handleDisplayIngredient, searchQuery}) => {
+const DefaultPage = ({setSelectedIngredientRef, handleDisplayIngredient, searchQuery, selectedFilters}) => {
     const [flavors, setFlavors] = useState([]);
     const containerRef = useRef(null);
 

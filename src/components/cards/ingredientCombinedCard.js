@@ -26,7 +26,6 @@ const IngredientCombinedCard = ({ingredient1, ingredient2}) => {
                 boxSizing: 'border-box',
                 boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
             }}>
-                {/* Place IngredientCard component here */}
                 <IngredientCard ingredient={ingredient1}/>
             </div>
             <div style={{
@@ -62,7 +61,6 @@ const IngredientCombinedCard = ({ingredient1, ingredient2}) => {
             </div>
         </div>
     );
-
 };
 
 
