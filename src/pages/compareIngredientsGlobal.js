@@ -78,9 +78,9 @@ const CompareIngredientsGlobal = ({ingredient1, ingredient2}) => {
                 <ResultsCard ingredient1={ingredient1} ingredient2={ingredient2}/>
                 <SharedMoleculesFlavorsCard moleculeData={radarData}/>
                 <IngredientFlavorsCard ingredientName={ingredientName1} radarData={radarData1}/>
-                <IngredientMoleculesCard ingredientName={ingredientName1} radarData={radarData1}/>
+                <IngredientMoleculesCard ingredientName={ingredientName1} moleculeData={radarData1}/>  {/*TODO: Fix naming*/}
                 <IngredientFlavorsCard ingredientName={ingredientName2} radarData={radarData2}/>
-                <IngredientMoleculesCard ingredientName={ingredientName2} radarData={radarData2}/>
+                <IngredientMoleculesCard ingredientName={ingredientName2} moleculeData={radarData2}/>
                 <PieCompare item1Data={ingredient1} item2Data={ingredient2} sharedMolecules={sharedMolecules}/>
             </div>
         </div>

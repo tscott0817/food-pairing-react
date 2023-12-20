@@ -21,4 +21,5 @@ export const pageSectionColor = '#f4f3f2';
 export const sectionItemColor = 'green';
 export const randomTempColor = '#f4f3f2';
 export const leftColumnColor = '#f4f3f2';
+export const buttonBackgroundColor = 'rgba(50, 50, 50, 0.5)';
 // export const randomTempColor2 = '#f4f3f2';

@@ -1,7 +1,7 @@
 import sqlite3
 
 import requests
-from flask import Flask, jsonify, g
+from flask import Flask, jsonify, g, send_file, redirect
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -35,9 +35,11 @@ def get_all_ingredients():
     cursor = db.cursor()
     cursor.execute("SELECT * FROM flavordb")
     rows = cursor.fetchall()
-    data = [dict(zip(['index', 'entityID', 'alias', 'synonyms', 'scientificName', 'category', 'molecules'], row)) for row in rows]
+    data = [dict(zip(['index', 'entityID', 'alias', 'synonyms', 'scientificName', 'category', 'molecules'], row)) for
+            row in rows]
     cursor.close()
     return jsonify({'data': data})
+
 
 @app.route('/api/flavordb/<alias>', methods=['GET'])
 def get_flavor_by_alias(alias):
@@ -45,7 +47,8 @@ def get_flavor_by_alias(alias):
     cursor = db.cursor()
     cursor.execute("SELECT * FROM flavordb WHERE alias = ?", (alias,))
     row = cursor.fetchone()
-    data = dict(zip(['index', 'entityID', 'alias', 'synonyms', 'scientificName', 'category', 'molecules'], row)) if row else None
+    data = dict(zip(['index', 'entityID', 'alias', 'synonyms', 'scientificName', 'category', 'molecules'],
+                    row)) if row else None
     cursor.close()
     return jsonify({'data': data})
 
@@ -56,10 +59,10 @@ def get_flavor_by_id(entity_id):
     cursor = db.cursor()
     cursor.execute("SELECT * FROM flavordb WHERE entityID = ?", (entity_id,))
     row = cursor.fetchone()
-    data = dict(zip(['index', 'entityID', 'alias', 'synonyms', 'scientificName', 'category', 'molecules'], row)) if row else None
+    data = dict(zip(['index', 'entityID', 'alias', 'synonyms', 'scientificName', 'category', 'molecules'],
+                    row)) if row else None
     cursor.close()
     return jsonify({'data': data})
-
 
 
 @app.route('/api/flavordb/ingredient-molecules/<int:entity_id>', methods=['GET'])
@@ -127,7 +130,7 @@ def get_items_by_category(category):
     rows = cursor.fetchall()
     aliases = [row[0] for row in rows] if rows else None
     cursor.close()
-    return jsonify({'aliases': aliases})
+    return jsonify({'data': aliases})
 
 
 @app.route('/api/molecules/<int:pubchem_id>', methods=['GET'])
@@ -166,7 +169,8 @@ def get_common_names_by_id(entity_id):
 
         if result:
             pubchem_ids = result[0].replace('{', '').replace('}', '').split(', ')
-            query = "SELECT commonName FROM molecules WHERE pubchemID IN ({})".format(','.join('?' for _ in pubchem_ids))
+            query = "SELECT commonName FROM molecules WHERE pubchemID IN ({})".format(
+                ','.join('?' for _ in pubchem_ids))
             cursor.execute(query, pubchem_ids)
 
             common_names = [row[0] for row in cursor.fetchall()]
@@ -203,7 +207,8 @@ def get_common_names_by_alias(alias):
 
         if result:
             pubchem_ids = result[0].replace('{', '').replace('}', '').split(', ')
-            query = "SELECT commonName FROM molecules WHERE pubchemID IN ({})".format(','.join('?' for _ in pubchem_ids))
+            query = "SELECT commonName FROM molecules WHERE pubchemID IN ({})".format(
+                ','.join('?' for _ in pubchem_ids))
             cursor.execute(query, pubchem_ids)
 
             common_names = [row[0] for row in cursor.fetchall()]
@@ -215,7 +220,6 @@ def get_common_names_by_alias(alias):
         db.close()
 
 
-
 @app.route('/api/common-data/<int:entity_id1>/<int:entity_id2>', methods=['GET'])
 def get_common_data_id_route(entity_id1, entity_id2):
     common_data = get_common_data_by_ids(entity_id1, entity_id2)
@@ -225,6 +229,7 @@ def get_common_data_id_route(entity_id1, entity_id2):
         common_data = [common_data]
 
     return jsonify({'common_data': common_data})
+
 
 def get_common_data_by_ids(entity_id1, entity_id2):
     db = get_db()
@@ -279,6 +284,61 @@ def wikipedia_proxy(pageTitle):
     except Exception as e:
         print(f'Error fetching Wikipedia data: {e}')
         return jsonify({'error': 'Internal Server Error'}), 500
+
+
+'''
+    - PUBCHEM Stuff
+'''
+
+
+@app.route('/api/get_molecule_info/<int:pubchem_id>', methods=['GET'])
+def get_molecule_info(pubchem_id):
+    try:
+        # Make a request to the PubChem PUG REST API
+        url = f'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{pubchem_id}/json'
+        response = requests.get(url)
+
+        if response.status_code == 200:
+            # Parse the response JSON and return all available information
+            result = response.json()['PC_Compounds'][0]
+            properties = result.get('props', [])
+
+            # Extract all properties from the 'props' field
+            molecule_info = {
+                'PubChemID': pubchem_id,
+                'Properties': {prop['urn']['label']: prop['value'] for prop in properties}
+            }
+
+            # Print the contents of the response for testing purposes
+            print("Molecule Info:", molecule_info)
+
+            return jsonify({'molecule_info': molecule_info})
+        else:
+            # Handle error responses
+            return jsonify({'error': f'Error retrieving data for PubChem ID {pubchem_id}'})
+
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
+
+@app.route('/api/get_molecule_image/<int:pubchem_id>', methods=['GET'])
+def get_molecule_image(pubchem_id):
+    pubchem_url = f'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{pubchem_id}/PNG'
+    return redirect(pubchem_url)
+
+
+# @app.route('/api/get_molecule_image/<int:pubchem_id>', methods=['GET'])
+# def get_molecule_image(pubchem_id):
+#     try:
+#         response = requests.get(f'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{pubchem_id}/PNG')
+#         response.raise_for_status()
+#
+#         # Set the desired file name (e.g., molecule.png)
+#         filename = f'molecule_{pubchem_id}.png'
+#
+#         return send_file(response.raw, mimetype='image/png', as_attachment=True, download_name=filename)
+#     except requests.exceptions.RequestException as e:
+#         return str(e), 500
 
 
 if __name__ == '__main__':

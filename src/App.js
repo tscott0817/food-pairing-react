@@ -7,11 +7,9 @@ import {useIngredientContext} from "./stateManager/IngredientContext";
 import MouseTracker from "./components/mouseTracker";
 import {
     ingredientBackgroundColor, mainAppColor, navBarColor, pageSectionColor, randomTempColor,
-    randomTempColor2, leftColumnColor, sectionItemColor
+    randomTempColor2, leftColumnColor, sectionItemColor, buttonBackgroundColor
 } from "./colors";
 import './animations.css';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faBars} from '@fortawesome/free-solid-svg-icons';
 import {FaBars} from 'react-icons/fa';
 import {FaSearch} from 'react-icons/fa';
 
@@ -25,6 +23,8 @@ function App() {
     const [leftColumnVisible, setLeftColumnVisible] = useState(true);
     const [comparisonVisible, setComparisonVisible] = useState(false);  // TODO: For if I want to show the comparison as overlay instead of new page
     const comparisonContainerRef = useRef(null);
+    const [selectedFilters, setSelectedFilters] = useState([]);
+    const [selectedFilter, setSelectedFilter] = useState('');
 
     // TODO: Apparently callback better? Not sure why, see if need to implement for other functions
     const handleDisplayIngredient = useCallback((displayIngredient) => {
@@ -97,6 +97,12 @@ function App() {
         };
     }, [comparisonVisible, displayIngredient]);
 
+    // New function to handle selecting a filter
+    const handleFilterSelect = (filter) => {
+        // Toggle the selected filter
+        setSelectedFilter((prevFilter) => (prevFilter === filter ? '' : filter));
+    };
+
 
     const disableScroll = () => {
         document.documentElement.style.overflow = 'hidden';
@@ -117,21 +123,25 @@ function App() {
                 height: '60px',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center',
+                justifyContent: 'space-between',  // Use space-between to push elements to the ends
                 position: 'fixed',
                 zIndex: 1,
                 boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
                 // border: '1px solid #000',
                 // boxSizing: 'border-box',
+                padding: '0 10px',  // Add padding to the ends for spacing
             }}>
-                {/*<button onClick={() => handlePageChange('defaultPage')}>Default Page</button>*/}
-                <div style={{backgroundColor: sectionItemColor, marginRight: '20%', position: 'fixed', left: 100,}}>
-                    <button onClick={handleToggleLeftColumn} style={{height: '100%', width: '100%'}}>
-                        {/*<FontAwesomeIcon icon={faBars} />*/}
-                        <FaBars/>
-                        {/*{leftColumnVisible ? 'Hide Left Column' : 'Show Left Column'}*/}
-                    </button>
-                </div>
+                <button onClick={handleToggleLeftColumn}
+                        style={{
+                            height: '30px',
+                            width: '30px',
+                            backgroundColor: buttonBackgroundColor,
+                            borderRadius: '50px',
+                            border: 'none',
+                        }}>
+                    <FaBars size={'20px'}/>
+                    {/*{leftColumnVisible ? 'Hide Left Column' : 'Show Left Column'}*/}
+                </button>
                 <div
                     style={{
                         display: 'flex',
@@ -145,6 +155,7 @@ function App() {
                         minWidth: '400px',
                         padding: '8px', // Adjust padding as needed
                         boxShadow: '0 0 8px rgba(0, 0, 0, 0.2)',
+                        marginRight: '30%',
                     }}
                 >
                     <input
@@ -244,9 +255,9 @@ function App() {
                     transition: 'margin-left 0.2s ease-in-out'
                 }}>
                     {currentPage === 'defaultPage' && <DefaultPage setSelectedIngredientRef={setSelectedIngredientRef}
-                                                                   handlePageChange={handlePageChange}
                                                                    handleDisplayIngredient={handleDisplayIngredient}
-                                                                   searchQuery={searchQuery}/>}
+                                                                   searchQuery={searchQuery}
+                                                                   selectedFilters={selectedFilters}/>}
                     {/*{currentPage === 'compareIngredientsGlobal' && (*/}
                     {/*    <div>*/}
                     {/*        <div style={{*/}
@@ -305,7 +316,7 @@ function App() {
                         alignItems: 'center',
                         justifyContent: 'center',
                     }}
-                         // onClick={() => setComparisonVisible(false)}  // Close comparison when clicking on the background overlay
+                        // onClick={() => setComparisonVisible(false)}  // Close comparison when clicking on the background overlay
                     >
                         <div style={{width: '75%', height: '95%'}}>
                             <CompareIngredientsGlobal
