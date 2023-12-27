@@ -11,6 +11,7 @@ import PieFlavorCompare from "../components/cards/pieFlavorCompare";
 import IngredientCombinedCard from "../components/cards/ingredientCombinedCard";
 import ResultsCard from "../components/cards/resultsCard";
 import {windowColor, pageColor, pageSectionColor, sectionItemColor, mainAppColor} from "../colors";
+import { FaArrowDown, FaArrowUp, FaArrowRight } from "react-icons/fa";
 
 const CollapsibleComponent = ({title, children, isCollapsed, onToggle}) => {
     const [contentHeight, setContentHeight] = useState(isCollapsed ? 0 : 'auto');
@@ -39,7 +40,8 @@ const CollapsibleComponent = ({title, children, isCollapsed, onToggle}) => {
                 onClick={toggleCollapse}
             >
                 <div>{title}</div>
-                {isCollapsed ? <span>&#x25BC;</span> : <span>&#x25B2;</span>}
+                {isCollapsed ? <FaArrowDown /> : <FaArrowRight />}
+                {/*{isCollapsed ? <span>&#x25BC;</span> : <span>&#x25B2;</span>}*/}
             </div>
             <div
                 style={{
@@ -126,7 +128,7 @@ const CompareIngredientsGlobal = ({ingredient1, ingredient2}) => {
             fontFamily: 'Roboto, sans-serif',
             backgroundColor: pageColor,
             width: '100%',
-            minWidth: '600px', // TODO: Make this a proportion of the users screen size instead of hardcoding
+            minWidth: '900px', // TODO: Make this a proportion of the users screen size instead of hardcoding
             height: '100%',
             margin: '0 auto',
             padding: '20px',
@@ -146,7 +148,7 @@ const CompareIngredientsGlobal = ({ingredient1, ingredient2}) => {
                 height: '100%',
 
             }}>
-                {/*<IngredientCombinedCard ingredient1={ingredient1} ingredient2={ingredient2}/>*/}
+                <IngredientCombinedCard ingredient1={ingredient1} ingredient2={ingredient2}/>
                 <ResultsCard ingredient1={ingredient1} ingredient2={ingredient2}/>
                 <CollapsibleComponent
                     title="Shared Molecules"

@@ -28,10 +28,11 @@ const ResultsCard = ({ingredient1, ingredient2}) => {
             marginBottom: '1%',
             width: '100%',
             height: '60%',
+            minHeight: '250px',
 
         }}>
             <div style={{
-                backgroundColor: 'yellow',
+                backgroundColor: sectionItemColor,
                 minWidth: '25vw',
                 width: '50%',
                 height: '100%',
@@ -43,12 +44,12 @@ const ResultsCard = ({ingredient1, ingredient2}) => {
                 boxSizing: 'border-box',
                 // overflow: 'hidden',
             }}>
-                <div style={{backgroundColor: 'blue', width: '100%', height: '50%', overflow: 'hidden'}}>
-                    <IngredientCard ingredient={ingredient1}/>
-                </div>
-                <div style={{backgroundColor: 'purple', width: '100%', height: '50%', overflow: 'hidden'}}>
-                    <IngredientCard ingredient={ingredient2}/>
-                </div>
+                {/*<div style={{width: '100%', height: '50%', overflow: 'hidden'}}>*/}
+                {/*    <IngredientCard ingredient={ingredient1}/>*/}
+                {/*</div>*/}
+                {/*<div style={{width: '100%', height: '50%', overflow: 'hidden'}}>*/}
+                {/*    <IngredientCard ingredient={ingredient2}/>*/}
+                {/*</div>*/}
             </div>
             <div style={{
                 backgroundColor: sectionItemColor,

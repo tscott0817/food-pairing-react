@@ -33,42 +33,70 @@ const IngredientCard = ({ingredient}) => {
         <div>
             {errorMessage && <p>{errorMessage}</p>}
             {ingredientData && (
-                <div style={{
-                    width: '100%',
-                    height: '100%',
-                    padding: '20px',
-                    borderRadius: '8px',
-                }}>
-                    <div className="top-left-section" style={{display: 'flex', flexDirection: 'column'}}>
-                        <div className="alias" style={{fontWeight: 'bold', fontSize: '1.5em', marginBottom: '10px'}}>
-                            {ingredientData.alias.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+                <div
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        padding: '20px',
+                        borderRadius: '8px',
+                    }}
+                >
+                    <div
+                        className="top-left-section"
+                        style={{display: 'flex', flexDirection: 'column'}}
+                    >
+                        <div
+                            className="alias"
+                            style={{
+                                fontWeight: 'bold',
+                                fontSize: '1.5vw', // Use vw or vh for responsive font size
+                                marginBottom: '10px',
+                            }}
+                        >
+                            {ingredientData.alias
+                                .split(' ')
+                                .map(
+                                    (word) =>
+                                        word.charAt(0).toUpperCase() + word.slice(1)
+                                )
+                                .join(' ')}
                         </div>
-                        <div className="scientific-name" style={{fontSize: '0.8em', color: '#555'}}>
+                        <div
+                            className="scientific-name"
+                            style={{fontSize: '0.8vw', color: '#555'}}
+                        >
                             Scientific Name: {ingredientData.scientificName}
                         </div>
-                        <div className="category" style={{fontSize: '0.8em', color: '#555'}}>
+                        <div
+                            className="category"
+                            style={{fontSize: '0.8vw', color: '#555'}}
+                        >
                             Category: {ingredientData.category}
                         </div>
                     </div>
-                    <hr className="separator" style={{margin: '1%', border: 'none', borderTop: '1px solid #ccc'}}/>
+                    <hr
+                        className="separator"
+                        style={{
+                            margin: '1%',
+                            border: 'none',
+                            borderTop: '1px solid #ccc',
+                        }}
+                    />
 
+                    {/*/!* Molecules Section (Replace placeholders with actual data) *!/*/}
+                    {/*<div className="molecules-section" style={{marginTop: '1%'}}>*/}
+                    {/*    <h2 style={{fontSize: '1.5vw'}}>Molecules</h2>*/}
+                    {/*    /!* Add your molecule data here *!/*/}
+                    {/*    /!* Example: <div className="molecule-item" style={{ fontSize: '0.8vw' }}>Molecule: {ingredientData.molecule}</div> *!/*/}
+                    {/*</div>*/}
 
-                    {/* Molecules Section (Replace placeholders with actual data) */}
-                    <div className="molecules-section" style={{marginTop: '1%'}}>
-                        <h2>Molecules</h2>
-                        {/* Add your molecule data here */}
-                        {/* Example: <div className="molecule-item">Molecule: {ingredientData.molecule}</div> */}
-                    </div>
+                    {/*/!* Flavors Section (Replace placeholders with actual data) *!/*/}
+                    {/*<div className="flavors-section" style={{marginTop: '1%'}}>*/}
+                    {/*    <h2 style={{fontSize: '1.5vw'}}>Flavors</h2>*/}
+                    {/*    /!* Add your flavor data here *!/*/}
+                    {/*    /!* Example: <div className="flavor-item" style={{ fontSize: '0.8vw' }}>Flavor: {ingredientData.flavor}</div> *!/*/}
+                    {/*</div>*/}
 
-                    {/* Flavors Section (Replace placeholders with actual data) */}
-                    <div className="flavors-section" style={{marginTop: '1%'}}>
-                        <h2>Flavors</h2>
-                        {/* Add your flavor data here */}
-                        {/* Example: <div className="flavor-item">Flavor: {ingredientData.flavor}</div> */}
-                    </div>
-
-                    {/* Separator */}
-                    {/*<hr className="separator" style={{margin: '20px 0', border: 'none', borderTop: '1px solid #ccc'}}/>*/}
                 </div>
             )}
         </div>

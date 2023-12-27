@@ -5,18 +5,24 @@ const SharedMoleculesCardSingle = ({ingredientName, moleculeData}) => {
     const [selectedMolecule, setSelectedMolecule] = useState(null);
     const [moleculeInfo, setMoleculeInfo] = useState(null);
     const [moleculeImage, setMoleculeImage] = useState(null);
+    const [isVisible, setIsVisible] = useState(true);
 
     const handleMoleculeClick = async (selected) => {
         const response = await fetch(`http://localhost:5000/api/get_molecule_info/${selected.pubchemID}`);
         const data = await response.json();
-        setSelectedMolecule(selected);
-        setMoleculeInfo(data.molecule_info);
+
+        setIsVisible(false); // Start fading out
 
         const moleculeResponse = await fetch(`http://localhost:5000/api/get_molecule_image/${selected.pubchemID}`);
         console.log("Molecule Image URL:", moleculeResponse.url); // Log the URL
         setMoleculeImage(moleculeResponse.url);
-    };
 
+        setTimeout(() => {
+            setSelectedMolecule(selected);
+            setMoleculeInfo(data.molecule_info);
+            setIsVisible(true); // Start fading in
+        }, 500);
+    };
     if (moleculeData === null) {
         return <div>No molecule data available.</div>;
     }
@@ -25,8 +31,9 @@ const SharedMoleculesCardSingle = ({ingredientName, moleculeData}) => {
         <div
             style={{
                 display: 'flex',
-                backgroundColor: 'red',
+                // backgroundColor: 'red',
                 height: '100%',
+                minHeight: '400px',
                 borderRadius: '8px',
                 padding: '1%',
                 border: '1px solid #000',
@@ -42,9 +49,8 @@ const SharedMoleculesCardSingle = ({ingredientName, moleculeData}) => {
                     backgroundColor: sectionItemColor,
                     minWidth: '250px',
                     maxWidth: '20vw',
-                    // width: '25%',
                     height: '50vh',
-                    // borderRadius: '8px',
+                    minHeight: '400px',
                     borderTopLeftRadius: '8px',
                     borderBottomLeftRadius: '8px',
                     // margin: '1%',
@@ -87,6 +93,7 @@ const SharedMoleculesCardSingle = ({ingredientName, moleculeData}) => {
                     minWidth: "25vw",
                     width: "100%",
                     height: "50vh",
+                    minHeight: '400px',
                     borderTopRightRadius: '8px',
                     borderBottomRightRadius: '8px',
                     // margin: "1%",
@@ -113,9 +120,20 @@ const SharedMoleculesCardSingle = ({ingredientName, moleculeData}) => {
                         >
                             Displaying data for: {selectedMolecule.commonName}
                         </h2>
-                        <div style={{display: 'flex', flexDirection: 'row', backgroundColor: 'yellow'}}>
+                        <div style={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            backgroundColor: 'yellow'
+                        }}>
                             {/*<div style={{backgroundColor: 'yellow', overflow: 'hidden', textAlign: 'left', padding: '1%'}}>*/}
-                            <div style={{overflow: 'auto', textAlign: 'left', padding: '1%', backgroundColor: 'red'}}>
+                            <div style={{
+                                overflow: 'hidden',
+                                textAlign: 'left',
+                                padding: '1%',
+                                backgroundColor: 'red',
+                                opacity: isVisible ? 1 : 0, // Set opacity based on visibility flag
+                                transition: "opacity 0.5s ease",
+                            }}>
                                 {/* Render all data contents of the selected molecule */}
                                 {Object.entries(moleculeInfo.Properties).map(([key, value]) => (
                                     <div key={key} style={{}}>
@@ -136,6 +154,8 @@ const SharedMoleculesCardSingle = ({ingredientName, moleculeData}) => {
                                 justifyContent: 'center',
                                 alignItems: 'center',
                                 // marginTop: '2.5%',
+                                opacity: isVisible ? 1 : 0, // Set opacity based on visibility flag
+                                transition: "opacity 0.5s ease",
                             }}>
                                 {/* Display the image */}
                                 {moleculeImage && (
