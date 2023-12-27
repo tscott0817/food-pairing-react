@@ -93,6 +93,7 @@ const SharedMoleculesCardSingle = ({ingredientName, moleculeData}) => {
                     marginTop: '1%',
                     marginBottom: '1%',
                     marginRight: '1%',
+                    // overflow: "auto",
                     overflow: "hidden",
                     fontSize: "1em",
                     border: "1px solid #000",
@@ -112,9 +113,9 @@ const SharedMoleculesCardSingle = ({ingredientName, moleculeData}) => {
                         >
                             Displaying data for: {selectedMolecule.commonName}
                         </h2>
-                        <div style={{display: 'flex', flexDirection: 'row'}}>
+                        <div style={{display: 'flex', flexDirection: 'row', backgroundColor: 'yellow'}}>
                             {/*<div style={{backgroundColor: 'yellow', overflow: 'hidden', textAlign: 'left', padding: '1%'}}>*/}
-                            <div style={{overflow: 'hidden', textAlign: 'left', padding: '1%'}}>
+                            <div style={{overflow: 'auto', textAlign: 'left', padding: '1%', backgroundColor: 'red'}}>
                                 {/* Render all data contents of the selected molecule */}
                                 {Object.entries(moleculeInfo.Properties).map(([key, value]) => (
                                     <div key={key} style={{}}>
@@ -123,14 +124,29 @@ const SharedMoleculesCardSingle = ({ingredientName, moleculeData}) => {
                                     </div>
                                 ))}
                             </div>
-                            {/*<div style={{backgroundColor: 'blue'}}>*/}
-                            <div style={{backgroundColor: 'blue', padding: '1%', marginRight: '1%'}}>
+                            <div style={{
+                                backgroundColor: 'blue',
+                                width: '100%',
+                                height: '100%',
+                                // marginRight: '10%',
+                                padding: '2%',
+                                // borderRadius: '8px',
+                                // overflow: 'hidden',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                // marginTop: '2.5%',
+                            }}>
                                 {/* Display the image */}
                                 {moleculeImage && (
                                     <img
                                         src={moleculeImage}
                                         alt={`Molecule: ${selectedMolecule.commonName}`}
-                                        style={{}}
+                                        style={{
+                                            width: '200px',
+                                            height: '200px',
+                                            borderRadius: 25,
+                                        }}
                                     />
                                 )}
                             </div>
@@ -139,10 +155,8 @@ const SharedMoleculesCardSingle = ({ingredientName, moleculeData}) => {
                 ) : (
                     <h2
                         style={{
-                            borderBottom: "1px solid #232b2b",
-                            paddingBottom: "0.5em",
-                            marginLeft: "5%",
-                            width: "90%",
+                            position: 'relative',
+                            top: '50%',
                         }}
                     >
                         Click on a molecule to view details

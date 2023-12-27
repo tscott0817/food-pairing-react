@@ -126,6 +126,7 @@ const CompareIngredientsGlobal = ({ingredient1, ingredient2}) => {
             fontFamily: 'Roboto, sans-serif',
             backgroundColor: pageColor,
             width: '100%',
+            minWidth: '600px', // TODO: Make this a proportion of the users screen size instead of hardcoding
             height: '100%',
             margin: '0 auto',
             padding: '20px',
@@ -147,7 +148,6 @@ const CompareIngredientsGlobal = ({ingredient1, ingredient2}) => {
             }}>
                 {/*<IngredientCombinedCard ingredient1={ingredient1} ingredient2={ingredient2}/>*/}
                 <ResultsCard ingredient1={ingredient1} ingredient2={ingredient2}/>
-
                 <CollapsibleComponent
                     title="Shared Molecules"
                     isCollapsed={isMoleculeCardCollapsed}

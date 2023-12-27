@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 
-const IngredientCard = ({ ingredient }) => {
+const IngredientCard = ({ingredient}) => {
     const [ingredientData, setIngredientData] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -10,9 +10,10 @@ const IngredientCard = ({ ingredient }) => {
 
             try {
                 const response = await fetch(`http://localhost:5000/api/flavordb/${entity_id}`);
-                const { data } = await response.json();
+                const {data} = await response.json();
 
                 if (data) {
+                    console.log(data)
                     setIngredientData(data);
                 } else {
                     setErrorMessage('Ingredient not found');
@@ -38,18 +39,36 @@ const IngredientCard = ({ ingredient }) => {
                     padding: '20px',
                     borderRadius: '8px',
                 }}>
-                    <div className="top-left-section" style={{ display: 'flex', flexDirection: 'column' }}>
-                        <div className="alias" style={{ fontWeight: 'bold', fontSize: '1.5em', marginBottom: '10px' }}>
+                    <div className="top-left-section" style={{display: 'flex', flexDirection: 'column'}}>
+                        <div className="alias" style={{fontWeight: 'bold', fontSize: '1.5em', marginBottom: '10px'}}>
                             {ingredientData.alias.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
                         </div>
-                        <div className="scientific-name" style={{ fontSize: '0.8em', color: '#555' }}>
+                        <div className="scientific-name" style={{fontSize: '0.8em', color: '#555'}}>
                             Scientific Name: {ingredientData.scientificName}
                         </div>
-                        <div className="category" style={{ fontSize: '0.8em', color: '#555' }}>
+                        <div className="category" style={{fontSize: '0.8em', color: '#555'}}>
                             Category: {ingredientData.category}
                         </div>
                     </div>
-                    <hr className="separator" style={{ margin: '20px 0', border: 'none', borderTop: '1px solid #ccc' }} />
+                    <hr className="separator" style={{margin: '1%', border: 'none', borderTop: '1px solid #ccc'}}/>
+
+
+                    {/* Molecules Section (Replace placeholders with actual data) */}
+                    <div className="molecules-section" style={{marginTop: '1%'}}>
+                        <h2>Molecules</h2>
+                        {/* Add your molecule data here */}
+                        {/* Example: <div className="molecule-item">Molecule: {ingredientData.molecule}</div> */}
+                    </div>
+
+                    {/* Flavors Section (Replace placeholders with actual data) */}
+                    <div className="flavors-section" style={{marginTop: '1%'}}>
+                        <h2>Flavors</h2>
+                        {/* Add your flavor data here */}
+                        {/* Example: <div className="flavor-item">Flavor: {ingredientData.flavor}</div> */}
+                    </div>
+
+                    {/* Separator */}
+                    {/*<hr className="separator" style={{margin: '20px 0', border: 'none', borderTop: '1px solid #ccc'}}/>*/}
                 </div>
             )}
         </div>
