@@ -102,7 +102,7 @@ const IngredientMoleculesCard = ({ingredientName, moleculeData}) => {
                         </h2>
                         {/* Render all data contents of the selected molecule */}
                         {Object.entries(moleculeInfo.Properties).map(([key, value]) => (
-                            <div key={key}>
+                            <div key={key} style={{backgroundColor: 'yellow'}}>
                                 <strong>{key}:</strong>{' '}
                                 {typeof value === 'object' ? JSON.stringify(value) : value}
                             </div>
@@ -112,7 +112,7 @@ const IngredientMoleculesCard = ({ingredientName, moleculeData}) => {
                             <img
                                 src={moleculeImage}
                                 alt={`Molecule: ${selectedMolecule.commonName}`}
-                                style={{marginTop: '1em'}}
+                                style={{marginTop: '1em', backgroundColor: 'blue', padding: '10px'}}
                             />
                         )}
                     </div>

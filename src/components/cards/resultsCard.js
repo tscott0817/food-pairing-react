@@ -38,6 +38,20 @@ const ResultsCard = ({ingredient1, ingredient2}) => {
                 boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
                 boxSizing: 'border-box',
             }}>
+                <IngredientCard ingredient={ingredient1}/>
+                <IngredientCard ingredient={ingredient2}/>
+            </div>
+            <div style={{
+                backgroundColor: sectionItemColor,
+                minWidth: '25vw',
+                width: '50%',
+                height: '50vh',
+                margin: '1%',
+                borderRadius: '8px',
+                border: '1px solid #000',
+                boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
+                boxSizing: 'border-box',
+            }}>
                 <ResponsiveRadialBar
                     data={radialBarChartData.map((d) => ({...d, data: [{x: d.id, y: d.value, color: '#4CAF50'}]}))}
                     keys={['value']}
@@ -52,20 +66,6 @@ const ResultsCard = ({ingredient1, ingredient2}) => {
                     enableGridX={false}
                     enableGridY={false}
                 />
-            </div>
-
-            <div style={{
-                backgroundColor: sectionItemColor,
-                minWidth: '25vw',
-                width: '50%',
-                height: '50vh',
-                margin: '1%',
-                borderRadius: '8px',
-                border: '1px solid #000',
-                boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
-                boxSizing: 'border-box',
-            }}>
-                <h2>Details here:</h2>
             </div>
         </div>
     );

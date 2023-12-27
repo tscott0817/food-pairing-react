@@ -3,9 +3,18 @@ import React, {useState} from "react";
 import {pageSectionColor, sectionItemColor} from "../../colors";
 
 
-function PieCompare({item1Data, item2Data, sharedMolecules}) {
+function PieFlavorCompare({item1Data, item2Data, sharedMolecules}) {
+    console.log(item1Data);
+    console.log(item2Data);
+    console.log(sharedMolecules);
 
-    // TODO: This is temp, need to fix 'molcules' column in db
+
+    // // TODO: Add shared
+    // if (item1Data === null  || item2Data === null) {
+    //     return <div>No radar data available.</div>;
+    // }
+
+    // TODO: This is temp, need to fix 'molecules' column in db
     const countWordsInString = (str) => {
         const cleanedStr = str.replace(/['{}]/g, '');
         const wordsArray = cleanedStr.split(',');
@@ -176,4 +185,4 @@ function PieCompare({item1Data, item2Data, sharedMolecules}) {
     )
 }
 
-export default PieCompare;
+export default PieFlavorCompare;
