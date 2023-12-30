@@ -1,7 +1,7 @@
 import sqlite3
 
 import requests
-from flask import Flask, jsonify, g, send_file, redirect
+from flask import Flask, jsonify, g, send_file, redirect, request
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -339,6 +339,40 @@ def get_molecule_image(pubchem_id):
 #         return send_file(response.raw, mimetype='image/png', as_attachment=True, download_name=filename)
 #     except requests.exceptions.RequestException as e:
 #         return str(e), 500
+
+
+@app.route('/api/get_ingredients/<entity_id>', methods=['GET'])
+def get_ingredients(entity_id):
+    # Use get_db() to get the database connection
+    with get_db() as conn:
+        # Query the database to get molecules associated with the entity_id
+        cur = conn.cursor()
+        cur.execute("SELECT alias, molecules FROM flavordb WHERE entityID = ?", (entity_id,))
+        result = cur.fetchone()
+
+        if result is None:
+            return jsonify({'error': 'Entity ID not found'}), 404
+
+        alias_entity_id, molecules_entity_id = result  # Assuming molecules are stored as a string and need to be converted to a list
+        molecules_entity_id = set(eval(molecules_entity_id))
+
+        # Fetch all rows from flavordb
+        cur.execute("SELECT alias, molecules FROM flavordb")
+        all_rows = cur.fetchall()
+
+        # Create a dictionary to store shared molecule count
+        shared_molecule_count_dict = {}
+
+        # Compare molecules of the entity_id with all other rows
+        for alias_row, molecules_row_str in all_rows:
+            if alias_row == alias_entity_id:
+                continue  # Skip the current row
+            molecules_row = set(eval(molecules_row_str))  # Assuming molecules are stored as a string and need to be converted to a list
+            shared_molecule_count = len(molecules_entity_id & molecules_row)
+            shared_molecule_count_dict[alias_row] = shared_molecule_count
+
+        return jsonify({'shared_molecule_count': shared_molecule_count_dict})
+
 
 
 if __name__ == '__main__':
