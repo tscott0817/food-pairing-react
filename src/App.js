@@ -6,11 +6,21 @@ import DefaultPage from "./pages/defaultPage";
 import {useIngredientContext} from "./stateManager/IngredientContext";
 import MouseTracker from "./components/mouseTracker";
 import {
-    ingredientBackgroundColor, mainAppColor, navBarColor, pageSectionColor, randomTempColor,
-    randomTempColor2, leftColumnColor, sectionItemColor, buttonBackgroundColor
+    ingredientBackgroundColor,
+    mainAppColor,
+    navBarColor,
+    pageSectionColor,
+    randomTempColor,
+    randomTempColor2,
+    leftColumnColor,
+    sectionItemColor,
+    buttonBackgroundColor,
+    defaultPageNeonColor,
+    searchBarColor,
+    buttonColorArrow
 } from "./colors";
 import './animations.css';
-import {FaBars} from 'react-icons/fa';
+import {FaBars, FaChevronLeft, FaChevronRight} from 'react-icons/fa';
 import {FaSearch} from 'react-icons/fa';
 
 function App() {
@@ -116,7 +126,8 @@ function App() {
 
 
     return (
-        <div key={key} className="App" style={{display: 'flex', flexDirection: 'column'}}>
+        <div key={key} className="App"
+             style={{display: 'flex', flexDirection: 'column', backgroundColor: mainAppColor}}>
             <div style={{
                 backgroundColor: navBarColor,
                 width: '100%',
@@ -127,35 +138,21 @@ function App() {
                 position: 'fixed',
                 zIndex: 1,
                 boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
-                // border: '1px solid #000',
-                // boxSizing: 'border-box',
                 padding: '0 10px',  // Add padding to the ends for spacing
             }}>
-                <button onClick={handleToggleLeftColumn}
-                        style={{
-                            height: '30px',
-                            width: '30px',
-                            backgroundColor: buttonBackgroundColor,
-                            borderRadius: '50px',
-                            border: 'none',
-                        }}>
-                    <FaBars size={'20px'}/>
-                    {/*{leftColumnVisible ? 'Hide Left Column' : 'Show Left Column'}*/}
-                </button>
                 <div
                     style={{
                         display: 'flex',
                         alignItems: 'center',
                         borderRadius: '25px',
-                        // border: '2px solid #ccc',
                         overflow: 'hidden',
-                        // backgroundColor: sectionItemColor,
+                        backgroundColor: searchBarColor,
                         height: '80%',
                         width: '40%',
                         minWidth: '400px',
                         padding: '8px', // Adjust padding as needed
                         boxShadow: '0 0 8px rgba(0, 0, 0, 0.2)',
-                        marginRight: '30%',
+                        margin: 'auto', // Center the search bar horizontally
                     }}
                 >
                     <input
@@ -181,76 +178,96 @@ function App() {
             </div>
             <div className="main-layout"
                  style={{display: 'flex', flexGrow: 1, marginTop: '60px', position: 'relative', top: '3%',}}>
-                <div className="left-column" style={{
-                    flex: '1',
-                    position: 'fixed',
-                    // padding: '1%',
-                    // width: '225px',
-                    width: leftColumnVisible ? '225px' : '0',
-                    height: '100%',
-                    backgroundColor: leftColumnColor,
-                    border: '1px solid #000',
-                    boxSizing: 'border-box',
-                    overflowY: 'auto',
-                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.5)',
-                    // boxShadow: '4px 0 8px rgba(0, 0, 0, 0.5)',
-                    transition: 'width 0.2s ease-in-out'
-                }}>
-                    {selectedIngredients.length > 0 && (
-                        <div>
-                            <button
-                                onClick={() => handleRemoveIngredient(0)}>Remove {selectedIngredients[0].alias}</button>
-                            {selectedIngredients.length > 1 && (
+                <div style={{display: 'flex', transition: 'width 0.2s ease-in-out'}}>
+                    <div className="left-column" style={{
+                        flex: '1',
+                        position: 'fixed',
+                        width: leftColumnVisible ? '225px' : '0',
+                        height: '100%',
+                        backgroundColor: leftColumnColor,
+                        boxSizing: 'border-box',
+                        overflowY: 'auto',
+                        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.5)',
+                        transition: 'width 0.2s ease-in-out', // Ensure the left column also has the transition
+                    }}>
+                        {selectedIngredients.length > 0 && (
+                            <div>
                                 <button
-                                    onClick={() => handleRemoveIngredient(1)}>Remove {selectedIngredients[1].alias}</button>
-                            )}
-                        </div>
-                    )}
-                    <button onClick={handleShowSelectedIngredients}>Show Selected Ingredients</button>
-                    <h3>Search Filters</h3>
-                    <ul>
-                        <li>Filter 1</li>
-                        <li>Filter 2</li>
-                        <li>Filter 2</li>
-                        <li>Filter 2</li>
-                        <li>Filter 2</li>
-                        <li>Filter 2</li>
-                        <li>Filter 2</li>
-                        <li>Filter 2</li>
-                        <li>Filter 2</li>
-                        <li>Filter 2</li>
-                        <li>Filter 2</li>
-                        <li>Filter 2</li>
-                        <li>Filter 1</li>
-                        <li>Filter 2</li>
-                        <li>Filter 2</li>
-                        <li>Filter 2</li>
-                        <li>Filter 2</li>
-                        <li>Filter 2</li>
-                        <li>Filter 2</li>
-                        <li>Filter 2</li>
-                        <li>Filter 2</li>
-                        <li>Filter 2</li>
-                        <li>Filter 2</li>
-                        <li>Filter 2</li>
-                        <li>Filter 1</li>
-                        <li>Filter 2</li>
-                        <li>Filter 2</li>
-                        <li>Filter 2</li>
-                        <li>Filter 2</li>
-                        <li>Filter 2</li>
-                        <li>Filter 2</li>
-                        <li>Filter 2</li>
-                        <li>Filter 2</li>
-                        <li>Filter 2</li>
-                        <li>Filter 2</li>
-                        <li>Filter 2</li>
-                    </ul>
+                                    onClick={() => handleRemoveIngredient(0)}>Remove {selectedIngredients[0].alias}</button>
+                                {selectedIngredients.length > 1 && (
+                                    <button
+                                        onClick={() => handleRemoveIngredient(1)}>Remove {selectedIngredients[1].alias}</button>
+                                )}
+                            </div>
+                        )}
+                        <button onClick={handleShowSelectedIngredients}>Show Selected Ingredients</button>
+                        <h3>Search Filters</h3>
+                        <ul>
+                            <li>Filter 1</li>
+                            <li>Filter 2</li>
+                            <li>Filter 2</li>
+                            <li>Filter 2</li>
+                            <li>Filter 2</li>
+                            <li>Filter 2</li>
+                            <li>Filter 2</li>
+                            <li>Filter 2</li>
+                            <li>Filter 2</li>
+                            <li>Filter 2</li>
+                            <li>Filter 2</li>
+                            <li>Filter 2</li>
+                            <li>Filter 1</li>
+                            <li>Filter 2</li>
+                            <li>Filter 2</li>
+                            <li>Filter 2</li>
+                            <li>Filter 2</li>
+                            <li>Filter 2</li>
+                            <li>Filter 2</li>
+                            <li>Filter 2</li>
+                            <li>Filter 2</li>
+                            <li>Filter 2</li>
+                            <li>Filter 2</li>
+                            <li>Filter 2</li>
+                            <li>Filter 1</li>
+                            <li>Filter 2</li>
+                            <li>Filter 2</li>
+                            <li>Filter 2</li>
+                            <li>Filter 2</li>
+                            <li>Filter 2</li>
+                            <li>Filter 2</li>
+                            <li>Filter 2</li>
+                            <li>Filter 2</li>
+                            <li>Filter 2</li>
+                            <li>Filter 2</li>
+                            <li>Filter 2</li>
+                        </ul>
+                    </div>
+                    <div style={{
+                        // backgroundColor: 'red',
+                        height: '100%',
+                        width: '37.5px',
+                        marginLeft: leftColumnVisible ? '225px' : '0', // Update marginLeft based on left column width
+                        position: 'fixed',
+                        zIndex: 1,
+                        transition: 'margin-left 0.2s ease-in-out', // Adjust transition duration and timing function
+                    }}>
+                        <button onClick={handleToggleLeftColumn}
+                                style={{
+                                    height: '30px',
+                                    width: '30px',
+                                    marginTop: '44vh',
+                                    backgroundColor: buttonBackgroundColor,
+                                    borderRadius: '50px',
+                                    border: 'none',
+                                    color: buttonColorArrow,
+                                }}>
+                            {leftColumnVisible ? <FaChevronLeft size={'20px'}/> : <FaChevronRight size={'20px'}/>}
+                        </button>
+                    </div>
                 </div>
 
                 <div className="main-content" style={{
                     flex: '1',
-                    marginLeft: leftColumnVisible ? '225px' : '0',
+                    marginLeft: leftColumnVisible ? '237.5px' : '12.5px',
                     overflow: 'auto',
                     transition: 'margin-left 0.2s ease-in-out'
                 }}>
@@ -258,29 +275,6 @@ function App() {
                                                                    handleDisplayIngredient={handleDisplayIngredient}
                                                                    searchQuery={searchQuery}
                                                                    selectedFilters={selectedFilters}/>}
-                    {/*{currentPage === 'compareIngredientsGlobal' && (*/}
-                    {/*    <div>*/}
-                    {/*        <div style={{*/}
-                    {/*            backgroundColor: randomTempColor2,*/}
-                    {/*            height: '40px',*/}
-                    {/*            width: '100%',*/}
-                    {/*            position: 'fixed',*/}
-                    {/*            display: 'flex',*/}
-                    {/*            alignItems: 'center',*/}
-                    {/*            zIndex: 1,*/}
-                    {/*            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.5)',*/}
-
-                    {/*        }}>*/}
-                    {/*            <button onClick={() => handlePageChange('defaultPage')} style={{marginLeft: '8px'}}>*/}
-                    {/*                Go Back*/}
-                    {/*            </button>*/}
-                    {/*        </div>*/}
-                    {/*        <CompareIngredientsGlobal*/}
-                    {/*            ingredient1={selectedIngredients[0]}*/}
-                    {/*            ingredient2={selectedIngredients[1]}*/}
-                    {/*        />*/}
-                    {/*    </div>*/}
-                    {/*)}*/}
                 </div>
                 {displayIngredient && (
                     <div style={{

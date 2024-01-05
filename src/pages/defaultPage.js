@@ -1,6 +1,13 @@
 import React, {useEffect, useState, useRef} from "react";
 import IngredientThumbnail from "../components/cards/ingredientThumbnail";
-import {mainAppColor, pageColor, pageSectionColor, randomTempColor, sectionItemColor} from "../colors";
+import {
+    defaultPageColor, defaultPageNeonColor,
+    mainAppColor,
+    pageColor,
+    pageSectionColor,
+    randomTempColor,
+    sectionItemColor
+} from "../colors";
 
 
 const DefaultPage = ({setSelectedIngredientRef, handleDisplayIngredient, searchQuery, selectedFilters}) => {
@@ -82,16 +89,16 @@ const DefaultPage = ({setSelectedIngredientRef, handleDisplayIngredient, searchQ
     );
 
     return (
-        <div style={{backgroundColor: pageColor, minWidth: '800px'}}>
+        <div style={{ backgroundColor: pageColor, minWidth: '800px' }}>
             <div
                 ref={containerRef}
                 style={{
-                    width: '100%',
+                    width: '99%',
                     height: '100%',
                     display: 'flex',
                     flexWrap: 'wrap',
                     padding: '1%',
-                    backgroundColor: pageSectionColor,
+                    backgroundColor: defaultPageColor,
                 }}
             >
                 {filteredFlavors.map((flavor) => (
@@ -108,10 +115,11 @@ const DefaultPage = ({setSelectedIngredientRef, handleDisplayIngredient, searchQ
                             opacity: 0,
                             transform: 'translateX(-30px)',
                             transition: 'opacity 0.5s, transform 0.5s',
+                            // Apply neon glow effect
                         }}
                         onClick={() => handleThumbnailClick(flavor)}
                     >
-                        <IngredientThumbnail ingredient={flavor}/>
+                        <IngredientThumbnail ingredient={flavor} />
                     </div>
                 ))}
             </div>
