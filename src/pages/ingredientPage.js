@@ -101,7 +101,7 @@ const IngredientPage = ({ ingredient }) => {
                         isCollapsed={isSuggestedCardCollapsed}
                         onToggle={() => setSuggestedCardCollapsed(!isSuggestedCardCollapsed)}
                     >
-                        <div style={{ maxHeight: '25vh', overflowY: 'auto' }}>
+                        <div style={{ maxHeight: '40vh', overflowY: 'auto' }}>
                             <div style={{ columns: '3', columnGap: '20px' }}>
                                 {sharedMoleculeCounts && sharedMoleculeCounts.map(([alias, count]) => (
                                     <div key={alias} style={{ marginBottom: '10px' }}>
@@ -111,6 +111,24 @@ const IngredientPage = ({ ingredient }) => {
                             </div>
                         </div>
                     </CollapsibleComponent>
+                    {/*<CollapsibleComponent*/}
+                    {/*    title="Ingredients With Shared Molecules"*/}
+                    {/*    isCollapsed={isSuggestedCardCollapsed}*/}
+                    {/*    onToggle={() => setSuggestedCardCollapsed(!isSuggestedCardCollapsed)}*/}
+                    {/*>*/}
+                    {/*    <div style={{maxHeight: '40vh', overflowY: 'auto'}}>*/}
+                    {/*        <div style={{columns: '3', columnGap: '20px'}}>*/}
+                    {/*            {sharedMoleculeCounts &&*/}
+                    {/*                sharedMoleculeCounts*/}
+                    {/*                    .filter(([, count]) => count > 0) // Filter out entries with count 0 TODO: This should be done on the backend*/}
+                    {/*                    .map(([alias, count]) => (*/}
+                    {/*                        <div key={alias} style={{marginBottom: '10px'}}>*/}
+                    {/*                            <strong>{alias}:</strong> {count}*/}
+                    {/*                        </div>*/}
+                    {/*                    ))}*/}
+                    {/*        </div>*/}
+                    {/*    </div>*/}
+                    {/*</CollapsibleComponent>*/}
                 </div>
             )}
             <button onClick={handleAddToComparison}>Add to Comparison</button>

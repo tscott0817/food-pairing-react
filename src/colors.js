@@ -17,6 +17,7 @@ export const randomTempColor = '#669dd4';
 export const leftColumnColor = '#f4f3f2';
 export const buttonColorArrow = 'rgba(50, 50, 50, 0.6)';
 export const buttonBackgroundColor = 'rgba(50, 50, 50, 0)';
+export const selectionColor = 'rgba(50, 50, 50, 0.5)';
 
 // Dark Mode Blues
 // TODO: PRODUCTION COLORS

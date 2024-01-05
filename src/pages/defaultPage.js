@@ -93,7 +93,7 @@ const DefaultPage = ({setSelectedIngredientRef, handleDisplayIngredient, searchQ
             <div
                 ref={containerRef}
                 style={{
-                    width: '99%',
+                    width: '98%',
                     height: '100%',
                     display: 'flex',
                     flexWrap: 'wrap',
@@ -119,7 +119,7 @@ const DefaultPage = ({setSelectedIngredientRef, handleDisplayIngredient, searchQ
                         }}
                         onClick={() => handleThumbnailClick(flavor)}
                     >
-                        <IngredientThumbnail ingredient={flavor} />
+                        <IngredientThumbnail ingredient_name={flavor.alias} ingredient_id={flavor.entityID} />
                     </div>
                 ))}
             </div>

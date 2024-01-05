@@ -5,11 +5,8 @@ import {
     thumbNailColorText
 } from "../../colors";
 
-const IngredientThumbnail = ({ ingredient }) => {
-    // Construct the image URL based on the entityID
-    const imageURL = `https://cosylab.iiitd.edu.in/flavordb/static/entities_images/${ingredient.entityID}.jpg`;
-
-    // Capitalize the first letter of each word
+const IngredientThumbnail = ({ ingredient_name, ingredient_id, font_size }) => {
+    const imageURL = `https://cosylab.iiitd.edu.in/flavordb/static/entities_images/${ingredient_id}.jpg`;
     const capitalizeWords = (str) => str.replace(/\b\w/g, (char) => char.toUpperCase());
 
     return (
@@ -35,7 +32,7 @@ const IngredientThumbnail = ({ ingredient }) => {
         >
             <img
                 src={imageURL}
-                alt={`Ingredient ${ingredient.alias}`}
+                alt={`Ingredient ${ingredient_name}`}
                 style={{
                     width: '100%', // Adjust the width as needed
                     height: '80%', // Adjust the height as needed
@@ -52,10 +49,10 @@ const IngredientThumbnail = ({ ingredient }) => {
                     marginTop: '3%',
                     // backgroundColor: randomTempColor,
                     // fontFamily: 'Crimson Text, serif', fontStyle: 'italic', fontWeight: 'bold',
-                    fontFamily: 'Lora, serif', fontStyle: 'italic', fontSize: '1.2em', color: thumbNailColorText,
+                    fontFamily: 'Lora, serif', fontStyle: 'italic', fontSize: font_size || '1.2em', color: thumbNailColorText,
                 }}
             >
-                {capitalizeWords(ingredient.alias)}
+                {capitalizeWords(ingredient_name)}
             </div>
         </div>
     );

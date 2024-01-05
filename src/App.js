@@ -5,6 +5,9 @@ import IngredientPage from "./pages/ingredientPage";
 import DefaultPage from "./pages/defaultPage";
 import {useIngredientContext} from "./stateManager/IngredientContext";
 import MouseTracker from "./components/mouseTracker";
+import IngredientThumbnail from "./components/cards/ingredientThumbnail";
+import {FaTimes} from 'react-icons/fa';
+
 import {
     ingredientBackgroundColor,
     mainAppColor,
@@ -17,7 +20,7 @@ import {
     buttonBackgroundColor,
     defaultPageNeonColor,
     searchBarColor,
-    buttonColorArrow
+    buttonColorArrow, selectionColor
 } from "./colors";
 import './animations.css';
 import {FaBars, FaChevronLeft, FaChevronRight} from 'react-icons/fa';
@@ -30,11 +33,12 @@ function App() {
     const {selectedIngredients, unselectIngredient} = useIngredientContext();
     const [displayIngredient, setDisplayIngredient] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
-    const [leftColumnVisible, setLeftColumnVisible] = useState(true);
+    const [leftColumnVisible, setLeftColumnVisible] = useState(false);
     const [comparisonVisible, setComparisonVisible] = useState(false);  // TODO: For if I want to show the comparison as overlay instead of new page
     const comparisonContainerRef = useRef(null);
     const [selectedFilters, setSelectedFilters] = useState([]);
     const [selectedFilter, setSelectedFilter] = useState('');
+    const [isIngredientSelected, setIsIngredientSelected] = useState(false);
 
     // TODO: Apparently callback better? Not sure why, see if need to implement for other functions
     const handleDisplayIngredient = useCallback((displayIngredient) => {
@@ -73,6 +77,11 @@ function App() {
     const handleToggleComparison = () => {
         setComparisonVisible((prevVisible) => !prevVisible);
     }
+
+    useEffect(() => {
+        // Update the isIngredientSelected state based on whether an ingredient is selected
+        setIsIngredientSelected(selectedIngredients.length > 0);
+    }, [selectedIngredients]);
 
     useEffect(() => {
         const handleResize = () => {
@@ -128,18 +137,126 @@ function App() {
     return (
         <div key={key} className="App"
              style={{display: 'flex', flexDirection: 'column', backgroundColor: mainAppColor}}>
-            <div style={{
-                backgroundColor: navBarColor,
-                width: '100%',
-                height: '60px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',  // Use space-between to push elements to the ends
-                position: 'fixed',
-                zIndex: 1,
-                boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
-                padding: '0 10px',  // Add padding to the ends for spacing
-            }}>
+            <div
+                style={{
+                    backgroundColor: navBarColor,
+                    width: '100%',
+                    height: '60px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    position: 'fixed',
+                    zIndex: 1,
+                    boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
+                    padding: '0 10px',
+                }}
+            >
+                <div style={{
+                    position: 'relative',
+                    // backgroundColor: 'red',
+                    height: '90%',
+                    minWidth: '80px',
+                    marginLeft: '1%',
+                    backgroundColor: selectionColor,
+                    borderRadius: '8px'
+                }}>
+                    {selectedIngredients.length > 0 && (
+                        <div style={{
+                            position: 'relative',
+                            // backgroundColor: 'red',
+                            height: '100%',
+                            minWidth: '75px',
+                            // marginLeft: '1%',
+                            // borderRadius: '8px'
+                        }}>
+                            <div style={{position: 'relative', zIndex: 3, width: '50%', marginLeft: '90%'}}>
+                                <button
+                                    onClick={() => handleRemoveIngredient(0)}
+                                    style={{backgroundColor: buttonBackgroundColor, border: 'none', cursor: 'pointer'}}>
+                                    <FaTimes/>
+                                </button>
+                            </div>
+                            <div
+                                style={{
+                                    position: 'absolute',
+                                    top: 0,
+                                    left: 0,
+                                    width: '100%',
+                                    height: '100%',
+                                    // backgroundColor: 'rgba(255, 255, 255, 0.7)', // Adjust background color and opacity as needed
+                                    // backgroundColor: 'red',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    // borderRadius: '8px', // Adjust border radius as needed
+                                    zIndex: 2, // Ensure this is above the button
+                                }}
+                            >
+                                {/*<p>{selectedIngredients[0].alias}</p>*/}
+                                <IngredientThumbnail ingredient_name={selectedIngredients[0].alias}
+                                                     ingredient_id={selectedIngredients[0].entityID}
+                                                     font_size={'10px'}/>
+                            </div>
+                        </div>
+                    )}
+                </div>
+
+                <div style={{
+                    position: 'relative',
+                    // backgroundColor: 'red',
+                    height: '90%',
+                    minWidth: '80px',
+                    marginLeft: '30px',
+                    backgroundColor: selectionColor,
+                    borderRadius: '8px'
+                }}>
+                    {selectedIngredients.length > 1 && (
+                        <div style={{
+                            position: 'relative',
+                            // backgroundColor: 'red',
+                            height: '100%',
+                            // minWidth: '75px',
+                            // marginLeft: '1%',
+                            // borderRadius: '8px'
+                        }}>
+                            <div style={{position: 'relative', zIndex: 3, width: '50%', marginLeft: '90%'}}>
+                                <button
+                                    onClick={() => handleRemoveIngredient(1)}
+                                    style={{backgroundColor: buttonBackgroundColor, border: 'none', cursor: 'pointer'}}>
+                                    <FaTimes/>
+                                </button>
+                            </div>
+                            <div
+                                style={{
+                                    position: 'absolute',
+                                    top: 0,
+                                    left: 0,
+                                    width: '100%',
+                                    height: '100%',
+                                    // backgroundColor: 'rgba(255, 255, 255, 0.7)', // Adjust background color and opacity as needed
+                                    // backgroundColor: 'red',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    // borderRadius: '8px', // Adjust border radius as needed
+                                    zIndex: 2, // Ensure this is above the button
+                                }}
+                            >
+                                {/*<p>{selectedIngredients[0].alias}</p>*/}
+                                <IngredientThumbnail ingredient_name={selectedIngredients[1].alias}
+                                                     ingredient_id={selectedIngredients[1].entityID}
+                                                     font_size={'10px'}/>
+                            </div>
+                        </div>
+                    )}
+                </div>
+
+                <div style={{position: 'relative', marginLeft: '30px'}}>
+                    <button onClick={handleShowSelectedIngredients} style={{whiteSpace: 'pre-line'}}>
+                        Compare<br/>Ingredients
+                    </button>
+                </div>
+
                 <div
                     style={{
                         display: 'flex',
@@ -150,9 +267,9 @@ function App() {
                         height: '80%',
                         width: '40%',
                         minWidth: '400px',
-                        padding: '8px', // Adjust padding as needed
+                        padding: '8px',
                         boxShadow: '0 0 8px rgba(0, 0, 0, 0.2)',
-                        margin: 'auto', // Center the search bar horizontally
+                        margin: 'auto',
                     }}
                 >
                     <input
@@ -163,7 +280,7 @@ function App() {
                         style={{
                             border: 'none',
                             outline: 'none',
-                            padding: '8px', // Adjust padding as needed
+                            padding: '8px',
                             flex: '1',
                             borderRadius: '25px',
                         }}
@@ -190,17 +307,17 @@ function App() {
                         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.5)',
                         transition: 'width 0.2s ease-in-out', // Ensure the left column also has the transition
                     }}>
-                        {selectedIngredients.length > 0 && (
-                            <div>
-                                <button
-                                    onClick={() => handleRemoveIngredient(0)}>Remove {selectedIngredients[0].alias}</button>
-                                {selectedIngredients.length > 1 && (
-                                    <button
-                                        onClick={() => handleRemoveIngredient(1)}>Remove {selectedIngredients[1].alias}</button>
-                                )}
-                            </div>
-                        )}
-                        <button onClick={handleShowSelectedIngredients}>Show Selected Ingredients</button>
+                        {/*{selectedIngredients.length > 0 && (*/}
+                        {/*    <div>*/}
+                        {/*        <button*/}
+                        {/*            onClick={() => handleRemoveIngredient(0)}>Remove {selectedIngredients[0].alias}</button>*/}
+                        {/*        {selectedIngredients.length > 1 && (*/}
+                        {/*            <button*/}
+                        {/*                onClick={() => handleRemoveIngredient(1)}>Remove {selectedIngredients[1].alias}</button>*/}
+                        {/*        )}*/}
+                        {/*    </div>*/}
+                        {/*)}*/}
+                        {/*<button onClick={handleShowSelectedIngredients}>Show Selected Ingredients</button>*/}
                         <h3>Search Filters</h3>
                         <ul>
                             <li>Filter 1</li>
@@ -244,7 +361,8 @@ function App() {
                     <div style={{
                         // backgroundColor: 'red',
                         height: '100%',
-                        width: '37.5px',
+                        // width: '37.5px',
+                        width: '3%',
                         marginLeft: leftColumnVisible ? '225px' : '0', // Update marginLeft based on left column width
                         position: 'fixed',
                         zIndex: 1,
@@ -255,10 +373,13 @@ function App() {
                                     height: '30px',
                                     width: '30px',
                                     marginTop: '44vh',
+                                    marginRight: '100%',
+                                    left: 0,
                                     backgroundColor: buttonBackgroundColor,
                                     borderRadius: '50px',
                                     border: 'none',
                                     color: buttonColorArrow,
+                                    cursor: 'pointer',
                                 }}>
                             {leftColumnVisible ? <FaChevronLeft size={'20px'}/> : <FaChevronRight size={'20px'}/>}
                         </button>
@@ -267,7 +388,9 @@ function App() {
 
                 <div className="main-content" style={{
                     flex: '1',
-                    marginLeft: leftColumnVisible ? '237.5px' : '12.5px',
+                    // marginLeft: leftColumnVisible ? '237.5px' : '12.5px',
+                    marginLeft: leftColumnVisible ? '250px' : '25px',
+                    marginTop: '8px',
                     overflow: 'auto',
                     transition: 'margin-left 0.2s ease-in-out'
                 }}>
