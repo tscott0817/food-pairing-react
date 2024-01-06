@@ -151,112 +151,6 @@ function App() {
                     padding: '0 10px',
                 }}
             >
-                <div style={{
-                    position: 'relative',
-                    // backgroundColor: 'red',
-                    height: '90%',
-                    minWidth: '80px',
-                    marginLeft: '1%',
-                    backgroundColor: selectionColor,
-                    borderRadius: '8px'
-                }}>
-                    {selectedIngredients.length > 0 && (
-                        <div style={{
-                            position: 'relative',
-                            // backgroundColor: 'red',
-                            height: '100%',
-                            minWidth: '75px',
-                            // marginLeft: '1%',
-                            // borderRadius: '8px'
-                        }}>
-                            <div style={{position: 'relative', zIndex: 3, width: '50%', marginLeft: '90%'}}>
-                                <button
-                                    onClick={() => handleRemoveIngredient(0)}
-                                    style={{backgroundColor: buttonBackgroundColor, border: 'none', cursor: 'pointer'}}>
-                                    <FaTimes/>
-                                </button>
-                            </div>
-                            <div
-                                style={{
-                                    position: 'absolute',
-                                    top: 0,
-                                    left: 0,
-                                    width: '100%',
-                                    height: '100%',
-                                    // backgroundColor: 'rgba(255, 255, 255, 0.7)', // Adjust background color and opacity as needed
-                                    // backgroundColor: 'red',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    // borderRadius: '8px', // Adjust border radius as needed
-                                    zIndex: 2, // Ensure this is above the button
-                                }}
-                            >
-                                {/*<p>{selectedIngredients[0].alias}</p>*/}
-                                <IngredientThumbnail ingredient_name={selectedIngredients[0].alias}
-                                                     ingredient_id={selectedIngredients[0].entityID}
-                                                     font_size={'10px'}/>
-                            </div>
-                        </div>
-                    )}
-                </div>
-
-                <div style={{
-                    position: 'relative',
-                    // backgroundColor: 'red',
-                    height: '90%',
-                    minWidth: '80px',
-                    marginLeft: '30px',
-                    backgroundColor: selectionColor,
-                    borderRadius: '8px'
-                }}>
-                    {selectedIngredients.length > 1 && (
-                        <div style={{
-                            position: 'relative',
-                            // backgroundColor: 'red',
-                            height: '100%',
-                            // minWidth: '75px',
-                            // marginLeft: '1%',
-                            // borderRadius: '8px'
-                        }}>
-                            <div style={{position: 'relative', zIndex: 3, width: '50%', marginLeft: '90%'}}>
-                                <button
-                                    onClick={() => handleRemoveIngredient(1)}
-                                    style={{backgroundColor: buttonBackgroundColor, border: 'none', cursor: 'pointer'}}>
-                                    <FaTimes/>
-                                </button>
-                            </div>
-                            <div
-                                style={{
-                                    position: 'absolute',
-                                    top: 0,
-                                    left: 0,
-                                    width: '100%',
-                                    height: '100%',
-                                    // backgroundColor: 'rgba(255, 255, 255, 0.7)', // Adjust background color and opacity as needed
-                                    // backgroundColor: 'red',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    // borderRadius: '8px', // Adjust border radius as needed
-                                    zIndex: 2, // Ensure this is above the button
-                                }}
-                            >
-                                {/*<p>{selectedIngredients[0].alias}</p>*/}
-                                <IngredientThumbnail ingredient_name={selectedIngredients[1].alias}
-                                                     ingredient_id={selectedIngredients[1].entityID}
-                                                     font_size={'10px'}/>
-                            </div>
-                        </div>
-                    )}
-                </div>
-
-                <div style={{position: 'relative', marginLeft: '30px'}}>
-                    <button onClick={handleShowSelectedIngredients} style={{whiteSpace: 'pre-line'}}>
-                        Compare<br/>Ingredients
-                    </button>
-                </div>
-
                 <div
                     style={{
                         display: 'flex',
@@ -295,68 +189,174 @@ function App() {
             </div>
             <div className="main-layout"
                  style={{display: 'flex', flexGrow: 1, marginTop: '60px', position: 'relative', top: '3%',}}>
-                <div style={{display: 'flex', transition: 'width 0.2s ease-in-out'}}>
+                <div style={{
+                    display: 'flex',
+                    transition: 'width 0.2s ease-in-out'
+                }}>
                     <div className="left-column" style={{
                         flex: '1',
                         position: 'fixed',
-                        width: leftColumnVisible ? '225px' : '0',
+                        width: '225px',
                         height: '100%',
                         backgroundColor: leftColumnColor,
                         boxSizing: 'border-box',
                         overflowY: 'auto',
                         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.5)',
-                        transition: 'width 0.2s ease-in-out', // Ensure the left column also has the transition
+                        transition: 'transform 0.2s ease-in-out', // Transition for moving left
+                        transform: leftColumnVisible ? 'translateX(0)' : 'translateX(-225px)', // Use translateX for movement
                     }}>
-                        {/*{selectedIngredients.length > 0 && (*/}
-                        {/*    <div>*/}
-                        {/*        <button*/}
-                        {/*            onClick={() => handleRemoveIngredient(0)}>Remove {selectedIngredients[0].alias}</button>*/}
-                        {/*        {selectedIngredients.length > 1 && (*/}
-                        {/*            <button*/}
-                        {/*                onClick={() => handleRemoveIngredient(1)}>Remove {selectedIngredients[1].alias}</button>*/}
-                        {/*        )}*/}
-                        {/*    </div>*/}
-                        {/*)}*/}
-                        {/*<button onClick={handleShowSelectedIngredients}>Show Selected Ingredients</button>*/}
-                        <h3>Search Filters</h3>
-                        <ul>
-                            <li>Filter 1</li>
-                            <li>Filter 2</li>
-                            <li>Filter 2</li>
-                            <li>Filter 2</li>
-                            <li>Filter 2</li>
-                            <li>Filter 2</li>
-                            <li>Filter 2</li>
-                            <li>Filter 2</li>
-                            <li>Filter 2</li>
-                            <li>Filter 2</li>
-                            <li>Filter 2</li>
-                            <li>Filter 2</li>
-                            <li>Filter 1</li>
-                            <li>Filter 2</li>
-                            <li>Filter 2</li>
-                            <li>Filter 2</li>
-                            <li>Filter 2</li>
-                            <li>Filter 2</li>
-                            <li>Filter 2</li>
-                            <li>Filter 2</li>
-                            <li>Filter 2</li>
-                            <li>Filter 2</li>
-                            <li>Filter 2</li>
-                            <li>Filter 2</li>
-                            <li>Filter 1</li>
-                            <li>Filter 2</li>
-                            <li>Filter 2</li>
-                            <li>Filter 2</li>
-                            <li>Filter 2</li>
-                            <li>Filter 2</li>
-                            <li>Filter 2</li>
-                            <li>Filter 2</li>
-                            <li>Filter 2</li>
-                            <li>Filter 2</li>
-                            <li>Filter 2</li>
-                            <li>Filter 2</li>
-                        </ul>
+                        <div style={{
+                            backgroundColor: navBarColor,
+                            position: 'fixed',
+                            width: '225px',
+                            overflow: 'hidden', // Hide content when width is '0'
+                            // transition: 'width 0.3s ease', // Add transition effect for smoother animation
+                            transition: 'width 0.2s ease-in-out', // Ensure the left column also has the transition
+                            boxShadow: '0 4px 8px -4px rgba(0, 0, 0, 0.5)',
+                        }}>
+                            <div style={{
+                                display: 'flex',
+                                flexDirection: 'row',
+                                padding: '1%',
+                                marginTop: '15px',
+                            }}>
+
+                                {/* First div */}
+                                <div style={{
+                                    position: 'relative',
+                                    height: '75px',
+                                    width: '30%',
+                                    // transform: leftColumnVisible ? 'translateX(0)' : 'translateX(-100%)', // Move left offscreen
+                                    backgroundColor: selectionColor,
+                                    borderRadius: '8px',
+                                    marginLeft: '25px',
+                                    // transition: 'transform 0.3s ease', // Add transition effect
+                                }}>
+                                    {selectedIngredients.length > 0 && (
+                                        <div style={{
+                                            position: 'relative',
+                                            height: '100%',
+                                        }}>
+                                            <div style={{
+                                                position: 'relative',
+                                                zIndex: 3,
+                                                width: '50%',
+                                                marginLeft: '90%'
+                                            }}>
+                                                <button
+                                                    onClick={() => handleRemoveIngredient(0)}
+                                                    style={{
+                                                        backgroundColor: buttonBackgroundColor,
+                                                        border: 'none',
+                                                        cursor: 'pointer'
+                                                    }}>
+                                                    <FaTimes/>
+                                                </button>
+                                            </div>
+                                            <div
+                                                style={{
+                                                    position: 'absolute',
+                                                    top: 0,
+                                                    left: 0,
+                                                    width: '100%',
+                                                    height: '100%',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    zIndex: 2,
+                                                }}
+                                            >
+                                                <IngredientThumbnail ingredient_name={selectedIngredients[0].alias}
+                                                                     ingredient_id={selectedIngredients[0].entityID}
+                                                                     font_size={'10px'}/>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Second div */}
+                                <div style={{
+                                    position: 'relative',
+                                    height: '75px',
+                                    width: '30%',
+                                    // transform: leftColumnVisible ? 'translateX(0)' : 'translateX(-100%)', // Move left offscreen
+                                    backgroundColor: selectionColor,
+                                    borderRadius: '8px',
+                                    marginLeft: '35px',
+                                    // transition: 'transform 0.3s ease', // Add transition effect
+                                }}>
+                                    {selectedIngredients.length > 1 && (
+                                        <div style={{
+                                            position: 'relative',
+                                            height: '100%',
+                                        }}>
+                                            <div style={{
+                                                position: 'relative',
+                                                zIndex: 3,
+                                                width: '50%',
+                                                marginLeft: '90%'
+                                            }}>
+                                                <button
+                                                    onClick={() => handleRemoveIngredient(1)}
+                                                    style={{
+                                                        backgroundColor: buttonBackgroundColor,
+                                                        border: 'none',
+                                                        cursor: 'pointer'
+                                                    }}>
+                                                    <FaTimes/>
+                                                </button>
+                                            </div>
+                                            <div
+                                                style={{
+                                                    position: 'absolute',
+                                                    top: 0,
+                                                    left: 0,
+                                                    width: '100%',
+                                                    height: '100%',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    zIndex: 2,
+                                                }}
+                                            >
+                                                <IngredientThumbnail ingredient_name={selectedIngredients[1].alias}
+                                                                     ingredient_id={selectedIngredients[1].entityID}
+                                                                     font_size={'10px'}/>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+
+                            </div>
+
+                            {/* Compare Ingredients button */}
+                            <div style={{position: 'relative', padding: '1%'}}>
+                                <button onClick={handleShowSelectedIngredients}
+                                        style={{
+                                            whiteSpace: 'pre-line',
+                                            width: '90%',
+                                            marginTop: '5%',
+                                            marginBottom: '5%'
+                                        }}>
+                                    Compare<br/>Ingredients
+                                </button>
+                            </div>
+                        </div>
+                        {/* Search Filters */}
+                        <div style={{
+                            // transition: 'transform 0.3s ease',
+                            // transform: leftColumnVisible ? 'translateX(0)' : 'translateX(-100%)', // Move left offscreen
+                            overflow: 'hidden', // Hide content when width is '0'
+                        }}>
+                            <h3 style={{marginTop: '160px'}}>Search Filters</h3>
+                            <ul>
+                                <li>Filter 1</li>
+                                <li>Filter 2</li>
+                                <li>Filter 3</li>
+                                <li>Filter 4</li>
+                                <li>Filter 5</li>
+                            </ul>
+                        </div>
                     </div>
                     <div style={{
                         // backgroundColor: 'red',
@@ -422,7 +422,7 @@ function App() {
                         position: 'fixed',
                         top: '50%',
                         left: '50%',
-                        transform: 'translate(-50%, -50%)',
+                        // transform: 'translate(-50%, -50%)',
                         width: '100%',
                         height: '100%',
                         backgroundColor: ingredientBackgroundColor,
