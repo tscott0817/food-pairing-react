@@ -422,9 +422,9 @@ function App() {
                         position: 'fixed',
                         top: '50%',
                         left: '50%',
-                        // transform: 'translate(-50%, -50%)',
-                        width: '100%',
-                        height: '100%',
+                        transform: 'translate(-50%, -50%)',
+                         width: '110%',  // 110% because some weird whitespace shows on window resize
+                        height: '110%',
                         backgroundColor: ingredientBackgroundColor,
                         zIndex: 1,
                         // overflowY: 'auto', // Add this line to enable scrolling
@@ -435,7 +435,7 @@ function App() {
                     }}
                         // onClick={() => setComparisonVisible(false)}  // Close comparison when clicking on the background overlay
                     >
-                        <div style={{width: '75%', height: '95%'}}>
+                        <div style={{width: '65%', height: '85%'}}>
                             <CompareIngredientsGlobal
                                 ingredient1={selectedIngredients[0]}
                                 ingredient2={selectedIngredients[1]}
