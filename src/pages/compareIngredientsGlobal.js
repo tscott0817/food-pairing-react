@@ -78,7 +78,7 @@ const CompareIngredientsGlobal = ({ingredient1, ingredient2}) => {
             fontFamily: 'Roboto, sans-serif',
             backgroundColor: pageColor,
             width: '100%',
-            minWidth: '900px', // TODO: Make this a proportion of the users screen size instead of hardcoding
+            // minWidth: '900px', // TODO: Make this a proportion of the users screen size instead of hardcoding
             height: '100%',
             margin: '0 auto',
             padding: '20px',
@@ -96,6 +96,7 @@ const CompareIngredientsGlobal = ({ingredient1, ingredient2}) => {
                 transition: 'opacity .5s ease-in-out',
                 width: '100%',
                 height: '100%',
+                marginTop: '2%',
 
             }}>
                 <IngredientCombinedCard ingredient1={ingredient1} ingredient2={ingredient2}/>

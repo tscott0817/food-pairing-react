@@ -112,6 +112,7 @@ const DefaultPage = ({setSelectedIngredientRef, handleDisplayIngredient, searchQ
                             minWidth: '250px',
                             height: '40vh',
                             minHeight: '275px',
+                            // maxWidth: '300px',
                             opacity: 0,
                             transform: 'translateX(-30px)',
                             transition: 'opacity 0.5s, transform 0.5s',

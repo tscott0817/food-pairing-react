@@ -7,6 +7,9 @@ import {useIngredientContext} from "./stateManager/IngredientContext";
 import MouseTracker from "./components/mouseTracker";
 import IngredientThumbnail from "./components/cards/ingredientThumbnail";
 import {FaTimes} from 'react-icons/fa';
+import {FaArrowLeft} from "react-icons/fa";
+import {FaRegChartBar} from "react-icons/fa";
+import {FaChartLine} from "react-icons/fa";
 
 import {
     ingredientBackgroundColor,
@@ -329,16 +332,26 @@ function App() {
 
                             </div>
 
-                            {/* Compare Ingredients button */}
+
                             <div style={{position: 'relative', padding: '1%'}}>
-                                <button onClick={handleShowSelectedIngredients}
-                                        style={{
-                                            whiteSpace: 'pre-line',
-                                            width: '90%',
-                                            marginTop: '5%',
-                                            marginBottom: '5%'
-                                        }}>
-                                    Compare<br/>Ingredients
+                                <button onClick={handleShowSelectedIngredients} style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    whiteSpace: 'pre-line',
+                                    width: '90%',
+                                    marginTop: '5%',
+                                    marginBottom: '5%',
+                                    marginLeft: '5%',
+                                    padding: '10px', // Add padding for better aesthetics
+                                    backgroundColor: buttonColorArrow, // Set background color
+                                    color: '#f4f3f2', // Set text color
+                                    border: 'none', // Remove default button border
+                                    borderRadius: '5px', // Add border-radius for rounded corners
+                                    cursor: 'pointer', // Add pointer cursor on hover
+                                }}>
+                                    <FaRegChartBar style={{marginRight: '10px'}}/> Compare Ingredients
+                                    {/*<FaChartLine style={{marginRight: '10px'}}/> Compare Ingredients*/}
                                 </button>
                             </div>
                         </div>
@@ -402,19 +415,43 @@ function App() {
                 {displayIngredient && (
                     <div style={{
                         position: 'fixed',
-                        top: 0,
-                        left: 0,
-                        width: '100%',
-                        height: '100%',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: '110%',  // 110% because some weird whitespace shows on window resize
+                        height: '110%',
                         backgroundColor: ingredientBackgroundColor,
-                        zIndex: 1  // TODO: Not sure if I want 0 or 1
+                        zIndex: 1,
+                        // overflowY: 'auto', // Add this line to enable scrolling
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
                     }}>
-                        <IngredientPage ingredient={selectedIngredientRef.current}/>
-                        <div>
-                            <button onClick={() => setDisplayIngredient(false)}>Go Back</button>
+                        <div style={{
+                            width: '65%',
+                            minWidth: '900px',
+                            height: '85%',
+                            minHeight: '85%',
+                            position: 'relative', // Add this line to make the position relative
+                        }}>
+                            <FaArrowLeft
+                                onClick={() => setDisplayIngredient(false)}
+                                style={{
+                                    position: 'absolute',
+                                    top: 10, // Adjust the top value to your preference
+                                    left: 10, // Adjust the left value to your preference
+                                    cursor: 'pointer',
+                                    fontSize: '24px', // Adjust the font size as needed
+                                    color: buttonColorArrow, // Adjust the color as needed
+                                    zIndex: 2,
+                                }}
+                            />
+                            <IngredientPage ingredient={selectedIngredientRef.current}/>
                         </div>
                     </div>
                 )}
+
 
                 {/*TODO: FOR IF I WANT TO SHOW THE COMPARISON AS OVERLAY*/}
                 {comparisonVisible && (
@@ -423,7 +460,7 @@ function App() {
                         top: '50%',
                         left: '50%',
                         transform: 'translate(-50%, -50%)',
-                         width: '110%',  // 110% because some weird whitespace shows on window resize
+                        width: '110%',  // 110% because some weird whitespace shows on window resize
                         height: '110%',
                         backgroundColor: ingredientBackgroundColor,
                         zIndex: 1,
@@ -435,17 +472,32 @@ function App() {
                     }}
                         // onClick={() => setComparisonVisible(false)}  // Close comparison when clicking on the background overlay
                     >
-                        <div style={{width: '65%', height: '85%'}}>
+                        <div style={{
+                            width: '65%',
+                            height: '85%',
+                            minWidth: '900px',
+                            position: 'relative', // Add this line to make the position relative
+                        }}>
+                            <FaArrowLeft
+                                onClick={() => setComparisonVisible(false)}
+                                style={{
+                                    position: 'absolute',
+                                    top: 10, // Adjust the top value to your preference
+                                    left: 10, // Adjust the left value to your preference
+                                    cursor: 'pointer',
+                                    fontSize: '24px', // Adjust the font size as needed
+                                    color: buttonColorArrow, // Adjust the color as needed
+                                    zIndex: 2,
+                                }}
+                            />
                             <CompareIngredientsGlobal
                                 ingredient1={selectedIngredients[0]}
                                 ingredient2={selectedIngredients[1]}
                             />
                         </div>
-                        <button onClick={() => setComparisonVisible(false)} style={{marginLeft: '8px'}}>
-                            Go Back
-                        </button>
                     </div>
                 )}
+
             </div>
         </div>
     );
