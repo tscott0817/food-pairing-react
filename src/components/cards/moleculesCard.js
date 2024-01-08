@@ -46,52 +46,73 @@ const MoleculesCard = ({ingredientName, moleculeData}) => {
             <div
                 style={{
                     // fontFamily: 'Roboto, sans-serif',
-                    backgroundColor: sectionItemColor,
+                    // backgroundColor: 'pink',
                     minWidth: '250px',
                     maxWidth: '20vw',
-                    height: '50vh',
-                    minHeight: '400px',
+                    height: '400px',
+                    // minHeight: '400px',
                     borderTopLeftRadius: '8px',
                     borderBottomLeftRadius: '8px',
                     // margin: '1%',
                     marginTop: '1%',
                     marginBottom: '1%',
                     marginLeft: '1%',
-                    padding: '1%',
-                    overflow: 'auto',
+                    // padding: '1%',
+                    overflow: 'hidden',
                     fontSize: '1em',
                     // border: '1px solid #000',
                     // borderRight: '1px solid #000',
-                    boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
+                    // boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
+                    borderRight: '1px solid #232b2b',
                     // boxSizing: 'border-box',
                     textAlign: 'left',
                     zIndex: 1,
                 }}
             >
-                <h2
-                    style={{
-                        borderBottom: '1px solid #232b2b',
-                        marginLeft: '2.5%',
-                        width: '95%',
-                        marginBottom: '10px',
-                    }}
-                >
-                    Molecules
-                </h2>
-                {moleculeData.molecules.length > 0 ? (
-                    moleculeData.molecules.map((detail, index) => (
-                        <div key={index} onClick={() => handleMoleculeClick(detail)} style={{cursor: 'pointer', marginBottom: '10px'}}>
-                            <p>{detail.commonName}</p>
-                        </div>
-                    ))
-                ) : (
-                    <p>No Molecules!</p>
-                )}
+                <div style={{
+                    // backgroundColor: 'blue',
+                    // marginTop: '30px',
+                    // marginTop: '5%',
+                }}>
+                    <h2
+                        style={{
+                            borderBottom: '1px solid #232b2b',
+                            marginLeft: '2.5%',
+                            width: '95%',
+                            // marginBottom: '10px',
+                            textAlign: 'center',
+                            // backgroundColor: 'red'
+                        }}
+                    >
+                        Molecules
+                    </h2>
+                </div>
+                <div style={{
+                    // backgroundColor: 'green',
+                    overflow: 'auto',
+                    // height: '93%',
+                    height: '370px',
+                    // paddingTop: '10px',
+                    padding: '5%',
+                    // borderRight: '1px solid #232b2b',
+                    // paddingBottom: '50px',
+                }}>
+                    {moleculeData.molecules.length > 0 ? (
+                        moleculeData.molecules.map((detail, index) => (
+                            <div key={index} onClick={() => handleMoleculeClick(detail)} style={{cursor: 'pointer', marginBottom: '10px', textAlign: 'center'}}>
+                                <p>{detail.commonName}</p>
+                            </div>
+                        ))
+                    ) : (
+                        <p>No Molecules!</p>
+                    )}
+                </div>
             </div>
             <div
                 style={{
                     // fontFamily: "Roboto, sans-serif",
-                    backgroundColor: sectionItemColor,
+                    // backgroundColor: sectionItemColor,
+                    // backgroundColor: 'red',
                     minWidth: "25vw",
                     width: "100%",
                     height: "50vh",
@@ -105,8 +126,9 @@ const MoleculesCard = ({ingredientName, moleculeData}) => {
                     // overflow: "auto",
                     overflow: "hidden",
                     fontSize: "1em",
+                    borderLeft: '1px solid #232b2b',
                     // border: "1px solid #000",
-                    boxShadow: "0 0 8px rgba(0, 0, 0, 0.5)",
+                    // boxShadow: "0 0 8px rgba(0, 0, 0, 0.5)",
                     // boxSizing: "border-box",
                 }}
             >
@@ -116,11 +138,11 @@ const MoleculesCard = ({ingredientName, moleculeData}) => {
                             style={{
                                 borderBottom: "1px solid #232b2b",
                                 // paddingBottom: "0.5em",
-                                marginLeft: "5%",
-                                width: "90%",
+                                marginLeft: "1%",
+                                width: "98%",
                             }}
                         >
-                            Displaying data for: {selectedMolecule.commonName}
+                            Viewing Molecule: {selectedMolecule.commonName}
                         </h2>
                         <div style={{
                             display: 'flex',
@@ -132,6 +154,7 @@ const MoleculesCard = ({ingredientName, moleculeData}) => {
                                 overflow: 'hidden',
                                 textAlign: 'left',
                                 padding: '2%',
+                                paddingTop: '2%',
                                 opacity: isVisible ? 1 : 0, // Set opacity based on visibility flag
                                 transition: "opacity 0.5s ease",
                                 // border: '1px solid #000',
@@ -185,8 +208,8 @@ const MoleculesCard = ({ingredientName, moleculeData}) => {
                                 // backgroundColor: 'red',
                                 padding: '2%',
                                 display: 'flex',
-                                marginLeft: '10%',
-                                marginTop: '10px',
+                                marginLeft: '15%',
+                                marginTop: '15px',
                                 justifyContent: 'center',
                                 alignItems: 'center',
                                 flexDirection: 'column',  // Stack the items vertically
@@ -199,8 +222,8 @@ const MoleculesCard = ({ingredientName, moleculeData}) => {
                                         src={moleculeImage}
                                         alt={`Molecule: ${selectedMolecule.commonName}`}
                                         style={{
-                                            width: '200px',
-                                            height: '200px',
+                                            width: '225px',
+                                            height: '225px',
                                             borderRadius: 8,
                                             boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
                                         }}

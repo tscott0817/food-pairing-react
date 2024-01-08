@@ -34,7 +34,7 @@ const ResultsCard = ({ingredient1, ingredient2, sharedMolecules}) => {
             padding: '2%',
             marginLeft: '2%',
             // border: '1px solid #000',
-            boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
+            // boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
             // boxSizing: 'border-box',
             marginTop: '1%',
             marginBottom: '1%',

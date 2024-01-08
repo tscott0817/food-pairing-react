@@ -23,7 +23,7 @@ const CollapsibleComponent = ({ title, children, isCollapsed, onToggle }) => {
                     transition: 'background-color 0.3s',
                     backgroundColor: isCollapsed ? '#e0e0e0' : 'white',
                     borderRadius: '8px',
-                    boxShadow: '0 0 8px rgba(0, 0, 0, 0.2)',
+                    // boxShadow: '0 0 8px rgba(0, 0, 0, 0.2)',
                 }}
                 onClick={toggleCollapse}
             >

@@ -101,8 +101,8 @@ const IngredientPage = ({ingredient}) => {
                     flexDirection: 'column',
                 }}>
                     <div style={{
-                        backgroundColor: 'red',
-                        boxShadow: '0 0 8px rgba(0, 0, 0, 0.2)',
+                        // backgroundColor: 'red',
+                        // boxShadow: '0 0 8px rgba(0, 0, 0, 0.2)',
                     }}>
                         <div className="alias" style={{fontWeight: 'bold', fontSize: '1.5em'}}>
                             {ingredientData.alias.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
