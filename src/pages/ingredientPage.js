@@ -5,6 +5,7 @@ import {FaArrowDown, FaArrowRight} from "react-icons/fa";
 import CollapsibleComponent from '../components/collapsibleComponent';
 import SharedMoleculesCardSingle from "../components/cards/sharedMoleculeCardSingle";
 import MoleculesCard from "../components/cards/moleculesCard";
+import SimilarIngredientsCard from "../components/cards/similarIngredientsCard";
 
 const IngredientPage = ({ingredient}) => {
     const [ingredientData, setIngredientData] = useState(null);
@@ -78,15 +79,12 @@ const IngredientPage = ({ingredient}) => {
             fontFamily: 'Roboto, sans-serif',
             backgroundColor: pageColor,
             width: '100%',
-            // minWidth: '900px', // TODO: Make this a proportion of the users screen size instead of hardcoding
             height: '100%',
             margin: '0 auto',
             padding: '20px',
             paddingTop: '20px',
             borderRadius: '8px',
-            // border: '1px solid #000',
-            // boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
-            overflowY: 'auto',
+            // overflowY: 'auto',
             opacity: fadeIn ? 1 : 0,
             transition: 'opacity .3s ease-in-out',
         }}>
@@ -97,13 +95,14 @@ const IngredientPage = ({ingredient}) => {
                     transition: 'opacity .5s ease-in-out',
                     width: '100%',
                     height: '100%',
-                    marginTop: '2%',
-                    // overflowY: 'auto',
+                    overflowY: 'hidden',
+                    display: 'flex',
+                    flexDirection: 'column',
                 }}>
                     <div style={{
-                        // backgroundColor: 'red'
+                        // backgroundColor: 'red',
                     }}>
-                        <div className="alias" style={{fontWeight: 'bold', fontSize: '1.5em', marginBottom: '10px'}}>
+                        <div className="alias" style={{fontWeight: 'bold', fontSize: '1.5em'}}>
                             {ingredientData.alias.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
                         </div>
                         <div className="scientific-name" style={{fontSize: '0.8em', color: '#555'}}>
@@ -112,12 +111,18 @@ const IngredientPage = ({ingredient}) => {
                         <div className="category" style={{fontSize: '0.8em', color: '#555'}}>
                             Category: {ingredientData.category}
                         </div>
-                        <button onClick={handleAddToComparison}>Add to Comparison</button>
+                        <button onClick={handleAddToComparison} style={{margin: '1%'}}>Add to Comparison</button>
                         <hr className="separator"
-                            style={{margin: '20px 0', border: 'none', borderTop: '1px solid #ccc'}}/>
+                            style={{
+                                // margin: '10px 0',
+                                border: 'none',
+                                borderTop: '1px solid #ccc'
+                        }}/>
                     </div>
                     <div style={{
-                        // backgroundColor: 'yellow'
+                        // backgroundColor: 'yellow',
+                        padding: '1%',
+                        overflow: 'auto',
                     }}>
                         <CollapsibleComponent
                             title="Molecules"
@@ -131,22 +136,14 @@ const IngredientPage = ({ingredient}) => {
                             isCollapsed={isSuggestedCardCollapsed}
                             onToggle={() => setSuggestedCardCollapsed(!isSuggestedCardCollapsed)}
                         >
-                            <div style={{maxHeight: '40vh', overflowY: 'auto'}}>
-                                <div style={{columns: '3', columnGap: '20px'}}>
-                                    {sharedMoleculeCounts && sharedMoleculeCounts.map(([alias, count]) => (
-                                        <div key={alias} style={{marginBottom: '10px'}}>
-                                            <strong>{alias}:</strong> {count}
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
+                            <SimilarIngredientsCard sharedMoleculeCounts={sharedMoleculeCounts}/>
                         </CollapsibleComponent>
                     </div>
                 </div>
             )}
-            {/*<button onClick={handleAddToComparison}>Add to Comparison</button>*/}
         </div>
     );
+
 };
 
 export default IngredientPage;

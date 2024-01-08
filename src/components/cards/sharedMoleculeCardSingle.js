@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 import {pageSectionColor, sectionItemColor} from "../../colors";
 
+// TODO: Need to remove the hardcoding of the molecule array [0]...
+//  - The JSON returned is not that great, but my backend sucks so
 const SharedMoleculesCardSingle = ({ingredientName, moleculeData}) => {
     const [selectedMolecule, setSelectedMolecule] = useState(null);
     const [moleculeInfo, setMoleculeInfo] = useState(null);
@@ -8,12 +10,12 @@ const SharedMoleculesCardSingle = ({ingredientName, moleculeData}) => {
     const [isVisible, setIsVisible] = useState(true);
 
     const handleMoleculeClick = async (selected) => {
-        const response = await fetch(`http://localhost:5000/api/get_molecule_info/${selected.pubchemID}`);
+        const response = await fetch(`http://localhost:5000/api/get_molecule_info/${selected[1]}`);
         const data = await response.json();
 
         setIsVisible(false); // Start fading out
 
-        const moleculeResponse = await fetch(`http://localhost:5000/api/get_molecule_image/${selected.pubchemID}`);
+        const moleculeResponse = await fetch(`http://localhost:5000/api/get_molecule_image/${selected[1]}`);
         console.log("Molecule Image URL:", moleculeResponse.url); // Log the URL
         setMoleculeImage(moleculeResponse.url);
 
@@ -36,16 +38,12 @@ const SharedMoleculesCardSingle = ({ingredientName, moleculeData}) => {
                 minHeight: '400px',
                 borderRadius: '8px',
                 padding: '1%',
-                border: '1px solid #000',
-                boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
-                boxSizing: 'border-box',
-                // marginTop: '1%',
                 marginBottom: '1%',
             }}
         >
             <div
                 style={{
-                    fontFamily: 'Roboto, sans-serif',
+                    // fontFamily: 'Roboto, sans-serif',
                     backgroundColor: sectionItemColor,
                     minWidth: '250px',
                     maxWidth: '20vw',
@@ -60,10 +58,11 @@ const SharedMoleculesCardSingle = ({ingredientName, moleculeData}) => {
                     padding: '1%',
                     overflow: 'auto',
                     fontSize: '1em',
-                    border: '1px solid #000',
+                    // border: '1px solid #000',
+                    // borderRight: '1px solid #000',
                     boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
-                    boxSizing: 'border-box',
                     textAlign: 'left',
+                    zIndex: 1,
                 }}
             >
                 <h2
@@ -74,21 +73,22 @@ const SharedMoleculesCardSingle = ({ingredientName, moleculeData}) => {
                         marginBottom: '10px',
                     }}
                 >
-                    All Shared Molecules
+                    Molecules
                 </h2>
                 {moleculeData.length > 0 ? (
                     moleculeData.map((detail, index) => (
-                        <div key={index} onClick={() => handleMoleculeClick(detail)} style={{cursor: 'pointer'}}>
-                            <p>- {detail.commonName}</p>
+                        <div key={index} onClick={() => handleMoleculeClick(detail)}
+                             style={{cursor: 'pointer', marginBottom: '10px'}}>
+                            <p>{detail[2]}</p>
                         </div>
                     ))
                 ) : (
-                    <p>No Molecules In Common!</p>
+                    <p>No Molecules!</p>
                 )}
             </div>
             <div
                 style={{
-                    fontFamily: "Roboto, sans-serif",
+                    // fontFamily: "Roboto, sans-serif",
                     backgroundColor: sectionItemColor,
                     minWidth: "25vw",
                     width: "100%",
@@ -103,9 +103,9 @@ const SharedMoleculesCardSingle = ({ingredientName, moleculeData}) => {
                     // overflow: "auto",
                     overflow: "hidden",
                     fontSize: "1em",
-                    border: "1px solid #000",
+                    // border: "1px solid #000",
                     boxShadow: "0 0 8px rgba(0, 0, 0, 0.5)",
-                    boxSizing: "border-box",
+                    // boxSizing: "border-box",
                 }}
             >
                 {selectedMolecule ? (
@@ -118,57 +118,108 @@ const SharedMoleculesCardSingle = ({ingredientName, moleculeData}) => {
                                 width: "90%",
                             }}
                         >
-                            Displaying data for: {selectedMolecule.commonName}
+                            Displaying data for: {selectedMolecule[2]}
                         </h2>
                         <div style={{
                             display: 'flex',
                             flexDirection: 'row',
-                            backgroundColor: 'yellow'
+                            // backgroundColor: 'yellow'
                         }}>
-                            {/*<div style={{backgroundColor: 'yellow', overflow: 'hidden', textAlign: 'left', padding: '1%'}}>*/}
                             <div style={{
+                                // backgroundColor: 'yellow',
                                 overflow: 'hidden',
                                 textAlign: 'left',
-                                padding: '1%',
-                                backgroundColor: 'red',
+                                padding: '2%',
                                 opacity: isVisible ? 1 : 0, // Set opacity based on visibility flag
                                 transition: "opacity 0.5s ease",
+                                // border: '1px solid #000',
+                                // borderRadius: '8px',
+                                // boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
+                                marginLeft: '8%',
+                                marginTop: '10px',
+                                // marginTop: '3%',
                             }}>
-                                {/* Render all data contents of the selected molecule */}
-                                {Object.entries(moleculeInfo.Properties).map(([key, value]) => (
-                                    <div key={key} style={{}}>
-                                        <strong>{key}:</strong>{" "}
-                                        {typeof value === "object" ? JSON.stringify(value) : value}
-                                    </div>
-                                ))}
+                                <div style={{
+                                    // marginTop: '1%',
+                                }}>
+                                    <strong>PubChemID:</strong> {moleculeInfo.PubChemID}
+                                </div>
+                                {/*<div><strong>Molecular Formula:</strong> {moleculeInfo.Properties["Molecular Formula"].sval}</div>*/}
+                                <div style={{
+                                    marginTop: '5%',
+                                }}>
+                                    <strong>Molecular Formula:</strong>{" "}
+                                    {moleculeInfo.Properties["Molecular Formula"].sval.split("").map((char, index) => (
+                                        <span
+                                            key={index}
+                                            style={{
+                                                verticalAlign: /\d/.test(char) ? "sub" : "baseline",
+                                                fontSize: /\d/.test(char) ? "75%" : "100%",
+                                            }}
+                                        >
+                                          {char}
+                                        </span>
+                                    ))}
+                                </div>
+                                <div style={{
+                                    marginTop: '5%',
+                                }}>
+                                    <strong>Molecular
+                                        Weight:</strong> {moleculeInfo.Properties["Molecular Weight"].sval} g/mol
+                                </div>
+                                <div style={{marginTop: '5%'}}>
+                                    <strong>Flavor Profiles:</strong>
+                                    {selectedMolecule[3]
+                                        .slice(1, -1)
+                                        .split(',')
+                                        .map((flavor, index) => (
+                                            <div key={index}>
+                                                <p>- {flavor.trim().replace(/'/g, '')}</p>
+                                            </div>
+                                        ))}
+                                </div>
                             </div>
                             <div style={{
-                                backgroundColor: 'blue',
-                                width: '100%',
-                                height: '100%',
-                                // marginRight: '10%',
+                                // backgroundColor: 'red',
                                 padding: '2%',
-                                // borderRadius: '8px',
-                                // overflow: 'hidden',
                                 display: 'flex',
+                                marginLeft: '10%',
+                                marginTop: '10px',
                                 justifyContent: 'center',
                                 alignItems: 'center',
-                                // marginTop: '2.5%',
-                                opacity: isVisible ? 1 : 0, // Set opacity based on visibility flag
+                                flexDirection: 'column',  // Stack the items vertically
+                                opacity: isVisible ? 1 : 0,
                                 transition: "opacity 0.5s ease",
                             }}>
                                 {/* Display the image */}
                                 {moleculeImage && (
                                     <img
                                         src={moleculeImage}
-                                        alt={`Molecule: ${selectedMolecule.commonName}`}
+                                        alt={`Molecule: ${selectedMolecule[2]}`}
                                         style={{
                                             width: '200px',
                                             height: '200px',
-                                            borderRadius: 25,
+                                            borderRadius: 8,
+                                            boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
                                         }}
                                     />
                                 )}
+                                <div style={{marginTop: '10px'}}>
+                                    <button
+                                        style={{
+                                            marginTop: '40px',
+                                            padding: '10px',
+                                            backgroundColor: 'blue',
+                                            color: 'white',
+                                            border: 'none',
+                                            borderRadius: '5px',
+                                            cursor: 'pointer',
+                                        }}
+                                        onClick={() => window.open(`https://pubchem.ncbi.nlm.nih.gov/compound/${moleculeInfo.PubChemID}`, '_blank')}
+                                    >
+                                        View on PubChem
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
