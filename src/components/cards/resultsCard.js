@@ -11,9 +11,9 @@ const ResultsCard = ({ingredient1, ingredient2}) => {
     //  - Flavor profile commonality, molecule commonality, and...?
     //      -- weighted ratio of those molecules/flavor profiles per total molecules/flavor profiles of each
     //      -- idk if that makes sense
-    const radialBarChartData = [
-        {id: 'Match', value: 75},
-    ];
+    const color1 = '#4CAF50';
+    const color2 = '#2196F3';
+    const color3 = '#FFC107';
 
     return (
         <div style={{
@@ -44,15 +44,9 @@ const ResultsCard = ({ingredient1, ingredient2}) => {
                 boxSizing: 'border-box',
                 // overflow: 'hidden',
             }}>
-                {/*<div style={{width: '100%', height: '50%', overflow: 'hidden'}}>*/}
-                {/*    <IngredientCard ingredient={ingredient1}/>*/}
-                {/*</div>*/}
-                {/*<div style={{width: '100%', height: '50%', overflow: 'hidden'}}>*/}
-                {/*    <IngredientCard ingredient={ingredient2}/>*/}
-                {/*</div>*/}
             </div>
             <div style={{
-                backgroundColor: sectionItemColor,
+                // backgroundColor: 'red',
                 minWidth: '25vw',
                 width: '50%',
                 height: '100%',
@@ -62,21 +56,70 @@ const ResultsCard = ({ingredient1, ingredient2}) => {
                 border: '1px solid #000',
                 boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
                 boxSizing: 'border-box',
+                position: 'relative',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
             }}>
                 <ResponsiveRadialBar
-                    data={radialBarChartData.map((d) => ({...d, data: [{x: d.id, y: d.value, color: '#4CAF50'}]}))}
+                    data={[
+                        {
+                            // id: 'Result 1',
+                            data: [{x: 'Jaccard', y: 75}],
+                        },
+                        {
+                            // id: 'Result 2',
+                            data: [{x: 'Cos', y: 50}],
+                        },
+                        {
+                            // id: 'Result 3',
+                            data: [{x: 'Euclidean', y: 20}],
+                        },
+                    ]}
                     keys={['value']}
                     indexBy="id"
-                    maxValue={100}  // Set the maximum value
-                    margin={{top: 50, right: 30, bottom: 50, left: 30}}
-                    padding={0.3}
-                    colors={['#fff']}  // Background color (outline)
                     innerRadius={0.5}
                     startAngle={-180}  // Adjusted to make it a full circle
                     endAngle={180}  // Adjusted to make it a full circle
                     enableGridX={false}
                     enableGridY={false}
+                    valueFormat=">-.2f"
+                    padding={0.4}
+                    maxValue={100}
+                    cornerRadius={2}
+                    margin={{top: 40, right: 0, bottom: 40, left: 0}}
+                    radialAxisStart={{tickSize: 5, tickPadding: 5, tickRotation: 0}}
+                    circularAxisOuter={{tickSize: 5, tickPadding: 12, tickRotation: 0}}
+                    legends={[
+                        {
+                            anchor: 'top-left',
+                            direction: 'column',
+                            justify: false,
+                            translateX: 10,
+                            translateY: -25,
+                            itemsSpacing: 6,
+                            itemDirection: 'left-to-right',
+                            itemWidth: 100,
+                            itemHeight: 18,
+                            itemTextColor: '#999',
+                            symbolSize: 18,
+                            symbolShape: 'square',
+                            effects: [
+                                {
+                                    on: 'hover',
+                                    style: {
+                                        itemTextColor: '#000'
+                                    }
+                                }
+                            ]
+                        }
+                    ]}
+                    colors={{scheme: 'nivo'}}
                 />
+                <div style={{position: 'absolute', top: '50%', transform: 'translateY(-50%)'}}>
+                    <p>75%</p>
+                </div>
             </div>
         </div>
     );
