@@ -138,15 +138,15 @@ const ResultsCard = ({ingredient1, ingredient2, sharedMolecules}) => {
                 <ResponsiveRadialBar
                     data={[
                         {
-                            // id: 'Result 1',
+                            id: 'Result 1',
                             data: [{x: 'Jaccard', y: 75}],
                         },
                         {
-                            // id: 'Result 2',
+                            id: 'Result 2',
                             data: [{x: 'Cos', y: 50}],
                         },
                         {
-                            // id: 'Result 3',
+                            id: 'Result 3',
                             data: [{x: 'Euclidean', y: 20}],
                         },
                     ]}

@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {sectionItemColor} from "../../colors";
 
+
 const MoleculesCard = ({ingredientName, moleculeData}) => {
     const [selectedMolecule, setSelectedMolecule] = useState(null);
     const [moleculeInfo, setMoleculeInfo] = useState(null);
