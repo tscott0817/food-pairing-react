@@ -67,6 +67,7 @@ const SharedMoleculesFlavorsCard = ({moleculeData}) => {
     return (<div style={{
             display: 'flex',
             backgroundColor: pageSectionColor,
+            width: '96%',
             borderRadius: '8px',
             padding: "1%",
             border: '1px solid #000',
@@ -74,6 +75,7 @@ const SharedMoleculesFlavorsCard = ({moleculeData}) => {
             boxSizing: 'border-box',
             // marginTop: '1%',
             marginBottom: '1%',
+            marginLeft: '2%',
         }}>
             <div style={{
                 fontFamily: 'Roboto, sans-serif',

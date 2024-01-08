@@ -6,25 +6,27 @@ const IngredientCombinedCard = ({ingredient1, ingredient2}) => {
     return (
         <div style={{
             display: 'flex',
-            backgroundColor: pageSectionColor,
+            // backgroundColor: 'red',
             borderRadius: '8px',
-            padding: '1%',
+            // padding: '1%',
             justifyContent: 'space-between',
-            border: '1px solid #000',
-            boxSizing: 'border-box',
-            boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)'
+            // marginBottom: '20px',
+            // border: '1px solid #000',
+            // boxSizing: 'border-box',
+            // boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)'
         }}>
             <div style={{
                 fontFamily: 'Roboto, sans-serif',
                 backgroundColor: sectionItemColor,
                 width: '50%',
+                height: '100%',
                 borderRadius: '8px',
                 margin: '1%',
-                overflow: 'auto',
+                // overflow: 'auto',
                 fontSize: '1em',
-                border: '1px solid #000',
-                boxSizing: 'border-box',
-                boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
+                // border: '1px solid #000',
+                // boxSizing: 'border-box',
+                // boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
             }}>
                 <IngredientCard ingredient={ingredient1}/>
             </div>
@@ -37,12 +39,12 @@ const IngredientCombinedCard = ({ingredient1, ingredient2}) => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '1.5em',
+                fontSize: '1em',
                 fontWeight: 'bold',
-                color: 'white',
-                border: '1px solid #000',
-                boxSizing: 'border-box',
-                boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
+                // color: 'white',
+                // border: '1px solid #000',
+                // boxSizing: 'border-box',
+                // boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
             }}>VS
             </div>
             <div style={{
@@ -51,11 +53,11 @@ const IngredientCombinedCard = ({ingredient1, ingredient2}) => {
                 width: '50%',
                 borderRadius: '8px',
                 margin: '1%',
-                overflow: 'auto',
+                // overflow: 'auto',
                 fontSize: '1em',
-                border: '1px solid #000',
-                boxSizing: 'border-box',
-                boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
+                // border: '1px solid #000',
+                // boxSizing: 'border-box',
+                // boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
             }}>
                 <IngredientCard ingredient={ingredient2}/>
             </div>

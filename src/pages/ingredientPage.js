@@ -78,6 +78,7 @@ const IngredientPage = ({ingredient}) => {
         <div style={{
             fontFamily: 'Roboto, sans-serif',
             backgroundColor: pageColor,
+            // backgroundColor: 'blue',
             width: '100%',
             height: '100%',
             margin: '0 auto',
@@ -100,7 +101,8 @@ const IngredientPage = ({ingredient}) => {
                     flexDirection: 'column',
                 }}>
                     <div style={{
-                        // backgroundColor: 'red',
+                        backgroundColor: 'red',
+                        boxShadow: '0 0 8px rgba(0, 0, 0, 0.2)',
                     }}>
                         <div className="alias" style={{fontWeight: 'bold', fontSize: '1.5em'}}>
                             {ingredientData.alias.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
@@ -116,12 +118,13 @@ const IngredientPage = ({ingredient}) => {
                             style={{
                                 // margin: '10px 0',
                                 border: 'none',
-                                borderTop: '1px solid #ccc'
+                                borderTop: '1px solid #ccc',
                         }}/>
                     </div>
                     <div style={{
                         // backgroundColor: 'yellow',
                         padding: '1%',
+                        paddingTop: '2%',
                         overflow: 'auto',
                     }}>
                         <CollapsibleComponent

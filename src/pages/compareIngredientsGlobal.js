@@ -7,6 +7,9 @@ import {windowColor, pageColor, pageSectionColor, sectionItemColor, mainAppColor
 import {FaArrowDown, FaArrowUp, FaArrowRight} from "react-icons/fa";
 import CollapsibleComponent from "../components/collapsibleComponent";
 
+// TODO: Prop drilling with ingredient1 and ingredient2
+//  - It goes from App.js -> Here -> ResultsCard -> IngredientCard
+//  - Need to use CONTEXT instead to make the ingredients global values
 const CompareIngredientsGlobal = ({ingredient1, ingredient2}) => {
     const [sharedMolecules, setSharedMolecules] = useState([]);
     const [radarData, setRadarData] = useState(null);
@@ -68,30 +71,49 @@ const CompareIngredientsGlobal = ({ingredient1, ingredient2}) => {
         <div style={{
             fontFamily: 'Roboto, sans-serif',
             backgroundColor: pageColor,
+            // backgroundColor: 'blue',
             width: '100%',
             // minWidth: '900px', // TODO: Make this a proportion of the users screen size instead of hardcoding
             height: '100%',
             margin: '0 auto',
             padding: '20px',
-            paddingTop: '20px',
+            // paddingLeft: '1%',
+            // padingRight: '1%',
             borderRadius: '8px',
             // border: '1px solid #000',
             // boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
-            overflowY: 'auto',
+            overflowY: 'hidden',
             opacity: fadeIn ? 1 : 0,
             transition: 'opacity .3s ease-in-out',
 
         }}>
             <div style={{
+                // backgroundColor: 'red',
+            }}>
+                <IngredientCombinedCard ingredient1={ingredient1} ingredient2={ingredient2}/>
+                <hr
+                    className="separator"
+                    style={{
+                        // boxShadow: '0 2px 4px rgba(0, 0, 0, 0.5)', // Adjust values as needed
+                        border: 'none',
+                        borderTop: '1px solid #ccc',
+                    }}
+                />
+            </div>
+            <div style={{
                 opacity: fadeIn ? 1 : 0,
                 transition: 'opacity .5s ease-in-out',
                 width: '100%',
                 height: '100%',
-                marginTop: '2%',
-
+                // marginTop: '1%',
+                // backgroundColor: 'yellow',
+                overflowY: 'auto',
+                padding: '1%',
+                // paddingTop: '2%',
+                paddingBottom: '10%',
+                overflow: 'auto',
             }}>
-                <IngredientCombinedCard ingredient1={ingredient1} ingredient2={ingredient2}/>
-                <ResultsCard ingredient1={ingredient1} ingredient2={ingredient2}/>
+                <ResultsCard ingredient1={ingredient1} ingredient2={ingredient2} sharedMolecules={sharedMolecules}/>
                 <CollapsibleComponent
                     title="Shared Molecules"
                     isCollapsed={isMoleculeCardCollapsed}

@@ -36,9 +36,9 @@ const IngredientCard = ({ingredient}) => {
                 <div
                     style={{
                         width: '100%',
-                        height: '100%',
-                        padding: '20px',
-                        borderRadius: '8px',
+                        height: '60px',
+                        // padding: '20px',
+                        // borderRadius: '8px',
                     }}
                 >
                     <div
@@ -49,7 +49,7 @@ const IngredientCard = ({ingredient}) => {
                             className="alias"
                             style={{
                                 fontWeight: 'bold',
-                                fontSize: '1.5vw', // Use vw or vh for responsive font size
+                                // fontSize: '1.5vw',
                                 marginBottom: '10px',
                             }}
                         >
@@ -63,40 +63,33 @@ const IngredientCard = ({ingredient}) => {
                         </div>
                         <div
                             className="scientific-name"
-                            style={{fontSize: '0.8vw', color: '#555'}}
+                            style={{
+                                // fontSize: '0.8vw',
+                                fontSize: '10px',
+                                color: '#555'
+                        }}
                         >
                             Scientific Name: {ingredientData.scientificName}
                         </div>
                         <div
                             className="category"
-                            style={{fontSize: '0.8vw', color: '#555'}}
+                            style={{
+                                // fontSize: '0.8vw',
+                                fontSize: '10px',
+                                color: '#555'
+                        }}
                         >
                             Category: {ingredientData.category}
                         </div>
                     </div>
-                    <hr
-                        className="separator"
-                        style={{
-                            margin: '1%',
-                            border: 'none',
-                            borderTop: '1px solid #ccc',
-                        }}
-                    />
-
-                    {/*/!* Molecules Section (Replace placeholders with actual data) *!/*/}
-                    {/*<div className="molecules-section" style={{marginTop: '1%'}}>*/}
-                    {/*    <h2 style={{fontSize: '1.5vw'}}>Molecules</h2>*/}
-                    {/*    /!* Add your molecule data here *!/*/}
-                    {/*    /!* Example: <div className="molecule-item" style={{ fontSize: '0.8vw' }}>Molecule: {ingredientData.molecule}</div> *!/*/}
-                    {/*</div>*/}
-
-                    {/*/!* Flavors Section (Replace placeholders with actual data) *!/*/}
-                    {/*<div className="flavors-section" style={{marginTop: '1%'}}>*/}
-                    {/*    <h2 style={{fontSize: '1.5vw'}}>Flavors</h2>*/}
-                    {/*    /!* Add your flavor data here *!/*/}
-                    {/*    /!* Example: <div className="flavor-item" style={{ fontSize: '0.8vw' }}>Flavor: {ingredientData.flavor}</div> *!/*/}
-                    {/*</div>*/}
-
+                    {/*<hr*/}
+                    {/*    className="separator"*/}
+                    {/*    style={{*/}
+                    {/*        margin: '1%',*/}
+                    {/*        border: 'none',*/}
+                    {/*        borderTop: '1px solid #ccc',*/}
+                    {/*    }}*/}
+                    {/*/>*/}
                 </div>
             )}
         </div>

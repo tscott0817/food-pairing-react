@@ -34,6 +34,7 @@ const SharedMoleculesCardSingle = ({ingredientName, moleculeData}) => {
             style={{
                 display: 'flex',
                 // backgroundColor: 'red',
+                width: '100%',
                 height: '100%',
                 minHeight: '400px',
                 borderRadius: '8px',

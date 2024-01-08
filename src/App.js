@@ -492,6 +492,7 @@ function App() {
                                     zIndex: 2,
                                 }}
                             />
+                            {/*TODO: Prop drilling issue here*/}
                             <CompareIngredientsGlobal
                                 ingredient1={selectedIngredients[0]}
                                 ingredient2={selectedIngredients[1]}
