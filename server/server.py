@@ -290,7 +290,6 @@ def wikipedia_proxy(pageTitle):
     - PUBCHEM Stuff
 '''
 
-
 @app.route('/api/get_molecule_info/<int:pubchem_id>', methods=['GET'])
 def get_molecule_info(pubchem_id):
     try:
@@ -326,21 +325,6 @@ def get_molecule_image(pubchem_id):
     pubchem_url = f'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{pubchem_id}/PNG'
     return redirect(pubchem_url)
 
-
-# @app.route('/api/get_molecule_image/<int:pubchem_id>', methods=['GET'])
-# def get_molecule_image(pubchem_id):
-#     try:
-#         response = requests.get(f'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{pubchem_id}/PNG')
-#         response.raise_for_status()
-#
-#         # Set the desired file name (e.g., molecule.png)
-#         filename = f'molecule_{pubchem_id}.png'
-#
-#         return send_file(response.raw, mimetype='image/png', as_attachment=True, download_name=filename)
-#     except requests.exceptions.RequestException as e:
-#         return str(e), 500
-
-
 @app.route('/api/get_ingredients/<entity_id>', methods=['GET'])
 def get_ingredients(entity_id):
     # Use get_db() to get the database connection
@@ -373,6 +357,57 @@ def get_ingredients(entity_id):
 
         return jsonify({'shared_molecule_count': shared_molecule_count_dict})
 
+
+@app.route('/api/get_shared_molecules/<int:entity_id1>/<int:entity_id2>', methods=['GET'])
+def get_shared_molecules(entity_id1, entity_id2):
+    # Connect to the database
+    db = get_db()
+
+    try:
+        # Retrieve molecules for entity_id1
+        cursor = db.cursor()
+        cursor.execute("SELECT molecules FROM flavordb WHERE entityID = ?", (entity_id1,))
+        result1 = cursor.fetchone()
+
+        # Check if the result exists
+        if result1:
+            molecules1 = set(eval(result1[0]) if result1[0] else [])
+        else:
+            return jsonify({"message": f"No record found for entity_id {entity_id1}"}), 404
+
+        # Retrieve molecules for entity_id2
+        cursor.execute("SELECT molecules FROM flavordb WHERE entityID = ?", (entity_id2,))
+        result2 = cursor.fetchone()
+
+        # Check if the result exists
+        if result2:
+            molecules2 = set(eval(result2[0]) if result2[0] else [])
+        else:
+            return jsonify({"message": f"No record found for entity_id {entity_id2}"}), 404
+
+        # Find the intersection of molecule sets
+        shared_molecules = molecules1.intersection(molecules2)
+
+        if not shared_molecules:
+            return jsonify({"message": "No shared molecules found."}), 404
+
+        # Query the 'molecules' table to get details of shared molecules
+        shared_molecules_list = list(shared_molecules)
+        cursor.execute(
+            "SELECT * FROM molecules WHERE pubchemID IN ({})".format(','.join(map(str, shared_molecules_list))))
+        shared_molecules_details = cursor.fetchall()
+
+        # Close the cursor
+        cursor.close()
+
+        return jsonify(shared_molecules_details), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+    finally:
+        # Close the database connection
+        close_db()
 
 
 if __name__ == '__main__':

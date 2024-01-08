@@ -88,7 +88,7 @@ const IngredientPage = ({ingredient}) => {
             // boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
             overflowY: 'auto',
             opacity: fadeIn ? 1 : 0,
-            transition: 'opacity .5s ease-in-out',
+            transition: 'opacity .3s ease-in-out',
         }}>
             {errorMessage && <p>{errorMessage}</p>}
             {ingredientData && (
@@ -98,40 +98,50 @@ const IngredientPage = ({ingredient}) => {
                     width: '100%',
                     height: '100%',
                     marginTop: '2%',
+                    // overflowY: 'auto',
                 }}>
-                    <div className="alias" style={{fontWeight: 'bold', fontSize: '1.5em', marginBottom: '10px'}}>
-                        {ingredientData.alias.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
-                    </div>
-                    <div className="scientific-name" style={{fontSize: '0.8em', color: '#555'}}>
-                        Scientific Name: {ingredientData.scientificName}
-                    </div>
-                    <div className="category" style={{fontSize: '0.8em', color: '#555'}}>
-                        Category: {ingredientData.category}
-                    </div>
-                    <button onClick={handleAddToComparison}>Add to Comparison</button>
-                    <hr className="separator" style={{margin: '20px 0', border: 'none', borderTop: '1px solid #ccc'}}/>
-                    <CollapsibleComponent
-                        title="Molecules"
-                        isCollapsed={isMoleculeCardCollapsed}
-                        onToggle={() => setMoleculeCardCollapsed(!isMoleculeCardCollapsed)}
-                    >
-                        <MoleculesCard ingredientName={"Temp"} moleculeData={allMolecules}/>
-                    </CollapsibleComponent>
-                    <CollapsibleComponent
-                        title="Ingredients With Shared Molecules"
-                        isCollapsed={isSuggestedCardCollapsed}
-                        onToggle={() => setSuggestedCardCollapsed(!isSuggestedCardCollapsed)}
-                    >
-                        <div style={{maxHeight: '40vh', overflowY: 'auto'}}>
-                            <div style={{columns: '3', columnGap: '20px'}}>
-                                {sharedMoleculeCounts && sharedMoleculeCounts.map(([alias, count]) => (
-                                    <div key={alias} style={{marginBottom: '10px'}}>
-                                        <strong>{alias}:</strong> {count}
-                                    </div>
-                                ))}
-                            </div>
+                    <div style={{
+                        // backgroundColor: 'red'
+                    }}>
+                        <div className="alias" style={{fontWeight: 'bold', fontSize: '1.5em', marginBottom: '10px'}}>
+                            {ingredientData.alias.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
                         </div>
-                    </CollapsibleComponent>
+                        <div className="scientific-name" style={{fontSize: '0.8em', color: '#555'}}>
+                            Scientific Name: {ingredientData.scientificName}
+                        </div>
+                        <div className="category" style={{fontSize: '0.8em', color: '#555'}}>
+                            Category: {ingredientData.category}
+                        </div>
+                        <button onClick={handleAddToComparison}>Add to Comparison</button>
+                        <hr className="separator"
+                            style={{margin: '20px 0', border: 'none', borderTop: '1px solid #ccc'}}/>
+                    </div>
+                    <div style={{
+                        // backgroundColor: 'yellow'
+                    }}>
+                        <CollapsibleComponent
+                            title="Molecules"
+                            isCollapsed={isMoleculeCardCollapsed}
+                            onToggle={() => setMoleculeCardCollapsed(!isMoleculeCardCollapsed)}
+                        >
+                            <MoleculesCard ingredientName={"Temp"} moleculeData={allMolecules}/>
+                        </CollapsibleComponent>
+                        <CollapsibleComponent
+                            title="Ingredients With Shared Molecules"
+                            isCollapsed={isSuggestedCardCollapsed}
+                            onToggle={() => setSuggestedCardCollapsed(!isSuggestedCardCollapsed)}
+                        >
+                            <div style={{maxHeight: '40vh', overflowY: 'auto'}}>
+                                <div style={{columns: '3', columnGap: '20px'}}>
+                                    {sharedMoleculeCounts && sharedMoleculeCounts.map(([alias, count]) => (
+                                        <div key={alias} style={{marginBottom: '10px'}}>
+                                            <strong>{alias}:</strong> {count}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </CollapsibleComponent>
+                    </div>
                 </div>
             )}
             {/*<button onClick={handleAddToComparison}>Add to Comparison</button>*/}

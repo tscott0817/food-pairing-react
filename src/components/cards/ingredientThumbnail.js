@@ -23,8 +23,12 @@ const IngredientThumbnail = ({ ingredient_name, ingredient_id, font_size }) => {
                 // border: '1px solid #333333',
                 // boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
                 boxSizing: 'border-box',
+                // paddingLeft: '5%',
+                // paddingRight: '5%',
+                // paddingTop: '5%',
                 paddingLeft: '3%',
                 paddingRight: '3%',
+                paddingTop: '3%',
                 boxShadow: defaultPageNeonColor,
                 // boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
                 // boxShadow: `0 0 10px rgba(173, 216, 230, 0.8), 0 0 20px rgba(173, 216, 230, 0.6), 0 0 30px rgba(173, 216, 230, 0.4)`,
@@ -35,7 +39,7 @@ const IngredientThumbnail = ({ ingredient_name, ingredient_id, font_size }) => {
                 alt={`Ingredient ${ingredient_name}`}
                 style={{
                     width: '100%', // Adjust the width as needed
-                    height: '80%', // Adjust the height as needed
+                    height: '90%', // Adjust the height as needed
                     objectFit: 'cover', // Maintain aspect ratio
                     // borderRadius: '8px',
                     borderRadius: '8px 8px 0 0',

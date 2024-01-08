@@ -349,9 +349,11 @@ function App() {
                                     border: 'none', // Remove default button border
                                     borderRadius: '5px', // Add border-radius for rounded corners
                                     cursor: 'pointer', // Add pointer cursor on hover
+                                    boxShadow: '0 0 8px rgba(0, 0, 0, 0.3)',
                                 }}>
-                                    <FaRegChartBar style={{marginRight: '10px'}}/> Compare Ingredients
                                     {/*<FaChartLine style={{marginRight: '10px'}}/> Compare Ingredients*/}
+                                    <FaRegChartBar style={{marginRight: '10px'}}/> Compare Ingredients
+
                                 </button>
                             </div>
                         </div>

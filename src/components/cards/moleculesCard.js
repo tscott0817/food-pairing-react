@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {pageSectionColor, sectionItemColor} from "../../colors";
+import {sectionItemColor} from "../../colors";
 
 const MoleculesCard = ({ingredientName, moleculeData}) => {
     const [selectedMolecule, setSelectedMolecule] = useState(null);
@@ -36,16 +36,16 @@ const MoleculesCard = ({ingredientName, moleculeData}) => {
                 minHeight: '400px',
                 borderRadius: '8px',
                 padding: '1%',
-                border: '1px solid #000',
-                boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
-                boxSizing: 'border-box',
+                // border: '1px solid #000',
+                // boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
+                // boxSizing: 'border-box',
                 // marginTop: '1%',
                 marginBottom: '1%',
             }}
         >
             <div
                 style={{
-                    fontFamily: 'Roboto, sans-serif',
+                    // fontFamily: 'Roboto, sans-serif',
                     backgroundColor: sectionItemColor,
                     minWidth: '250px',
                     maxWidth: '20vw',
@@ -60,10 +60,12 @@ const MoleculesCard = ({ingredientName, moleculeData}) => {
                     padding: '1%',
                     overflow: 'auto',
                     fontSize: '1em',
-                    border: '1px solid #000',
+                    // border: '1px solid #000',
+                    // borderRight: '1px solid #000',
                     boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
-                    boxSizing: 'border-box',
+                    // boxSizing: 'border-box',
                     textAlign: 'left',
+                    zIndex: 1,
                 }}
             >
                 <h2
@@ -78,8 +80,8 @@ const MoleculesCard = ({ingredientName, moleculeData}) => {
                 </h2>
                 {moleculeData.molecules.length > 0 ? (
                     moleculeData.molecules.map((detail, index) => (
-                        <div key={index} onClick={() => handleMoleculeClick(detail)} style={{cursor: 'pointer'}}>
-                            <p>- {detail.commonName}</p>
+                        <div key={index} onClick={() => handleMoleculeClick(detail)} style={{cursor: 'pointer', marginBottom: '10px'}}>
+                            <p>{detail.commonName}</p>
                         </div>
                     ))
                 ) : (
@@ -88,7 +90,7 @@ const MoleculesCard = ({ingredientName, moleculeData}) => {
             </div>
             <div
                 style={{
-                    fontFamily: "Roboto, sans-serif",
+                    // fontFamily: "Roboto, sans-serif",
                     backgroundColor: sectionItemColor,
                     minWidth: "25vw",
                     width: "100%",
@@ -103,9 +105,9 @@ const MoleculesCard = ({ingredientName, moleculeData}) => {
                     // overflow: "auto",
                     overflow: "hidden",
                     fontSize: "1em",
-                    border: "1px solid #000",
+                    // border: "1px solid #000",
                     boxShadow: "0 0 8px rgba(0, 0, 0, 0.5)",
-                    boxSizing: "border-box",
+                    // boxSizing: "border-box",
                 }}
             >
                 {selectedMolecule ? (
@@ -123,38 +125,72 @@ const MoleculesCard = ({ingredientName, moleculeData}) => {
                         <div style={{
                             display: 'flex',
                             flexDirection: 'row',
-                            backgroundColor: 'yellow'
+                            // backgroundColor: 'yellow'
                         }}>
-                            {/*<div style={{backgroundColor: 'yellow', overflow: 'hidden', textAlign: 'left', padding: '1%'}}>*/}
                             <div style={{
+                                // backgroundColor: 'yellow',
                                 overflow: 'hidden',
                                 textAlign: 'left',
-                                padding: '1%',
-                                backgroundColor: 'red',
+                                padding: '2%',
                                 opacity: isVisible ? 1 : 0, // Set opacity based on visibility flag
                                 transition: "opacity 0.5s ease",
+                                // border: '1px solid #000',
+                                // borderRadius: '8px',
+                                // boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
+                                marginLeft: '8%',
+                                marginTop: '10px',
+                                // marginTop: '3%',
                             }}>
-                                {/* Render all data contents of the selected molecule */}
-                                {Object.entries(moleculeInfo.Properties).map(([key, value]) => (
-                                    <div key={key} style={{}}>
-                                        <strong>{key}:</strong>{" "}
-                                        {typeof value === "object" ? JSON.stringify(value) : value}
-                                    </div>
-                                ))}
+                                <div style={{
+                                    // marginTop: '1%',
+                                }}>
+                                    <strong>PubChemID:</strong> {moleculeInfo.PubChemID}
+                                </div>
+                                {/*<div><strong>Molecular Formula:</strong> {moleculeInfo.Properties["Molecular Formula"].sval}</div>*/}
+                                <div style={{
+                                    marginTop: '5%',
+                                }}>
+                                    <strong>Molecular Formula:</strong>{" "}
+                                    {moleculeInfo.Properties["Molecular Formula"].sval.split("").map((char, index) => (
+                                        <span
+                                            key={index}
+                                            style={{
+                                                verticalAlign: /\d/.test(char) ? "sub" : "baseline",
+                                                fontSize: /\d/.test(char) ? "75%" : "100%",
+                                            }}
+                                        >
+                                          {char}
+                                        </span>
+                                    ))}
+                                </div>
+                                <div style={{
+                                    marginTop: '5%',
+                                }}>
+                                    <strong>Molecular
+                                    Weight:</strong> {moleculeInfo.Properties["Molecular Weight"].sval} g/mol
+                                </div>
+                                <div style={{
+                                    marginTop: '5%',
+                                }}>
+                                    <strong>Flavor Profiles:</strong>
+                                    {selectedMolecule.flavorProfile.map((flavor, index) => (
+                                        // <span key={index}>{flavor}</span>
+                                        <div>
+                                            <p>- {flavor}</p>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                             <div style={{
-                                backgroundColor: 'blue',
-                                width: '100%',
-                                height: '100%',
-                                // marginRight: '10%',
+                                // backgroundColor: 'red',
                                 padding: '2%',
-                                // borderRadius: '8px',
-                                // overflow: 'hidden',
                                 display: 'flex',
+                                marginLeft: '10%',
+                                marginTop: '10px',
                                 justifyContent: 'center',
                                 alignItems: 'center',
-                                // marginTop: '2.5%',
-                                opacity: isVisible ? 1 : 0, // Set opacity based on visibility flag
+                                flexDirection: 'column',  // Stack the items vertically
+                                opacity: isVisible ? 1 : 0,
                                 transition: "opacity 0.5s ease",
                             }}>
                                 {/* Display the image */}
@@ -165,10 +201,37 @@ const MoleculesCard = ({ingredientName, moleculeData}) => {
                                         style={{
                                             width: '200px',
                                             height: '200px',
-                                            borderRadius: 25,
+                                            borderRadius: 8,
+                                            boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
                                         }}
                                     />
                                 )}
+
+                                {/* Link under the image */}
+                                <div style={{marginTop: '10px'}}>
+                                    {/*<a*/}
+                                    {/*    href={`https://pubchem.ncbi.nlm.nih.gov/compound/${moleculeInfo.PubChemID}`}*/}
+                                    {/*    target="_blank"*/}
+                                    {/*    rel="noopener noreferrer"*/}
+                                    {/*>*/}
+                                    {/*    View on PubChem*/}
+                                    {/*</a>*/}
+                                    {/* Button under the image */}
+                                    <button
+                                        style={{
+                                            marginTop: '40px',
+                                            padding: '10px',
+                                            backgroundColor: 'blue',
+                                            color: 'white',
+                                            border: 'none',
+                                            borderRadius: '5px',
+                                            cursor: 'pointer',
+                                        }}
+                                        onClick={() => window.open(`https://pubchem.ncbi.nlm.nih.gov/compound/${moleculeInfo.PubChemID}`, '_blank')}
+                                    >
+                                        View on PubChem
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>

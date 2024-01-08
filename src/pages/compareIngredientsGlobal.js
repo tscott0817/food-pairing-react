@@ -4,7 +4,7 @@ import SharedMoleculesCardSingle from "../components/cards/sharedMoleculeCardSin
 import IngredientCombinedCard from "../components/cards/ingredientCombinedCard";
 import ResultsCard from "../components/cards/resultsCard";
 import {windowColor, pageColor, pageSectionColor, sectionItemColor, mainAppColor} from "../colors";
-import { FaArrowDown, FaArrowUp, FaArrowRight } from "react-icons/fa";
+import {FaArrowDown, FaArrowUp, FaArrowRight} from "react-icons/fa";
 import CollapsibleComponent from "../components/collapsibleComponent";
 
 const CompareIngredientsGlobal = ({ingredient1, ingredient2}) => {
@@ -26,11 +26,22 @@ const CompareIngredientsGlobal = ({ingredient1, ingredient2}) => {
             const entityID1 = ingredient1.entityID || '';
             const entityID2 = ingredient2.entityID || '';
 
-            // // Fetch shared molecules using the entity IDs
-            // const responseShared = await fetch(`http://localhost:5000/api/common-molecules/${entityID1}/${entityID2}`);
-            // const dataShared = await responseShared.json();
-            // setSharedMolecules(dataShared);
+            try {
+                // Fetch shared molecules using the entity IDs
+                const responseShared = await fetch(`http://localhost:5000/api/get_shared_molecules/${entityID1}/${entityID2}`);
+                const dataShared = await responseShared.json();
 
+                if (responseShared.ok) {
+                    // Update the state with the fetched shared molecules
+                    setSharedMolecules(dataShared);
+                } else {
+                    console.error(`Failed to fetch shared molecules: ${dataShared.message}`);
+                }
+            } catch (error) {
+                console.error("Error fetching shared molecules:", error);
+            }
+
+            // Fetch other data and update the state as needed
             const responseRadar = await fetch(`http://localhost:5000/api/common-data/${entityID1}/${entityID2}`);
             const dataRadar = await responseRadar.json();
             setRadarData(dataRadar.common_data);
@@ -43,34 +54,14 @@ const CompareIngredientsGlobal = ({ingredient1, ingredient2}) => {
             const singleRadarResponse2 = await fetch(`http://localhost:5000/api/flavordb/ingredient-molecules/${entityID2}`);
             const singleRadarData2 = await singleRadarResponse2.json();
             setRadarData2(singleRadarData2);
-            setIngredientName2(ingredient2.alias)
-
-
-            // Get the inersection of radarData1 and radarData2
-            // Do this but comparing the column named pubchemID in each array
-            // If the both have it, add to the sharedMolecules array
-            // TODO: Ugly af
-            // Check if both singleRadarData1 and singleRadarData2 are not null before accessing them
-            if (singleRadarData1 && singleRadarData2) {
-                setIngredientName1(ingredient1.alias);
-
-                // Get the intersection of radarData1 and radarData2
-                for (let i = 0; i < singleRadarData1.length; i++) {
-                    for (let j = 0; j < singleRadarData2.length; j++) {
-                        if (singleRadarData1[i].pubchemID === singleRadarData2[j].pubchemID) {
-                            sharedMolecules.push(singleRadarData1[i]);
-                        }
-                    }
-                }
-            }
-
+            setIngredientName2(ingredient2.alias);
 
             // Trigger fade-in effect
             setFadeIn(true);
         };
 
         fetchData(); // Call fetchData when the component mounts
-    }, [ingredient1, ingredient2, sharedMolecules, setFadeIn]);
+    }, [ingredient1, ingredient2, setFadeIn, setSharedMolecules, setRadarData, setRadarData1, setRadarData2]);
 
 
     return (
@@ -88,7 +79,7 @@ const CompareIngredientsGlobal = ({ingredient1, ingredient2}) => {
             // boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
             overflowY: 'auto',
             opacity: fadeIn ? 1 : 0,
-            transition: 'opacity .5s ease-in-out',
+            transition: 'opacity .3s ease-in-out',
 
         }}>
             <div style={{
@@ -109,7 +100,7 @@ const CompareIngredientsGlobal = ({ingredient1, ingredient2}) => {
                     {/*<SharedMoleculesCard ingredientName={"Temp"} moleculeData={radarData2}/>*/}
                     {/*TODO: THIS IS THE WRONG DATA*/}
                     {/*<SharedMoleculesCardStacked ingredientName={"Temp"} moleculeData={radarData2}/>  /!*TODO: THIS IS THE WRONG DATA*!/*/}
-                    <SharedMoleculesCardSingle ingredientName={"Temp"} moleculeData={radarData2}/>
+                    <SharedMoleculesCardSingle ingredientName={"Temp"} moleculeData={sharedMolecules}/>
                     {/*TODO: THIS IS THE WRONG DATA*/}
                 </CollapsibleComponent>
                 <CollapsibleComponent

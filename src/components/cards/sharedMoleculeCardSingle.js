@@ -76,8 +76,8 @@ const SharedMoleculesCardSingle = ({ingredientName, moleculeData}) => {
                 >
                     All Shared Molecules
                 </h2>
-                {moleculeData.molecules.length > 0 ? (
-                    moleculeData.molecules.map((detail, index) => (
+                {moleculeData.length > 0 ? (
+                    moleculeData.map((detail, index) => (
                         <div key={index} onClick={() => handleMoleculeClick(detail)} style={{cursor: 'pointer'}}>
                             <p>- {detail.commonName}</p>
                         </div>
