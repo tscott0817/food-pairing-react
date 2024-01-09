@@ -33,14 +33,7 @@ const IngredientCard = ({ingredient}) => {
         <div>
             {errorMessage && <p>{errorMessage}</p>}
             {ingredientData && (
-                <div
-                    style={{
-                        width: '100%',
-                        height: '60px',
-                        // padding: '20px',
-                        // borderRadius: '8px',
-                    }}
-                >
+                <div>
                     <div
                         className="top-left-section"
                         style={{display: 'flex', flexDirection: 'column'}}
@@ -49,7 +42,7 @@ const IngredientCard = ({ingredient}) => {
                             className="alias"
                             style={{
                                 fontWeight: 'bold',
-                                // fontSize: '1.5vw',
+                                fontSize: '1.5em',
                                 marginBottom: '10px',
                             }}
                         >
@@ -65,7 +58,7 @@ const IngredientCard = ({ingredient}) => {
                             className="scientific-name"
                             style={{
                                 // fontSize: '0.8vw',
-                                fontSize: '10px',
+                                fontSize: '0.8em',
                                 color: '#555'
                         }}
                         >
@@ -75,7 +68,7 @@ const IngredientCard = ({ingredient}) => {
                             className="category"
                             style={{
                                 // fontSize: '0.8vw',
-                                fontSize: '10px',
+                                fontSize: '0.8em',
                                 color: '#555'
                         }}
                         >

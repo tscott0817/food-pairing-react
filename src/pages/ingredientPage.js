@@ -6,14 +6,17 @@ import CollapsibleComponent from '../components/collapsibleComponent';
 import SharedMoleculesCardSingle from "../components/cards/sharedMoleculeCardSingle";
 import MoleculesCard from "../components/cards/moleculesCard";
 import SimilarIngredientsCard from "../components/cards/similarIngredientsCard";
+import {FaPlus} from 'react-icons/fa';
 
 const IngredientPage = ({ingredient}) => {
+    const imageURL = `https://cosylab.iiitd.edu.in/flavordb/static/entities_images/${ingredient.entityID}.jpg`;
     const [ingredientData, setIngredientData] = useState(null);
     const [sharedMoleculeCounts, setSharedMoleculeCounts] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
     const {selectedIngredients, selectIngredient, unselectIngredient} = useIngredientContext();
     const [isSuggestedCardCollapsed, setSuggestedCardCollapsed] = useState(true);
     const [isMoleculeCardCollapsed, setMoleculeCardCollapsed] = useState(true);
+    const [isFlavorCardCollapsed, setFlavorCardCollapsed] = useState(true);
     const [allMolecules, setAllMolecules] = useState(null);
     const [fadeIn, setFadeIn] = useState(false);
 
@@ -82,8 +85,10 @@ const IngredientPage = ({ingredient}) => {
             width: '100%',
             height: '100%',
             margin: '0 auto',
-            padding: '20px',
-            paddingTop: '20px',
+            // padding: '20px',
+            // paddingTop: '20px',
+            paddingLeft: '20px',
+            paddingRight: '20px',
             borderRadius: '8px',
             // overflowY: 'auto',
             opacity: fadeIn ? 1 : 0,
@@ -101,26 +106,114 @@ const IngredientPage = ({ingredient}) => {
                     flexDirection: 'column',
                 }}>
                     <div style={{
+                        display: 'flex',
+                        flexDirection: 'row', // Stack items vertically
                         // backgroundColor: 'red',
+                        justifyContent: 'center',
+                        // paddingBottom: '1%',
                         // boxShadow: '0 0 8px rgba(0, 0, 0, 0.2)',
                     }}>
-                        <div className="alias" style={{fontWeight: 'bold', fontSize: '1.5em'}}>
-                            {ingredientData.alias.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+                        {/* Image on the left */}
+                        <div style={{
+                            // marginLeft: '30%',
+                            // backgroundColor: 'pink',
+                            width: '75px',
+                            height: '75px',
+                        }}>
+                            <img
+                                src={imageURL}
+                                alt={`Ingredient ${ingredient.alias}`}
+                                style={{
+                                    width: '100%', // Adjust the width as needed
+                                    height: '100%', // Adjust the height as needed
+                                    marginTop: '10%',
+                                    objectFit: 'cover', // Maintain aspect ratio
+                                    boxShadow: '0 0 8px rgba(0, 0, 0, 0.2)',
+                                    // borderRadius: '8px',
+                                    // borderRadius: '8px 8px 0 0',
+                                }}
+                            />
                         </div>
-                        <div className="scientific-name" style={{fontSize: '0.8em', color: '#555'}}>
-                            Scientific Name: {ingredientData.scientificName}
+
+                        {/* Data in the middle */}
+                        <div style={{
+                            // flex: 1,
+                            textAlign: 'center',
+                            marginTop: '1%',
+                            marginBottom: '1%',
+                            marginLeft: '5%',
+                            marginRight: '5%',
+                            // backgroundColor: 'blue',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                        }}>
+                            <div className="alias" style={{
+                                fontWeight: 'bold',
+                                fontSize: '1.5em',
+                                marginBottom: '5%',
+                                // backgroundColor: 'yellow',
+                                // width: '50%'
+                            }}>
+                                {ingredientData.alias.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+                            </div>
+                            <div className="scientific-name" style={{
+                                fontSize: '0.8em',
+                                color: '#555',
+                                // backgroundColor: 'yellow',
+                                // width: '50%'
+                            }}>
+                                Scientific Name: {ingredientData.scientificName}
+                            </div>
+                            <div className="category" style={{
+                                fontSize: '0.8em',
+                                color: '#555',
+                                // backgroundColor: 'yellow',
+                                // width: '50%'
+                            }}>
+                                Category: {ingredientData.category}
+                            </div>
                         </div>
-                        <div className="category" style={{fontSize: '0.8em', color: '#555'}}>
-                            Category: {ingredientData.category}
-                        </div>
-                        <button onClick={handleAddToComparison} style={{margin: '1%'}}>Add to Comparison</button>
-                        <hr className="separator"
+                        <div
                             style={{
-                                // margin: '10px 0',
-                                border: 'none',
-                                borderTop: '1px solid #ccc',
-                        }}/>
+                                // marginRight: '30%',
+                                // backgroundColor: 'green',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                            }}
+                        >
+                            <button
+                                onClick={handleAddToComparison}
+                                style={{
+                                    margin: '1%',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    width: '40px', // Set the width for a circle
+                                    height: '40px', // Set the height for a circle
+                                    borderRadius: '50%', // Make it circular
+                                    backgroundColor: 'blue', // Add your desired background color
+                                    color: 'white', // Set the text color
+                                    border: 'none', // Remove border for a cleaner look
+                                    cursor: 'pointer', // Change cursor on hover
+                                }}
+                            >
+                                <FaPlus/>
+                            </button>
+                        </div>
                     </div>
+
+                    {/* Separator at the bottom */}
+                    <hr
+                        className="separator"
+                        style={{
+                            // margin: '10px 0',
+                            border: 'none',
+                            borderTop: '1px solid #ccc',
+                            width: '100%',
+                        }}
+                    />
                     <div style={{
                         // backgroundColor: 'yellow',
                         padding: '1%',
@@ -135,7 +228,14 @@ const IngredientPage = ({ingredient}) => {
                             <MoleculesCard ingredientName={"Temp"} moleculeData={allMolecules}/>
                         </CollapsibleComponent>
                         <CollapsibleComponent
-                            title="Ingredients With Shared Molecules"
+                            title="Flavor Profiles"
+                            isCollapsed={isFlavorCardCollapsed}
+                            onToggle={() => setFlavorCardCollapsed(!isFlavorCardCollapsed)}
+                        >
+                            Flavor Card Goes Here
+                        </CollapsibleComponent>
+                        <CollapsibleComponent
+                            title="Ingredients With Shared Molecules (Name: Count)"
                             isCollapsed={isSuggestedCardCollapsed}
                             onToggle={() => setSuggestedCardCollapsed(!isSuggestedCardCollapsed)}
                         >

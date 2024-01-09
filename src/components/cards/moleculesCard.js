@@ -64,7 +64,7 @@ const MoleculesCard = ({ingredientName, moleculeData}) => {
                     // border: '1px solid #000',
                     // borderRight: '1px solid #000',
                     // boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
-                    borderRight: '1px solid #232b2b',
+                    borderRight: '1px solid #999',
                     // boxSizing: 'border-box',
                     textAlign: 'left',
                     zIndex: 1,
@@ -77,7 +77,7 @@ const MoleculesCard = ({ingredientName, moleculeData}) => {
                 }}>
                     <h2
                         style={{
-                            borderBottom: '1px solid #232b2b',
+                            borderBottom: '1px solid #999',
                             marginLeft: '2.5%',
                             width: '95%',
                             // marginBottom: '10px',
@@ -127,7 +127,7 @@ const MoleculesCard = ({ingredientName, moleculeData}) => {
                     // overflow: "auto",
                     overflow: "hidden",
                     fontSize: "1em",
-                    borderLeft: '1px solid #232b2b',
+                    // borderLeft: '1px solid #232b2b',
                     // border: "1px solid #000",
                     // boxShadow: "0 0 8px rgba(0, 0, 0, 0.5)",
                     // boxSizing: "border-box",
@@ -137,7 +137,7 @@ const MoleculesCard = ({ingredientName, moleculeData}) => {
                     <div>
                         <h2
                             style={{
-                                borderBottom: "1px solid #232b2b",
+                                borderBottom: "1px solid #999",
                                 // paddingBottom: "0.5em",
                                 marginLeft: "1%",
                                 width: "98%",

@@ -50,7 +50,7 @@ const SimilarIngredientsCard = ({sharedMoleculeCounts}) => {
                     backgroundColor: sectionItemColor,
                     minWidth: "25vw",
                     width: "100%",
-                    height: "50vh",
+                    // height: "50vh",
                     minHeight: '400px',
                     // borderTopRightRadius: '8px',
                     // borderBottomRightRadius: '8px',
@@ -64,9 +64,9 @@ const SimilarIngredientsCard = ({sharedMoleculeCounts}) => {
                     overflow: "hidden",
                     fontSize: "1em",
                     // border: "1px solid #000",
-                    boxShadow: "0 0 8px rgba(0, 0, 0, 0.5)",
+                    // boxShadow: "0 0 8px rgba(0, 0, 0, 0.5)",
                     // boxSizing: "border-box",
-                    overflowY: "auto",
+                    // overflowY: "auto",
                 }}
             >
                 <div style={{
@@ -77,7 +77,10 @@ const SimilarIngredientsCard = ({sharedMoleculeCounts}) => {
                         sharedMoleculeCounts
                             .filter(([alias, count]) => count !== 0) // Filter out items with count 0
                             .map(([alias, count]) => (
-                                <div key={alias} style={{marginBottom: '10px'}}>
+                                <div key={alias} style={{
+                                    marginBottom: '10px',
+                                    textAlign: 'left',
+                                }}>
                                     <strong>{alias}:</strong> {count}
                                 </div>
                             ))}

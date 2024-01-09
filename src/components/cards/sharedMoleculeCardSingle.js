@@ -68,7 +68,7 @@ const SharedMoleculesCardSingle = ({ingredientName, moleculeData}) => {
                     // border: '1px solid #000',
                     // borderRight: '1px solid #000',
                     // boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
-                    borderRight: '1px solid #232b2b',
+                    borderRight: '1px solid #999',
                     // boxSizing: 'border-box',
                     textAlign: 'left',
                     zIndex: 1,
@@ -81,7 +81,7 @@ const SharedMoleculesCardSingle = ({ingredientName, moleculeData}) => {
                 }}>
                     <h2
                         style={{
-                            borderBottom: '1px solid #232b2b',
+                            borderBottom: '1px solid #999',
                             marginLeft: '2.5%',
                             width: '95%',
                             // marginBottom: '10px',
@@ -104,7 +104,8 @@ const SharedMoleculesCardSingle = ({ingredientName, moleculeData}) => {
                 }}>
                     {moleculeData.length > 0 ? (
                         moleculeData.map((detail, index) => (
-                            <div key={index} onClick={() => handleMoleculeClick(detail)} style={{cursor: 'pointer', marginBottom: '10px', textAlign: 'center'}}>
+                            <div key={index} onClick={() => handleMoleculeClick(detail)}
+                                 style={{cursor: 'pointer', marginBottom: '10px', textAlign: 'center'}}>
                                 <p>{detail[2]}</p>
                             </div>
                         ))
@@ -131,7 +132,7 @@ const SharedMoleculesCardSingle = ({ingredientName, moleculeData}) => {
                     // overflow: "auto",
                     overflow: "hidden",
                     fontSize: "1em",
-                    borderLeft: '1px solid #232b2b',
+                    // borderLeft: '1px solid #999',
                     // border: "1px solid #000",
                     // boxShadow: "0 0 8px rgba(0, 0, 0, 0.5)",
                     // boxSizing: "border-box",
@@ -141,7 +142,7 @@ const SharedMoleculesCardSingle = ({ingredientName, moleculeData}) => {
                     <div>
                         <h2
                             style={{
-                                borderBottom: "1px solid #232b2b",
+                                borderBottom: "1px solid #999",
                                 // paddingBottom: "0.5em",
                                 marginLeft: "1%",
                                 width: "98%",
@@ -195,18 +196,18 @@ const SharedMoleculesCardSingle = ({ingredientName, moleculeData}) => {
                                     marginTop: '5%',
                                 }}>
                                     <strong>Molecular
-                                    Weight:</strong> {moleculeInfo.Properties["Molecular Weight"].sval} g/mol
+                                        Weight:</strong> {moleculeInfo.Properties["Molecular Weight"].sval} g/mol
                                 </div>
-                                <div style={{
-                                    marginTop: '5%',
-                                }}>
+                                <div style={{marginTop: '5%'}}>
                                     <strong>Flavor Profiles:</strong>
-                                    {selectedMolecule[3].map((flavor, index) => (
-                                        // <span key={index}>{flavor}</span>
-                                        <div>
-                                            <p>- {flavor}</p>
-                                        </div>
-                                    ))}
+                                    {selectedMolecule[3]
+                                        .slice(1, -1)
+                                        .split(',')
+                                        .map((flavor, index) => (
+                                            <div key={index}>
+                                                <p>- {flavor.trim().replace(/'/g, '')}</p>
+                                            </div>
+                                        ))}
                                 </div>
                             </div>
                             <div style={{

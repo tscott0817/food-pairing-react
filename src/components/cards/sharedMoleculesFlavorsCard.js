@@ -34,6 +34,7 @@ const SharedMoleculesFlavorsCard = ({moleculeData}) => {
     // Sort radarChartData in descending order based on count
     flavorListData.sort((a, b) => b.count - a.count);
 
+    // TODO: Not sure I even like having this
     const toggleFullScreen = () => {
         const chartContainer = chartContainerRef.current;
 
@@ -70,9 +71,9 @@ const SharedMoleculesFlavorsCard = ({moleculeData}) => {
             width: '96%',
             borderRadius: '8px',
             padding: "1%",
-            border: '1px solid #000',
-            boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
-            boxSizing: 'border-box',
+            // border: '1px solid #000',
+            // boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
+            // boxSizing: 'border-box',
             // marginTop: '1%',
             marginBottom: '1%',
             marginLeft: '2%',
@@ -87,20 +88,20 @@ const SharedMoleculesFlavorsCard = ({moleculeData}) => {
                 margin: "1%",
                 overflow: 'auto',
                 fontSize: '1em',
-                border: '1px solid #000',
-                boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
-                boxSizing: 'border-box',
+                // border: '1px solid #000',
+                // boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
+                // boxSizing: 'border-box',
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fill, minmax(125px, 1fr))', // Adjust the column width as needed
                 gridGap: '1em',
             }}>
                 <div style={{gridColumn: '1 / -1'}}> {/* This spans across all columns */}
                     <h2 style={{
-                        borderBottom: '1px solid #232b2b',
+                        borderBottom: '1px solid #999',
                         paddingBottom: '0.5em',
                         marginLeft: "5%",
                         width: "90%",
-                    }}>Flavor Profiles of Shared Molecules (Weighed Heavier)</h2>
+                    }}>Shared Flavor Profiles</h2>
 
                 </div>
                 {flavorListData.length > 0 ? (
@@ -122,9 +123,9 @@ const SharedMoleculesFlavorsCard = ({moleculeData}) => {
                      margin: '1%',
                      padding: '2%',
                      borderRadius: '8px',
-                     border: '1px solid #000',
-                     boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
-                     boxSizing: 'border-box',
+                     // border: '1px solid #000',
+                     // boxShadow: '0 0 8px rgba(0, 0, 0, 0.5)',
+                     // boxSizing: 'border-box',
                      backgroundColor: sectionItemColor,
 
                  }}>

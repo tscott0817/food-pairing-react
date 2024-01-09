@@ -76,7 +76,9 @@ const CompareIngredientsGlobal = ({ingredient1, ingredient2}) => {
             // minWidth: '900px', // TODO: Make this a proportion of the users screen size instead of hardcoding
             height: '100%',
             margin: '0 auto',
-            padding: '20px',
+            // padding: '20px',
+            paddingLeft: '20px',
+            paddingRight: '20px',
             // paddingLeft: '1%',
             // padingRight: '1%',
             borderRadius: '8px',
